@@ -11,5 +11,8 @@ class AppbarSettings {
     this.title,
     this.leadingIcon,
     this.onTapLeading,
-  }) : assert(child != null || title != null, "Either child or title must be provided");
+  }) : assert(!(child == null && title == null), "Either child or title must be provided"),
+       assert(child == null || title == null, "Only one of child or title must be provided");
+
+  bool get hasTitle => title != null;
 }

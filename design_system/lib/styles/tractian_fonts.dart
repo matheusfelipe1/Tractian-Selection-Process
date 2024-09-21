@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:design_system/styles/tractian_lineheight.dart';
+import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 
 const _robotoMedium = 'Roboto-Medium';
@@ -11,9 +12,7 @@ class TractianFonts {
   TextStyle defaultStyle() => customColor(TractianColors.black50);
 }
 
-TractianFonts mediumLg({
-  required Color color,
-}) =>
+final TractianFonts mediumLg =
     TractianFonts(
       (color) {
         return TextStyle(
@@ -21,41 +20,34 @@ TractianFonts mediumLg({
           fontSize: 18,
           fontFamily: _robotoMedium,
           fontWeight: FontWeight.w500,
+          height: TractianLineheight.lineHeight28,
         );
       },
     );
 
-TractianFonts regularLg({
-  required Color color,
-}) =>
-    TractianFonts(
-      (color) {
-        return TextStyle(
-          color: color,
-          fontSize: 18,
-          fontFamily: _robotoRegular,
-          fontWeight: FontWeight.w400,
-        );
-      },
+final TractianFonts regularLg = TractianFonts(
+  (color) {
+    return TextStyle(
+      color: color,
+      fontSize: 18,
+      fontFamily: _robotoRegular,
+      fontWeight: FontWeight.w400,
     );
+  },
+);
 
-TractianFonts mediumSm({
-  required Color color,
-}) =>
-    TractianFonts(
-      (color) {
-        return TextStyle(
-          color: color,
-          fontSize: 14,
-          fontFamily: _robotoMedium,
-          fontWeight: FontWeight.w500,
-        );
-      },
+final TractianFonts mediumSm = TractianFonts(
+  (color) {
+    return TextStyle(
+      color: color,
+      fontSize: 14,
+      fontFamily: _robotoMedium,
+      fontWeight: FontWeight.w500,
     );
+  },
+);
 
-TractianFonts regularSm({
-  required Color color,
-}) =>
+final TractianFonts regularSm =
     TractianFonts(
       (color) {
         return TextStyle(

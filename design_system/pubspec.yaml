@@ -63,10 +63,10 @@ flutter:
     - family: TractianIcons
       fonts:
         - asset: fonts/tractian_icons.ttf
-  - family: Roboto-Medium
+    - family: Roboto-Medium
       fonts:
         - asset: fonts/Roboto/Roboto-Medium.ttf
-  - family: Roboto-Regular
+    - family: Roboto-Regular
       fonts:
         - asset: fonts/Roboto/Roboto-Regular.ttf
   #

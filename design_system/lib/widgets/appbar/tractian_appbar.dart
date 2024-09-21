@@ -1,5 +1,5 @@
-import 'package:design_system/widgets/appbar/settings/appbar_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:design_system/design_system.dart';
 
 class TractianAppbar extends StatelessWidget implements PreferredSizeWidget {
   final AppbarSettings appbarSettings;
@@ -14,17 +14,32 @@ class TractianAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Título do App'),
       centerTitle: true,
-      backgroundColor: Colors.blue,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.settings),
-          onPressed: () {
-            // Ação ao pressionar o botão
-          },
-        ),
-      ],
+      title: _buildTitle(),
+      leading: _buildLeadingIcon(),
+      automaticallyImplyLeading: false,
+      backgroundColor: TractianColors.blue100,
+    );
+  }
+
+  Widget _buildTitle() {
+    return appbarSettings.hasTitle
+        ? Text(
+            appbarSettings.title!,
+            style: regularSm.customColor(TractianColors.white50),
+          )
+        : appbarSettings.child ?? const SizedBox();
+  }
+
+  Widget? _buildLeadingIcon() {
+    if (appbarSettings.leadingIcon == null) return null;
+    return IconButton(
+      onPressed: appbarSettings.onTapLeading,
+      icon: Icon(
+        size: 24,
+        appbarSettings.leadingIcon,
+        color: TractianColors.white50,
+      ),
     );
   }
 }
