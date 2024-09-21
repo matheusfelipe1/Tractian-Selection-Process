@@ -26,7 +26,7 @@ class TractianAppbar extends StatelessWidget implements PreferredSizeWidget {
     return appbarSettings.hasTitle
         ? Text(
             appbarSettings.title!,
-            style: regularSm.customColor(TractianColors.white50),
+            style: regularLg.customColor(TractianColors.whiteBrand),
           )
         : appbarSettings.child ?? const SizedBox();
   }
@@ -38,7 +38,7 @@ class TractianAppbar extends StatelessWidget implements PreferredSizeWidget {
       icon: Icon(
         size: 24,
         appbarSettings.leadingIcon,
-        color: TractianColors.white50,
+        color: TractianColors.whiteBrand,
       ),
     );
   }

@@ -29,12 +29,12 @@ class TractianCompaniesTileWidget extends StatelessWidget {
               Icon(
                 size: 24,
                 TractianIcons.threeSquares,
-                color: TractianColors.white50,
+                color: TractianColors.whiteBrand,
               ),
               const SizedBox(width: 16),
               Text(
                 companyNamel,
-                style: mediumLg.customColor(TractianColors.white50),
+                style: mediumLg.customColor(TractianColors.whiteBrand),
               ),
             ],
           ),
