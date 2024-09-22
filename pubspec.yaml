@@ -50,7 +50,7 @@ flutter:
   fonts:
     - family: TractianIcons
       fonts:
-        - asset: design_system/fonts/
+        - asset: design_system/fonts/tractian_icons.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
