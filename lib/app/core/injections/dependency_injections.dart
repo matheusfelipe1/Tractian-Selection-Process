@@ -1,18 +1,18 @@
 import 'package:get_it/get_it.dart';
-import 'package:traction_selection_proccess/app/data/assets/datasource/assets_datasource.dart';
-import 'package:traction_selection_proccess/app/data/assets/repository/assets_repository_impl.dart';
-import 'package:traction_selection_proccess/app/data/locations/datasource/location_datasource.dart';
-import 'package:traction_selection_proccess/app/data/locations/repository/location_repository_impl.dart';
 import 'package:traction_selection_proccess/app/domain/api/api_handler.dart';
 import 'package:traction_selection_proccess/app/data/api/api_handler_impl.dart';
 import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
-import 'package:traction_selection_proccess/app/domain/tree/repository/assets_repository.dart';
-import 'package:traction_selection_proccess/app/domain/tree/use_case/get_tree_asset_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
+import 'package:traction_selection_proccess/app/data/assets/datasource/assets_tree_datasource.dart';
+import 'package:traction_selection_proccess/app/data/locations/datasource/location_datasource.dart';
 import 'package:traction_selection_proccess/app/data/company/repository/company_repository_impl.dart';
 import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/locations/repository/location_repository.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
+import 'package:traction_selection_proccess/app/data/assets/repository/assets_tree_repository_impl.dart';
+import 'package:traction_selection_proccess/app/data/locations/repository/location_repository_impl.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/repository/assets_tree_repository.dart';
 
 class DependencyInjections {
   static final _getIt = GetIt.instance;
@@ -34,7 +34,7 @@ class DependencyInjections {
       () => LocationDatasource(_getIt()),
     );
     _getIt.registerFactory(
-      () => AssetsDatasource(_getIt()),
+      () => AssetsTreeDatasource(_getIt()),
     );
   }
 
@@ -45,8 +45,8 @@ class DependencyInjections {
     _getIt.registerFactory<LocationRepository>(
       () => LocationRepositoryImpl(locationDatasource: _getIt()),
     );
-    _getIt.registerFactory<AssetsRepository>(
-      () => AssetsRepositoryImpl(_getIt()),
+    _getIt.registerFactory<AssetsTreeRepository>(
+      () => AssetsTreeRepositoryImpl(_getIt()),
     );
   }
 

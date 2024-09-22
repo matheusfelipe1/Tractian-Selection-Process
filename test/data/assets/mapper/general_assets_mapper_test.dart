@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/data/assets/mappers/assets_tree_mappers.dart';
 
 void main() {

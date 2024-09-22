@@ -25,6 +25,5 @@ abstract class TreeBranches {
     List<TreeBranches>? children,
   });
 
-
-  TractianAssetsTree toDSData();
+  TractianAssetsTree toDSEntity();
 }

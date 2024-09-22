@@ -1,15 +1,17 @@
+import 'dart:ui' as ui;
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/route_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/route_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
-import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 import 'package:traction_selection_proccess/app/routes/route_pages.dart';
 import 'package:traction_selection_proccess/app/routes/route_paths.dart';
 import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
+import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 import 'package:traction_selection_proccess/app/core/injections/dependency_injections.dart';
+import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
 
 void main() async {
   FlutterError.onError = (details) {
@@ -17,6 +19,10 @@ void main() async {
   };
   await dotenv.load();
   DependencyInjections.ensureInitialized();
+  BackgroundIsolateBinaryMessenger.ensureInitialized(
+    ui.RootIsolateToken.instance!,
+  );
+
   runApp(const MyApp());
 }
 

@@ -1,7 +1,7 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
 import 'package:traction_selection_proccess/app/data/assets/mappers/assets_mapper.dart';
 import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 typedef TreeMapperList = List<Map<String, dynamic>>;
 

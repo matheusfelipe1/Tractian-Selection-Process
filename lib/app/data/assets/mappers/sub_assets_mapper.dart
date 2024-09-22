@@ -1,18 +1,19 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/sub_assets.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/sub_assets.dart';
 import 'package:traction_selection_proccess/app/data/assets/mappers/assets_tree_mappers.dart';
+import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
 
 class SubAssetsMapper {
   static List<SubAssets> fromDataList({
     required TreeMapperList subAssets,
     required TreeMapperList components,
   }) {
-    return subAssets
+    final subAssetsFiltered = subAssets
         .map(
-          (subAsset) => _fromData(components: components, subAsset: subAsset),
-        )
+            (subAsset) => _fromData(components: components, subAsset: subAsset))
         .toList();
+
+    return subAssetsFiltered;
   }
 
   static SubAssets _fromData({
@@ -20,6 +21,7 @@ class SubAssetsMapper {
     required Map<String, dynamic> subAsset,
   }) {
     final id = subAsset.getValue(key: "id");
+
     final componentAssets = components
         .where((component) => component.getValue(key: "parentId") == id)
         .toList();

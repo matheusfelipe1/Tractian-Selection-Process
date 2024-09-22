@@ -1,6 +1,6 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/component_asset.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class SubAssets extends TreeBranches {
   final String name;
@@ -33,13 +33,13 @@ class SubAssets extends TreeBranches {
   }
 
   @override
-  TractianAssetsTree toDSData() {
+  TractianAssetsTree toDSEntity() {
     return TractianAssetsTree(
       id: id,
       name: name,
       isOpen: isOpen,
       type: TractianAssetType.subasset,
-      children: children.map((e) => e.toDSData()).toList(),
+      children: children.map((e) => e.toDSEntity()).toList(),
     );
   }
 }

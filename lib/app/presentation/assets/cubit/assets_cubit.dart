@@ -2,21 +2,22 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/core/extensions/location_extension.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/core/extensions/assets_tree_extension.dart';
 import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_states.dart';
-import 'package:traction_selection_proccess/app/domain/tree/use_case/get_tree_asset_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 
 class AssetsCubit extends BaseCubit<AssetsState> {
   final GetLocationUseCase _getLocationUseCase;
   final GetAssetsTreeUseCase _getAssetsTreeUseCase;
 
-  AssetsCubit(this._getLocationUseCase, this._getAssetsTreeUseCase)
-      : super(AssetsInitial());
+  AssetsCubit(
+    this._getLocationUseCase,
+    this._getAssetsTreeUseCase,
+  ) : super(AssetsInitial());
 
   late final AssetsArgs _args;
 
@@ -74,26 +75,30 @@ class AssetsCubit extends BaseCubit<AssetsState> {
         )
       ],
     );
-    final items = _assetsTree.branches.toDSData();
+    final items = _assetsTree.branches.toDSEntity();
     items.sort((a, b) => b.type == TractianAssetType.location ? 1 : -1);
     emit(AssetsLoaded(assets: items));
   }
 
   void toggleTree(String id) {
-    _assetsTree = AssetsTree(branches: _deepSearchToggle(id, _assetsTree.branches));
-    final itemsDSData = _assetsTree.branches.toDSData();
+    _assetsTree = AssetsTree(
+      branches: _deepSearchToExpandes(id, _assetsTree.branches),
+    );
+
+    final itemsDSData = _assetsTree.branches.toDSEntity();
 
     itemsDSData.sort((a, b) => b.type == TractianAssetType.location ? 1 : -1);
+
     emit(AssetsLoaded(assets: itemsDSData));
   }
 
-  List<TreeBranches> _deepSearchToggle(String id, List<TreeBranches> branches) {
+  List<TreeBranches> _deepSearchToExpandes(String id, List<TreeBranches> branches) {
     final List<TreeBranches> assetsTree = [];
 
     for (var element in branches) {
       if (element.children.isNotEmpty) {
         element = element.copyWith(
-          children: _deepSearchToggle(id, element.children),
+          children: _deepSearchToExpandes(id, element.children),
         );
       }
 

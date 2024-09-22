@@ -1,6 +1,6 @@
 import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
 import 'package:design_system/styles/traction_asset_type.dart';
-import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class SubLocation extends TreeBranches {
   final String name;
@@ -32,13 +32,13 @@ class SubLocation extends TreeBranches {
   }
 
   @override
-  TractianAssetsTree toDSData() {
+  TractianAssetsTree toDSEntity() {
     return TractianAssetsTree(
       id: id,
       name: name,
       isOpen: isOpen,
       type: TractianAssetType.subLocation,
-      children: children.map((e) => e.toDSData()).toList(),
+      children: children.map((e) => e.toDSEntity()).toList(),
     );
   }
 }
