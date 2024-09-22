@@ -11,8 +11,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TractianAssetsTree(
-              assetsTreeDSEntity: TractianAssetsTreeMock.get(),
+            body: TractianAssetsTreeWidget(
+              assetsTree: TractianAssetsTreeMock.get(),
             ),
           ),
         ),
@@ -20,7 +20,7 @@ void main() {
 
       await tester.pumpAndSettle();
       // As it is a recursive algorithm, the number of DS classes must be equal to the number of widgets
-      expect(find.byType(TractianAssetsTree), findsNWidgets(15));
+      expect(find.byType(TractianAssetsTreeWidget), findsNWidgets(15));
 
       final locationIcon = find.byWidgetPredicate((widget) {
         return widget is Icon && widget.icon == TractianIcons.location;

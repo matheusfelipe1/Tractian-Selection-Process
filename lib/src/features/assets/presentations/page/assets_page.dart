@@ -18,8 +18,8 @@ class _AssetsPageState extends State<AssetsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TractianColors.whiteBrand,
-      appBar: TractianAppbar(
-        appbarSettings: AppbarSettings(
+      appBar: TractianAppbarWidget(
+        appbarSettings: TractianAppbar(
           onTapLeading: Get.back,
           leadingIcon: Icons.navigate_before,
           title: tractianLocalizations.assets,
@@ -29,7 +29,7 @@ class _AssetsPageState extends State<AssetsPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TractianTextField(
+            TractianTextFieldWidget(
               controller: controller,
               hintText: tractianLocalizations.searchField,
               onChanged: (value) {},
@@ -38,8 +38,8 @@ class _AssetsPageState extends State<AssetsPage> {
             Row(
               children: [
                 FittedBox(
-                  child: TractianToggleButton(
-                    settings: TractianToggleButtonsSettings(
+                  child: TractianToggleButtonWidget(
+                    settings: TractianToggleButtons(
                       title: tractianLocalizations.powerSensor,
                       icon: TractianIcons.lightning,
                       isActive: isActive,
@@ -58,8 +58,8 @@ class _AssetsPageState extends State<AssetsPage> {
                 ),
                 const SizedBox(width: 8),
                 FittedBox(
-                  child: TractianToggleButton(
-                    settings: TractianToggleButtonsSettings(
+                  child: TractianToggleButtonWidget(
+                    settings: TractianToggleButtons(
                       title: tractianLocalizations.critical,
                       icon: TractianIcons.warninig,
                       isActive: isActive,
@@ -80,39 +80,39 @@ class _AssetsPageState extends State<AssetsPage> {
             ),
             const SizedBox(height: 8),
             Flexible(
-              child: TractianAssetsTree(
-                assetsTreeDSEntity: TractianAssetsTreeDSEntity(
+              child: TractianAssetsTreeWidget(
+                assetsTree: TractianAssetsTree(
                   name: "PRODUCTION AREA - ROW MATERIAL",
                   type: TractianAssetType.location,
                   children: [
-                    TractianAssetsTreeDSEntity(
+                    TractianAssetsTree(
                       name: "CHARCOAL STORAGE SECTOR",
                       type: TractianAssetType.subLocation,
                       children: [
-                        TractianAssetsTreeDSEntity(
+                        TractianAssetsTree(
                           name: "CONVENYOR BELT ASSEMBLY",
                           type: TractianAssetType.asset,
                           children: [
-                            TractianAssetsTreeDSEntity(
+                            TractianAssetsTree(
                               name: "MOTOR TC01",
                               type: TractianAssetType.subasset,
                               children: [
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
@@ -123,34 +123,34 @@ class _AssetsPageState extends State<AssetsPage> {
                         ),
                       ],
                     ),
-                    TractianAssetsTreeDSEntity(
+                    TractianAssetsTree(
                       name: "CHARCOAL STORAGE SECTOR",
                       type: TractianAssetType.subLocation,
                       children: [
-                        TractianAssetsTreeDSEntity(
+                        TractianAssetsTree(
                           name: "CONVENYOR BELT ASSEMBLY",
                           type: TractianAssetType.asset,
                           children: [
-                            TractianAssetsTreeDSEntity(
+                            TractianAssetsTree(
                               name: "MOTOR TC01",
                               type: TractianAssetType.subasset,
                               children: [
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],
                                 ),
-                                TractianAssetsTreeDSEntity(
+                                TractianAssetsTree(
                                   name: "Tractian",
                                   type: TractianAssetType.component,
                                   children: [],

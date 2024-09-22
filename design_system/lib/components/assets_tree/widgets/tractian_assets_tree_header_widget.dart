@@ -1,19 +1,19 @@
-part of 'tractian_assets_tree.dart';
+part of 'tractian_assets_tree_widget.dart';
 
-class _TractianAssetsTreeHeader extends StatelessWidget {
-  final TractianAssetsTreeDSEntity assetsTreeDSEntity;
+class _TractianAssetsTreeHeaderWidget extends StatelessWidget {
+  final TractianAssetsTree assetsTree;
 
-  const _TractianAssetsTreeHeader({required this.assetsTreeDSEntity});
+  const _TractianAssetsTreeHeaderWidget({required this.assetsTree});
 
   @override
   Widget build(BuildContext context) {
     final expansionIcon =
-        assetsTreeDSEntity.isOpen ? Icons.expand_less : Icons.expand_more;
+        assetsTree.isOpen ? Icons.expand_less : Icons.expand_more;
 
     return Row(
       children: [
         Visibility(
-          visible: !assetsTreeDSEntity.isComponent,
+          visible: !assetsTree.isComponent,
           child: Icon(
             size: 16,
             expansionIcon,
@@ -23,17 +23,17 @@ class _TractianAssetsTreeHeader extends StatelessWidget {
         const SizedBox(width: 8),
         Icon(
           size: 22,
-          assetsTreeDSEntity.getIcon(),
+          assetsTree.getIcon(),
           color: TractianColors.blue50,
         ),
         const SizedBox(width: 4),
         Text(
-          assetsTreeDSEntity.name,
+          assetsTree.name,
           style: regularSm.defaultStyle(),
         ),
         const SizedBox(width: 8),
         Visibility(
-          visible: assetsTreeDSEntity.isComponent,
+          visible: assetsTree.isComponent,
           child: _getStatusIcon(),
         )
       ],
@@ -41,7 +41,7 @@ class _TractianAssetsTreeHeader extends StatelessWidget {
   }
 
   Widget _getStatusIcon() {
-    return assetsTreeDSEntity.isCritical
+    return assetsTree.isCritical
         ? Icon(
             size: 8,
             TractianIcons.warninig,

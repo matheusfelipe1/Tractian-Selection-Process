@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 
-class TractianToggleButton extends StatelessWidget {
-  final TractianToggleButtonsSettings settings;
-  const TractianToggleButton({super.key, required this.settings});
+part '../tractian_toggle_buttons.dart';
+
+class TractianToggleButtonWidget extends StatelessWidget {
+  final TractianToggleButtons settings;
+  const TractianToggleButtonWidget({super.key, required this.settings});
 
   @override
   Widget build(BuildContext context) {

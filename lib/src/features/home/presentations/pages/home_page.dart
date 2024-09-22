@@ -16,8 +16,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TractianColors.whiteBrand,
-      appBar: TractianAppbar(
-        appbarSettings: AppbarSettings(
+      appBar: TractianAppbarWidget(
+        appbarSettings: TractianAppbar(
           child: Image.asset(
             TractianImages.logo,
             package: AppConstants.designSystemPackageName,
