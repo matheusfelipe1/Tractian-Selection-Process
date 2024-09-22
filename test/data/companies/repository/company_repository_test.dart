@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/src/core/utils/result.dart';
-import 'package:traction_selection_proccess/src/domain/company/entity/company_entity.dart';
-import 'package:traction_selection_proccess/src/data/company/datasource/company_datasource.dart';
-import 'package:traction_selection_proccess/src/domain/company/repository/company_repository.dart';
-import 'package:traction_selection_proccess/src/data/company/repository/company_repository_impl.dart';
+import 'package:traction_selection_proccess/app/core/utils/result.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
+import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
+import 'package:traction_selection_proccess/app/data/company/repository/company_repository_impl.dart';
 
 class CompanyDatasourceMock extends Mock implements CompanyDatasource {}
 

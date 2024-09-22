@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:traction_selection_proccess/src/core/constants/app_constants.dart';
-import 'package:traction_selection_proccess/src/routes/route_pages.dart';
+import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
+import 'package:traction_selection_proccess/app/routes/route_pages.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MockMaterialApp {

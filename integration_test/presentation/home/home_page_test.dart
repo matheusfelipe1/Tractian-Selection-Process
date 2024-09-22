@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:design_system/design_system.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:traction_selection_proccess/src/routes/route_paths.dart';
-import 'package:traction_selection_proccess/src/presentation/home/cubit/home_cubit.dart';
+import 'package:traction_selection_proccess/app/routes/route_paths.dart';
+import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 
 import '../../../test/mocks/injection/mock_dependency_injection.dart';
 import '../../../test/mocks/material_app/mock_material_app.dart';

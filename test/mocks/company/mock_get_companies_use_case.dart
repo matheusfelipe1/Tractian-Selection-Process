@@ -1,8 +1,8 @@
 import 'package:mocktail/mocktail.dart';
-import 'package:traction_selection_proccess/src/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/src/core/utils/result.dart';
-import 'package:traction_selection_proccess/src/domain/company/entity/company_entity.dart';
-import 'package:traction_selection_proccess/src/domain/company/use_cases/get_companies_use_case.dart';
+import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_proccess/app/core/utils/result.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
 
 class MockGetCompaniesUseCase extends Mock implements GetCompaniesUseCase {
   @override
