@@ -1,8 +1,9 @@
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/src/core/constants/app_constants.dart';
-import 'package:traction_selection_proccess/src/routes/route_paths.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:traction_selection_proccess/src/presentation/home/cubit/home_cubit.dart';
+import 'package:traction_selection_proccess/src/presentation/home/cubit/home_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,14 +25,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TractianCompaniesTileWidget(
-            onTap: () => Get.toNamed(RoutePaths.assets),
-            companyNamel: "JAGUAR",
-          ),
-        ),
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              // child: ,
+            ),
+          );
+        }
       ),
     );
   }

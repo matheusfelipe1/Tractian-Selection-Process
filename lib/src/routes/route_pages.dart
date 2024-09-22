@@ -1,8 +1,8 @@
 import 'package:get/route_manager.dart';
-import 'package:traction_selection_proccess/src/features/assets/presentations/page/assets_page.dart';
-import 'package:traction_selection_proccess/src/features/home/presentations/pages/home_page.dart';
-import 'package:traction_selection_proccess/src/features/splash_screen/presentations/pages/splash_screen.dart';
 import 'package:traction_selection_proccess/src/routes/route_paths.dart';
+import 'package:traction_selection_proccess/src/presentation/home/pages/home_page.dart';
+import 'package:traction_selection_proccess/src/presentation/assets/page/assets_page.dart';
+import 'package:traction_selection_proccess/src/presentation/splash_screen/pages/splash_screen.dart';
 
 final class RoutePages {
   static List<GetPage> get pages {

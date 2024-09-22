@@ -1,5 +1,7 @@
-abstract class UseCases<T, NoParams> {
-  Future<T> call();
+abstract class UseCases<Type, Params> {
+  Future<Type> call(Params params);
 }
 
-abstract class NoParams {}
+class NoParams extends Params {}
+
+abstract class Params {}
