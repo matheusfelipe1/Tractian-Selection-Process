@@ -3,33 +3,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:traction_selection_proccess/src/core/utils/result.dart';
 
 void main() {
-  test('Should return data success', () {
-    final result = Result<A, Exception>.success(A());
-    expect(result.isSuccess, equals(true));
-    result.proccessResult(
-      onSuccess: (data) {
-        expect(data, isA<A>());
-        expect(data.a, "a");
-      },
-      onFailure: (error) {
-        debugPrint("error on $error");
-        fail("Should not be called");
-      },
-    );
-  });
+  group("Result tests", () {
+    test('Should return data success', () {
+      final result = Result<A, Exception>.success(A());
+      expect(result.isSuccess, equals(true));
+      result.proccessResult(
+        onSuccess: (data) {
+          expect(data, isA<A>());
+          expect(data.a, "a");
+        },
+        onFailure: (error) {
+          debugPrint("error on $error");
+          fail("Should not be called");
+        },
+      );
+    });
 
-  test('Should return data failure', () {
-    final result = Result<A, Exception>.failure(Exception("error!!!"));
-    expect(result.isSuccess, equals(false));
-    result.proccessResult(
-      onSuccess: (data) {
-        fail("Should not be called");
-      },
-      onFailure: (error) {
-        expect(error, isA<Exception>());
-        expect(error.toString(), "Exception: error!!!");
-      },
-    );
+    test('Should return data failure', () {
+      final result = Result<A, Exception>.failure(Exception("error!!!"));
+      expect(result.isSuccess, equals(false));
+      result.proccessResult(
+        onSuccess: (data) {
+          fail("Should not be called");
+        },
+        onFailure: (error) {
+          expect(error, isA<Exception>());
+          expect(error.toString(), "Exception: error!!!");
+        },
+      );
+    });
   });
 }
 

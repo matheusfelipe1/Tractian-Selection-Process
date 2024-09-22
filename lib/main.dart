@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:traction_selection_proccess/src/routes/route_pages.dart';
 import 'package:traction_selection_proccess/src/routes/route_paths.dart';
 import 'package:traction_selection_proccess/src/core/constants/app_constants.dart';
@@ -22,15 +22,8 @@ class MyApp extends StatelessWidget {
       title: AppConstants.appName,
       initialRoute: RoutePaths.splash,
       theme: ThemeData(useMaterial3: true),
-      supportedLocales: const [
-        Locale('pt', 'BR'),
-        Locale('en', 'US'),
-      ],
-      localizationsDelegates: const [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(
           viewPadding: EdgeInsets.zero,
