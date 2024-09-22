@@ -2,19 +2,21 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class TractianCompaniesTileWidget extends StatelessWidget {
-  final VoidCallback onTap;
+  final bool isLoading;
+  final VoidCallback? onTap;
   final String companyNamel;
 
   const TractianCompaniesTileWidget({
     super.key,
-    required this.onTap,
+    this.onTap,
+    this.isLoading = false,
     required this.companyNamel,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: TractianColors.blue50,
+      color: isLoading ? TractianColors.gray100 : TractianColors.blue50,
       borderRadius: BorderRadius.circular(5),
       child: InkWell(
         onTap: onTap,
@@ -26,15 +28,23 @@ class TractianCompaniesTileWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(
-                size: 24,
-                TractianIcons.threeSquares,
-                color: TractianColors.whiteBrand,
+              TractianLoadingShimmerWidget(
+                isLoading: isLoading,
+                child: Icon(
+                  size: 24,
+                  TractianIcons.threeSquares,
+                  color: TractianColors.whiteBrand,
+                ),
               ),
               const SizedBox(width: 16),
-              Text(
-                companyNamel,
-                style: mediumLg.customColor(TractianColors.whiteBrand),
+              Flexible(
+                child: TractianLoadingShimmerWidget(
+                  isLoading: isLoading,
+                  child: Text(
+                    companyNamel,
+                    style: mediumLg.customColor(TractianColors.whiteBrand),
+                  ),
+                ),
               ),
             ],
           ),

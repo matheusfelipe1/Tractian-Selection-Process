@@ -3,5 +3,8 @@
     "searchField": "Search Asset or Location",
     "powerSensor": "Power Sensor",
     "critical": "Critical",
-    "assets": "Assets"
+    "assets": "Assets",
+    "somethingWrong": "Oops, something went wrong!!",
+    "companiesDataError": "An error occurred when trying to search for your companies",
+    "tryAgain": "Try again"
 }
