@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+part of 'widgets/tractian_toggle_button_widget.dart';
 
-class TractianToggleButtonsSettings {
+class TractianToggleButtons {
   final String title;
   final bool isActive; 
   final IconData icon;
@@ -8,7 +8,7 @@ class TractianToggleButtonsSettings {
   final VoidCallback onTapInactive;
 
 
-  TractianToggleButtonsSettings({
+  TractianToggleButtons({
     required this.icon,
     required this.title,
     this.isActive = false,

@@ -1,38 +1,38 @@
 import 'package:design_system/design_system.dart';
 
 class TractianAssetsTreeMock {
-  static TractianAssetsTreeDSEntity get() => TractianAssetsTreeDSEntity(
+  static TractianAssetsTree get() => TractianAssetsTree(
         name: "PRODUCTION AREA - ROW MATERIAL",
         type: TractianAssetType.location,
         children: [
-          TractianAssetsTreeDSEntity(
+          TractianAssetsTree(
             name: "CHARCOAL STORAGE SECTOR",
             type: TractianAssetType.subLocation,
             children: [
-              TractianAssetsTreeDSEntity(
+              TractianAssetsTree(
                 name: "CONVENYOR BELT ASSEMBLY",
                 type: TractianAssetType.asset,
                 children: [
-                  TractianAssetsTreeDSEntity(
+                  TractianAssetsTree(
                     name: "MOTOR TC01",
                     type: TractianAssetType.subasset,
                     children: [
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
@@ -43,34 +43,34 @@ class TractianAssetsTreeMock {
               ),
             ],
           ),
-          TractianAssetsTreeDSEntity(
+          TractianAssetsTree(
             name: "CHARCOAL STORAGE SECTOR",
             type: TractianAssetType.subLocation,
             children: [
-              TractianAssetsTreeDSEntity(
+              TractianAssetsTree(
                 name: "CONVENYOR BELT ASSEMBLY",
                 type: TractianAssetType.asset,
                 children: [
-                  TractianAssetsTreeDSEntity(
+                  TractianAssetsTree(
                     name: "MOTOR TC01",
                     type: TractianAssetType.subasset,
                     children: [
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],
                       ),
-                      TractianAssetsTreeDSEntity(
+                      TractianAssetsTree(
                         name: "Tractian",
                         type: TractianAssetType.component,
                         children: [],

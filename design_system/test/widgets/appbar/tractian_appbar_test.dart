@@ -12,8 +12,8 @@ void main() {
           await tester.pumpWidget(
             MaterialApp(
               home: Scaffold(
-                appBar: TractianAppbar(
-                  appbarSettings: AppbarSettings(
+                appBar: TractianAppbarWidget(
+                  appbarSettings: TractianAppbar(
                     child: Image.asset(
                       TractianImages.logo,
                       package: "design_system",
@@ -26,7 +26,7 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          expect(find.byType(TractianAppbar), findsOneWidget);
+          expect(find.byType(TractianAppbarWidget), findsOneWidget);
           expect(find.byType(Image), findsOneWidget);
         },
       );
@@ -37,8 +37,8 @@ void main() {
           await tester.pumpWidget(
             const MaterialApp(
               home: Scaffold(
-                appBar: TractianAppbar(
-                  appbarSettings: AppbarSettings(
+                appBar: TractianAppbarWidget(
+                  appbarSettings: TractianAppbar(
                     title: "Tractian",
                   ),
                 ),
@@ -48,7 +48,7 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          expect(find.byType(TractianAppbar), findsOneWidget);
+          expect(find.byType(TractianAppbarWidget), findsOneWidget);
           expect(find.text("Tractian"), findsOneWidget);
         },
       );
@@ -60,8 +60,8 @@ void main() {
             () => tester.pumpWidget(
               MaterialApp(
                 home: Scaffold(
-                  appBar: TractianAppbar(
-                    appbarSettings: AppbarSettings(), 
+                  appBar: TractianAppbarWidget(
+                    appbarSettings: TractianAppbar(), 
                   ),
                 ),
               ),
@@ -73,8 +73,8 @@ void main() {
             () => tester.pumpWidget(
               MaterialApp(
                 home: Scaffold(
-                  appBar: TractianAppbar(
-                    appbarSettings: AppbarSettings(
+                  appBar: TractianAppbarWidget(
+                    appbarSettings: TractianAppbar(
                       title: "Tractian",
                       child: Image.asset(
                         TractianImages.logo,

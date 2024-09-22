@@ -1,6 +1,6 @@
-part of 'tractian_assets_tree.dart';
+part of '../widgets/tractian_assets_tree_widget.dart';
 
-class _TractianVerticalLine extends CustomPainter {
+class _TractianVerticalLinePaint extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()

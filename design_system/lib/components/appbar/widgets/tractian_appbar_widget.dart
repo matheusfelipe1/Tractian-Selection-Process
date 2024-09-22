@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 
-class TractianAppbar extends StatelessWidget implements PreferredSizeWidget {
-  final AppbarSettings appbarSettings;
-  const TractianAppbar({
+class TractianAppbarWidget extends StatelessWidget implements PreferredSizeWidget {
+  final TractianAppbar appbarSettings;
+  const TractianAppbarWidget({
     super.key,
     required this.appbarSettings,
   });

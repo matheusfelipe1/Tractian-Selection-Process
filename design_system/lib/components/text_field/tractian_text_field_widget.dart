@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:design_system/styles/tractian_fonts.dart';
 import 'package:design_system/styles/tractian_colors.dart';
 
-class TractianTextField extends StatelessWidget {
+class TractianTextFieldWidget extends StatelessWidget {
   final String hintText;
   final Function(String)? onChanged;
   final TextEditingController controller;
 
-  const TractianTextField({
+  const TractianTextFieldWidget({
     super.key,
     this.onChanged,
     required this.hintText,

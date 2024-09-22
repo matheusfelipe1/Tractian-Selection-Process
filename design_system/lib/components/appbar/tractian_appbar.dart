@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AppbarSettings {
+class TractianAppbar {
   final Widget? child;
   final String? title;
   final IconData? leadingIcon;
   final VoidCallback? onTapLeading;
 
-  const AppbarSettings({
+  const TractianAppbar({
     this.child,
     this.title,
     this.leadingIcon,

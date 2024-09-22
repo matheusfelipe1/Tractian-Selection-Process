@@ -1,14 +1,13 @@
-import 'package:design_system/styles/traction_asset_type.dart';
-import 'package:flutter/material.dart';
+part of 'widgets/tractian_assets_tree_widget.dart';
 
-class TractianAssetsTreeDSEntity {
+class TractianAssetsTree {
   final String name;
   final bool isOpen;
   final bool critical;
   final TractianAssetType type;
-  final List<TractianAssetsTreeDSEntity> children;
+  final List<TractianAssetsTree> children;
 
-  TractianAssetsTreeDSEntity({
+  TractianAssetsTree({
     required this.name,
     required this.type,
     this.isOpen = true,
