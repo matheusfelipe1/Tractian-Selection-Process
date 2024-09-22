@@ -1,10 +1,12 @@
 part of 'tractian_assets_tree_widget.dart';
 
 class _TractianListViewChildrenWidget extends StatelessWidget {
-  final TractianAssetsTree assetsTree;
+  final bool isLoading;
+  final TractianAssetsTree item;
 
   const _TractianListViewChildrenWidget({
-    required this.assetsTree,
+    required this.item,
+    required this.isLoading,
   });
 
   @override
@@ -16,10 +18,11 @@ class _TractianListViewChildrenWidget extends StatelessWidget {
         child: ListView.builder(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
-          itemCount: assetsTree.children.length,
+          itemCount: item.children.length,
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final item = assetsTree.children.elementAt(index);
-            return TractianAssetsTreeWidget(assetsTree: item);
+            final child = item.children.elementAt(index);
+            return _TractianAssetsTreeItemWidget(item: child, isLoading: isLoading);
           },
         ),
       ),

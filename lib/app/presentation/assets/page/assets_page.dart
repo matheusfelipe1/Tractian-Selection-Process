@@ -1,7 +1,12 @@
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
+import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_states.dart';
+
+part "../widgets/assets_error_widget.dart";
 
 class AssetsPage extends StatefulWidget {
   const AssetsPage({super.key});
@@ -12,7 +17,6 @@ class AssetsPage extends StatefulWidget {
 
 class _AssetsPageState extends State<AssetsPage> {
   final TextEditingController controller = TextEditingController();
-  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,149 +29,63 @@ class _AssetsPageState extends State<AssetsPage> {
           title: tractianLocalizations.assets,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TractianTextFieldWidget(
-              controller: controller,
-              hintText: tractianLocalizations.searchField,
-              onChanged: (value) {},
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                FittedBox(
-                  child: TractianToggleButtonWidget(
-                    settings: TractianToggleButtons(
-                      title: tractianLocalizations.powerSensor,
-                      icon: TractianIcons.lightning,
-                      isActive: isActive,
-                      onTapActive: () {
-                        setState(() {
-                          isActive = true;
-                        });
-                      },
-                      onTapInactive: () {
-                        setState(() {
-                          isActive = false;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                FittedBox(
-                  child: TractianToggleButtonWidget(
-                    settings: TractianToggleButtons(
-                      title: tractianLocalizations.critical,
-                      icon: TractianIcons.warninig,
-                      isActive: isActive,
-                      onTapActive: () {
-                        setState(() {
-                          isActive = true;
-                        });
-                      },
-                      onTapInactive: () {
-                        setState(() {
-                          isActive = false;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Flexible(
-              child: TractianAssetsTreeWidget(
-                assetsTree: TractianAssetsTree(
-                  name: "PRODUCTION AREA - ROW MATERIAL",
-                  type: TractianAssetType.location,
-                  children: [
-                    TractianAssetsTree(
-                      name: "CHARCOAL STORAGE SECTOR",
-                      type: TractianAssetType.subLocation,
-                      children: [
-                        TractianAssetsTree(
-                          name: "CONVENYOR BELT ASSEMBLY",
-                          type: TractianAssetType.asset,
-                          children: [
-                            TractianAssetsTree(
-                              name: "MOTOR TC01",
-                              type: TractianAssetType.subasset,
-                              children: [
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    TractianAssetsTree(
-                      name: "CHARCOAL STORAGE SECTOR",
-                      type: TractianAssetType.subLocation,
-                      children: [
-                        TractianAssetsTree(
-                          name: "CONVENYOR BELT ASSEMBLY",
-                          type: TractianAssetType.asset,
-                          children: [
-                            TractianAssetsTree(
-                              name: "MOTOR TC01",
-                              type: TractianAssetType.subasset,
-                              children: [
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                                TractianAssetsTree(
-                                  name: "Tractian",
-                                  type: TractianAssetType.component,
-                                  children: [],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+      body: BlocBuilder<AssetsCubit, AssetsState>(builder: (context, state) {
+        if (state is AssetsError) {
+          return const AssetsErrorWidget();
+        }
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TractianTextFieldWidget(
+                controller: controller,
+                hintText: tractianLocalizations.searchField,
+                onChanged: (value) {},
               ),
-            )
-          ],
-        ),
-      ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  FittedBox(
+                    child: TractianToggleButtonWidget(
+                      settings: TractianToggleButtons(
+                        isActive: false,
+                        onTapActive: () {},
+                        onTapInactive: () {},
+                        icon: TractianIcons.lightning,
+                        title: tractianLocalizations.powerSensor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  FittedBox(
+                    child: TractianToggleButtonWidget(
+                      settings: TractianToggleButtons(
+                        isActive: false,
+                        onTapActive: () {},
+                        onTapInactive: () {},
+                        icon: TractianIcons.warninig,
+                        title: tractianLocalizations.critical,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              if (state is AssetsLoaded)
+                Flexible(
+                  child: TractianAssetsTreeWidget(assetsTree: state.assets),
+                ),
+              if (state is AssetsLoading)
+                Flexible(
+                  child: TractianAssetsTreeWidget(
+                    isLoading: true,
+                    assetsTree: state.assets,
+                  ),
+                )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

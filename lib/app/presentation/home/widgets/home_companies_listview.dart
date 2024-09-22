@@ -2,7 +2,7 @@ part of "../pages/home_page.dart";
 
 class _HomeCompaniesListview extends StatelessWidget {
   final bool isLoading;
-  final VoidCallback? onTap;
+  final Function(String)? onTap;
   final List<CompanyEntity> companies;
   final Future<void> Function() onRefresh;
 
@@ -24,9 +24,9 @@ class _HomeCompaniesListview extends StatelessWidget {
         itemBuilder: (_, index) {
           final company = companies.elementAt(index);
           return TractianCompaniesTileWidget(
-            onTap: onTap,
             isLoading: isLoading,
             companyNamel: company.name,
+            onTap: () => onTap?.call(company.id),
           );
         },
       ),

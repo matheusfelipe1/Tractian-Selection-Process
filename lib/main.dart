@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 import 'package:traction_selection_proccess/app/routes/route_pages.dart';
 import 'package:traction_selection_proccess/app/routes/route_paths.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(GetIt.I()),
+        ),
+        BlocProvider<AssetsCubit>(
+          create: (context) => AssetsCubit(GetIt.I()),
         ),
       ],
       child: GetMaterialApp(

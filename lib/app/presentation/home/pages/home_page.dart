@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/routes/route_paths.dart';
 import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
 import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
@@ -51,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               isLoading: false,
               companies: state.companies,
               onRefresh: homeCubit.onRefresh,
-              onTap: () => Get.toNamed(RoutePaths.assets),
+              onTap: homeCubit.goToAssetsPage,
             );
           }
           return const _HomeErrorPage();
