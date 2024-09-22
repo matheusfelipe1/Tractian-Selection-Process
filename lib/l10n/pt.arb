@@ -3,5 +3,8 @@
     "searchField": "Buscar Ativo ou Local",
     "powerSensor": "Sensor de Energia",
     "critical": "Crítico",
-    "assets": "Ativos"
+    "assets": "Ativos",
+    "somethingWrong": "Opa, algo deu errado!!",
+    "companiesDataError": "Ocorreu uma falhar ao tentar buscar suas companias.",
+    "tryAgain": "Tente novamente"
 }

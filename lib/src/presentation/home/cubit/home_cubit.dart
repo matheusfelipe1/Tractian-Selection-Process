@@ -12,7 +12,6 @@ class HomeCubit extends BaseCubit<HomeState> {
     _onGetCompanies();
   }
 
-
   Future<void> _onGetCompanies() async {
     emit(HomeLoading());
     final result = await _getCompaniesUseCase(NoParams());
@@ -21,4 +20,6 @@ class HomeCubit extends BaseCubit<HomeState> {
       onFailure: (error) => emit(HomeError(message: error.toString())),
     );
   }
+
+  Future<void> onRefresh() async => await _onGetCompanies();
 }

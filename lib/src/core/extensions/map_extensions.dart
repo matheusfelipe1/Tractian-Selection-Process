@@ -5,7 +5,7 @@ extension MapExtensions on Map {
   }) {
     if (containsKey(key)) {
       final value = this[key];
-      if (value != null) return defaultValue;
+      if (value == null) return defaultValue;
       return value as T;
     } else {
       return defaultValue;

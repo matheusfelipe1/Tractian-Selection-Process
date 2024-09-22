@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
@@ -9,10 +10,11 @@ import 'package:traction_selection_proccess/src/routes/route_paths.dart';
 import 'package:traction_selection_proccess/src/core/constants/app_constants.dart';
 import 'package:traction_selection_proccess/src/core/injections/dependency_injections.dart';
 
-void main() {
+void main() async {
   FlutterError.onError = (details) {
     FlutterError.dumpErrorToConsole(details);
   };
+  await dotenv.load();
   DependencyInjections.ensureInitialized();
   runApp(const MyApp());
 }

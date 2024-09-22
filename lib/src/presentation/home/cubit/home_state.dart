@@ -17,8 +17,8 @@ class HomeError extends HomeState {
 
 class HomeLoading extends HomeState {
   final List<CompanyEntity> companies = const [
-    CompanyEntity(id: "", name: "Tractian"),
-    CompanyEntity(id: "", name: "Tractian"),
-    CompanyEntity(id: "", name: "Tractian"),
+    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
+    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
+    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
   ];
 }
