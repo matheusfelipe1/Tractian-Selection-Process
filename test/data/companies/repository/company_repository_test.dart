@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
 import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
 import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
 import 'package:traction_selection_proccess/app/data/company/repository/company_repository_impl.dart';
@@ -19,13 +19,13 @@ void main() {
   });
 
   test(
-    "Must return a Result<List<CompanyEntity>, Exception>",
+    "Must return a Result<List<Company>, Exception>",
     () async {
       when(() => datasource.getCompanies())
           .thenAnswer((_) async => _mockCompaniesJSON);
 
       final result = await repository.getCompanies();
-      expect(result, isA<Result<List<CompanyEntity>, Exception>>());
+      expect(result, isA<Result<List<Company>, Exception>>());
       expect(result.isSuccess, equals(true));
       result.proccessResult(
         onSuccess: (data) {

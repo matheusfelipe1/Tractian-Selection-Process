@@ -3,7 +3,7 @@ part of "../pages/home_page.dart";
 class _HomeCompaniesListview extends StatelessWidget {
   final bool isLoading;
   final Function(String)? onTap;
-  final List<CompanyEntity> companies;
+  final List<Company> companies;
   final Future<void> Function() onRefresh;
 
   const _HomeCompaniesListview({

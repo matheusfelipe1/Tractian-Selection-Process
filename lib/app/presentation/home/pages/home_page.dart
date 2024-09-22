@@ -5,7 +5,7 @@ import 'package:traction_selection_proccess/app/core/constants/app_constants.dar
 import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_state.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
 
 part '../widgets/home_error_page.dart';
 part "../widgets/home_companies_listview.dart";
