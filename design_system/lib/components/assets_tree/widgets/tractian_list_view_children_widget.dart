@@ -3,9 +3,11 @@ part of 'tractian_assets_tree_widget.dart';
 class _TractianListViewChildrenWidget extends StatelessWidget {
   final bool isLoading;
   final TractianAssetsTree item;
+  final Function(dynamic)? onTap;
 
   const _TractianListViewChildrenWidget({
     required this.item,
+    required this.onTap,
     required this.isLoading,
   });
 
@@ -22,7 +24,11 @@ class _TractianListViewChildrenWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final child = item.children.elementAt(index);
-            return _TractianAssetsTreeItemWidget(item: child, isLoading: isLoading);
+            return _TractianAssetsTreeItemWidget(
+              item: child,
+              onTap: onTap,
+              isLoading: isLoading,
+            );
           },
         ),
       ),

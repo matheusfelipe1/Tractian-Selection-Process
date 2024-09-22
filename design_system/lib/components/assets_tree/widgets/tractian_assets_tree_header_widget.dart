@@ -42,9 +42,9 @@ class _TractianAssetsTreeHeaderWidget extends StatelessWidget {
 
   Widget _getStatusIcon() {
     return item.isCritical
-        ? Icon(
+        ? const Icon(
             size: 8,
-            TractianIcons.warninig,
+            Icons.circle,
             color: TractianColors.red50,
           )
         : const Icon(

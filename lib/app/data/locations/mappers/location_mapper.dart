@@ -33,7 +33,7 @@ class LocationMapper {
     return Location(
       id: id,
       name: location.getOrDefaultValue(key: _name, defaultValue: ""),
-      subLocations: SubLocationMapper.fromDataList(
+      children: SubLocationMapper.fromDataList(
         parentId: id,
         subLocationList: subLocationList,
       ),

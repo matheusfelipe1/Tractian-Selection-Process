@@ -1,33 +1,34 @@
-import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
-import 'package:design_system/styles/traction_asset_type.dart';
+import 'package:design_system/design_system.dart';
+import 'package:traction_selection_proccess/app/domain/tree/entities/component_asset.dart';
 import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
 
-class SubLocation extends TreeBranches {
+class SubAssets extends TreeBranches {
   final String name;
   final String parentId;
 
-  SubLocation({
+  SubAssets({
     super.isOpen,
     required super.id,
     required this.name,
     required this.parentId,
-    super.children = const [],
+    required super.children,
   });
 
   @override
-  SubLocation copyWith({
+  SubAssets copyWith({
     String? id,
     bool? isOpen,
     String? name,
     String? parentId,
     List<TreeBranches>? children,
+    List<ComponentAsset>? componentAssets,
   }) {
-    return SubLocation(
+    return SubAssets(
       id: id ?? this.id,
       name: name ?? this.name,
       isOpen: isOpen ?? this.isOpen,
-      parentId: parentId ?? this.parentId,
       children: children ?? this.children,
+      parentId: parentId ?? this.parentId,
     );
   }
 
@@ -37,7 +38,7 @@ class SubLocation extends TreeBranches {
       id: id,
       name: name,
       isOpen: isOpen,
-      type: TractianAssetType.subLocation,
+      type: TractianAssetType.subasset,
       children: children.map((e) => e.toDSData()).toList(),
     );
   }

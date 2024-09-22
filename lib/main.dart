@@ -31,7 +31,10 @@ class MyApp extends StatelessWidget {
           create: (context) => HomeCubit(GetIt.I()),
         ),
         BlocProvider<AssetsCubit>(
-          create: (context) => AssetsCubit(GetIt.I()),
+          create: (context) => AssetsCubit(
+            GetIt.I(),
+            GetIt.I(),
+          ),
         ),
       ],
       child: GetMaterialApp(

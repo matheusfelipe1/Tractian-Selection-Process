@@ -1,23 +1,39 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_proccess/app/domain/tree/entities/tree_assets.dart';
 
-class Location {
-  final String id;
+class Location extends TreeBranches {
   final String name;
-  final List<SubLocation> subLocations;
 
   Location({
-    required this.id,
+    super.isOpen,
+    required super.id,
     required this.name,
-    required this.subLocations,
+    super.children = const [],
   });
 
+  @override
+  Location copyWith({
+    String? id,
+    String? name,
+    bool? isOpen,
+    List<TreeBranches>? children,
+  }) {
+    return Location(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isOpen: isOpen ?? this.isOpen,
+      children: children ?? this.children,
+    );
+  }
+
+  @override
   TractianAssetsTree toDSData() {
     return TractianAssetsTree(
+      id: id,
       name: name,
-      isOpen: false,
+      isOpen: isOpen,
       type: TractianAssetType.location,
-      children: subLocations.map((e) => e.toDSData()).toList(),
+      children: children.map((e) => e.toDSData()).toList(),
     );
   }
 }

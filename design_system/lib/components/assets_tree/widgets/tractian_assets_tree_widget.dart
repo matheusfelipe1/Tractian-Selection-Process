@@ -10,9 +10,11 @@ part '../designs/tractian_horizontal_line_paint.dart';
 
 class TractianAssetsTreeWidget extends StatelessWidget {
   final bool isLoading;
+  final Function(dynamic)? onTap;
   final List<TractianAssetsTree> assetsTree;
   const TractianAssetsTreeWidget({
     super.key,
+    this.onTap,
     this.isLoading = false,
     required this.assetsTree,
   });
@@ -27,6 +29,7 @@ class TractianAssetsTreeWidget extends StatelessWidget {
         final item = assetsTree.elementAt(index);
         return _TractianAssetsTreeItemWidget(
           item: item,
+          onTap: onTap,
           isLoading: isLoading,
         );
       },

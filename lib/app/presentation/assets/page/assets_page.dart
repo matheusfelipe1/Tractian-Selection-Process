@@ -30,6 +30,7 @@ class _AssetsPageState extends State<AssetsPage> {
         ),
       ),
       body: BlocBuilder<AssetsCubit, AssetsState>(builder: (context, state) {
+        final AssetsCubit cubit = context.read<AssetsCubit>();
         if (state is AssetsError) {
           return const AssetsErrorWidget();
         }
@@ -73,7 +74,10 @@ class _AssetsPageState extends State<AssetsPage> {
               const SizedBox(height: 8),
               if (state is AssetsLoaded)
                 Flexible(
-                  child: TractianAssetsTreeWidget(assetsTree: state.assets),
+                  child: TractianAssetsTreeWidget(
+                    assetsTree: state.assets,
+                    onTap: (id) => cubit.toggleTree(id),
+                  ),
                 ),
               if (state is AssetsLoading)
                 Flexible(

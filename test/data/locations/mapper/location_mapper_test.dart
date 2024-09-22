@@ -11,8 +11,8 @@ void main() {
       expect(locations.length, equals(11));
 
       for (var location in locations) {
-        if (location.subLocations.isNotEmpty) {
-          final checkIfIsParentId = location.subLocations.every(
+        if (location.children.isNotEmpty) {
+          final checkIfIsParentId = location.children.cast<dynamic>().every(
             (item) => item.parentId == location.id,
           );
           expect(checkIfIsParentId, equals(true));

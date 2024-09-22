@@ -3,8 +3,10 @@ part of 'tractian_assets_tree_widget.dart';
 class _TractianAssetsTreeItemWidget extends StatelessWidget {
   final bool isLoading;
   final TractianAssetsTree item;
+  final Function(dynamic)? onTap;
   const _TractianAssetsTreeItemWidget({
     required this.item,
+    required this.onTap,
     required this.isLoading,
   });
 
@@ -19,9 +21,19 @@ class _TractianAssetsTreeItemWidget extends StatelessWidget {
           padding: _getPadding(),
           child: Column(
             children: [
-              _TractianAssetsTreeHeaderWidget(item: item),
+              InkWell(
+                onTap: item.isComponent ? null : () => onTap?.call(item.id),
+                child: _TractianAssetsTreeHeaderWidget(item: item),
+              ),
               const SizedBox(height: 4),
-              _TractianListViewChildrenWidget(item: item, isLoading: isLoading),
+              Visibility(
+                visible: item.isOpen,
+                child: _TractianListViewChildrenWidget(
+                  item: item,
+                  onTap: onTap,
+                  isLoading: isLoading,
+                ),
+              ),
             ],
           ),
         ),
@@ -30,13 +42,15 @@ class _TractianAssetsTreeItemWidget extends StatelessWidget {
   }
 
   _TractianHorizontalLinePaint? _getPainter() {
-    return item.isComponent ? _TractianHorizontalLinePaint() : null;
+    return item.isComponent && item.isAssociated
+        ? _TractianHorizontalLinePaint()
+        : null;
   }
 
   EdgeInsets _getPadding() {
     return EdgeInsets.only(
       top: 8,
-      left: item.isComponent ? 16 : 0,
+      left: item.isComponent && item.isAssociated ? 16 : 0,
     );
   }
 }
