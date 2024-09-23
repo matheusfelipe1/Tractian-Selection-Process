@@ -1,12 +1,11 @@
-import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
 
 abstract class HomeState {}
 
 class HomeInitial extends HomeState {}
 
-
 class HomeLoaded extends HomeState {
-  final List<CompanyEntity> companies;
+  final List<Company> companies;
   HomeLoaded({required this.companies});
 }
 
@@ -16,9 +15,9 @@ class HomeError extends HomeState {
 }
 
 class HomeLoading extends HomeState {
-  final List<CompanyEntity> companies = const [
-    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
-    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
-    CompanyEntity(id: "", name: "Tractian: Tecnologia"),
+  final List<Company> companies = const [
+    Company(id: "", name: "Tractian: Tecnologia"),
+    Company(id: "", name: "Tractian: Tecnologia"),
+    Company(id: "", name: "Tractian: Tecnologia"),
   ];
 }

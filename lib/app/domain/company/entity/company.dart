@@ -1,8 +1,8 @@
-class CompanyEntity {
+class Company {
   final String id;
   final String name;
 
-  const CompanyEntity({
+  const Company({
     required this.id,
     required this.name,
   });

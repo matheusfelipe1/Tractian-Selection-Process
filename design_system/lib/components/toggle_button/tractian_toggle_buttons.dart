@@ -4,23 +4,14 @@ class TractianToggleButtons {
   final String title;
   final bool isActive; 
   final IconData icon;
-  final VoidCallback onTapActive;
-  final VoidCallback onTapInactive;
+  final VoidCallback onTap;
 
 
   TractianToggleButtons({
     required this.icon,
     required this.title,
+    required this.onTap,
     this.isActive = false,
-    required this.onTapActive,
-    required this.onTapInactive,
   });
 
-  void onTap() {
-    if (isActive) {
-      onTapInactive();
-    } else {
-      onTapActive();
-    }
-  }
 }

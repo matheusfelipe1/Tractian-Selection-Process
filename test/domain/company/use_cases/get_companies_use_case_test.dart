@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:traction_selection_proccess/app/core/utils/result.dart';
 import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
 import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
 import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
 
@@ -24,15 +23,12 @@ void main() {
     () async {
       when(() => repository.getCompanies()).thenAnswer(
         (_) async => Result.success(
-          [
-            const CompanyEntity(id: "123", name: "Tractian: Inovação")
-          ]
-        ),
+            [const Company(id: "123", name: "Tractian: Inovação")]),
       );
 
       final result = await getCompaniesUseCase(NoParams());
 
-      expect(result, isA<Result<List<CompanyEntity>, Exception>>());
+      expect(result, isA<Result<List<Company>, Exception>>());
       expect(result.isSuccess, equals(true));
       result.proccessResult(
         onSuccess: (data) {

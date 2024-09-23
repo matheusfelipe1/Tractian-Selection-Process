@@ -2,44 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 
 part "../tractian_assets_tree.dart";
-part '../designs/tractian_vertical_line_paint.dart';
-part '../designs/tractian_horizontal_line_paint.dart';
+part "tractian_assets_tree_item_widget.dart";
 part 'tractian_list_view_children_widget.dart';
 part "tractian_assets_tree_header_widget.dart";
+part '../designs/tractian_vertical_line_paint.dart';
+part '../designs/tractian_horizontal_line_paint.dart';
 
 class TractianAssetsTreeWidget extends StatelessWidget {
-  final TractianAssetsTree assetsTree;
+  final bool isLoading;
+  final Function(dynamic)? onTap;
+  final List<TractianAssetsTree> assetsTree;
   const TractianAssetsTreeWidget({
     super.key,
+    this.onTap,
+    this.isLoading = false,
     required this.assetsTree,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _getPainter(),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: _getPadding(),
-        child: Column(
-          children: [
-            _TractianAssetsTreeHeaderWidget(assetsTree: assetsTree),
-            const SizedBox(height: 4),
-            _TractianListViewChildrenWidget(assetsTree: assetsTree),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _TractianHorizontalLinePaint? _getPainter() {
-    return assetsTree.isComponent ? _TractianHorizontalLinePaint() : null;
-  }
-
-  EdgeInsets _getPadding() {
-    return EdgeInsets.only(
-      top: 8,
-      left: assetsTree.isComponent ? 16 : 0,
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemCount: assetsTree.length,
+      itemBuilder: (context, index) {
+        final item = assetsTree.elementAt(index);
+        return _TractianAssetsTreeItemWidget(
+          item: item,
+          onTap: onTap,
+          isLoading: isLoading,
+        );
+      },
     );
   }
 }
