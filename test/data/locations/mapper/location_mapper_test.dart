@@ -12,7 +12,7 @@ void main() {
 
       for (var location in locations) {
         if (location.children.isNotEmpty) {
-          final checkIfIsParentId = location.children.cast<dynamic>().every(
+          final checkIfIsParentId = location.children.cast().every(
             (item) => item.parentId == location.id,
           );
           expect(checkIfIsParentId, equals(true));

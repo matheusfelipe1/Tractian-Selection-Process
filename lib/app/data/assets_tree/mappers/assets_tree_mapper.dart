@@ -1,6 +1,6 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/assets_mapper.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_mapper.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/component_asset_mapper.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 typedef TreeMapperList = List<Map<String, dynamic>>;
@@ -22,8 +22,8 @@ class AssetsTreeMappers {
     final componentWLocation = dataList.where(_isComponentWLocation).toList();
 
     return [
-      ...ComponentMapped.fromDataList(componentUnliked),
-      ...ComponentMapped.fromDataList(componentWLocation),
+      ...ComponentMapper.fromDataList(componentUnliked),
+      ...ComponentMapper.fromDataList(componentWLocation),
       ...AssetsMapper.fromDataList(
         assets: assets,
         subAssets: subAssets,

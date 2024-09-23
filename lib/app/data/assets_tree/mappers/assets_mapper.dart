@@ -1,7 +1,7 @@
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/assets_tree_mappers.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/component_asset_mapper.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_tree_mapper.dart';
 
 import 'sub_assets_mapper.dart';
 
@@ -40,11 +40,11 @@ class AssetsMapper {
       locationId: asset.getValue(key: "locationId"),
       name: asset.getOrDefaultValue(key: "name", defaultValue: ""),
       children: [
+        ...ComponentMapper.fromDataList(componentAssets),
         ...SubAssetsMapper.fromDataList(
           components: components,
           subAssets: subAssetsFiltered,
         ),
-        ...ComponentMapped.fromDataList(componentAssets),
       ],
     );
   }

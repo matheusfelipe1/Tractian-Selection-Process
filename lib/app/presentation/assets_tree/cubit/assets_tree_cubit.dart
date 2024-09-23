@@ -19,7 +19,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     this._getAssetsTreeUseCase,
   ) : super(AssetsTreeInitial());
 
-  late final AssetsArgs _args;
+  late final AssetsTreeArgs _args;
 
   Completer<List<Location>> completer = Completer();
 
@@ -27,7 +27,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
 
   @override
   void onInit() {
-    _args = Get.arguments as AssetsArgs;
+    _args = Get.arguments as AssetsTreeArgs;
     _getData();
   }
 
@@ -233,8 +233,8 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   }
 }
 
-class AssetsArgs {
+class AssetsTreeArgs {
   final String companyId;
 
-  AssetsArgs({required this.companyId});
+  AssetsTreeArgs({required this.companyId});
 }

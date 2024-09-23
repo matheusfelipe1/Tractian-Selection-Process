@@ -27,7 +27,7 @@ class HomeCubit extends BaseCubit<HomeState> {
   void goToAssetsPage(String idCompany) {
     Get.toNamed(
       RoutePaths.assets,
-      arguments: AssetsArgs(companyId: idCompany),
+      arguments: AssetsTreeArgs(companyId: idCompany),
     );
   }
 

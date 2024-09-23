@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:traction_selection_proccess/app/core/utils/result.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_repository.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/assets_tree_mappers.dart';
-import 'package:traction_selection_proccess/app/data/assets/datasource/assets_tree_datasource.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_tree_mapper.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/datasource/assets_tree_datasource.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/repository/assets_tree_repository.dart';
 
 class AssetsTreeRepositoryImpl extends BaseRepository

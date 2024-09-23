@@ -14,20 +14,33 @@ class SubLocationMapper {
         .where((element) => _isParent(element, parentId))
         .toList();
 
-    return subLocationsFiltered.map(_fromData).toList();
+    return subLocationsFiltered
+        .map((e) => _fromData(subLocation: e, subLocationList: subLocationList))
+        .toList();
   }
 
   static bool _isParent(Map<String, dynamic> data, String parentId) {
     return data.getOrDefaultValue(key: _parentId, defaultValue: "") == parentId;
   }
 
-  static SubLocation _fromData(Map<String, dynamic> subLocation) {
+  static SubLocation _fromData({
+    required Map<String, dynamic> subLocation,
+    required List<Map<String, dynamic>> subLocationList,
+  }) {
+    final id = subLocation.getValue(key: _id);
     return SubLocation(
-      id: subLocation.getValue(key: _id),
-      name: subLocation.getOrDefaultValue(key: _name, defaultValue: ""),
+      id: id,
+      name: subLocation.getOrDefaultValue(
+        key: _name,
+        defaultValue: "",
+      ),
       parentId: subLocation.getOrDefaultValue(
         key: _parentId,
         defaultValue: "",
+      ),
+      children: fromDataList(
+        parentId: id,
+        subLocationList: subLocationList,
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/sub_assets.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/assets_tree_mappers.dart';
-import 'package:traction_selection_proccess/app/data/assets/mappers/component_asset_mapped.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_tree_mapper.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/component_asset_mapper.dart';
 
 class SubAssetsMapper {
   static List<SubAssets> fromDataList({
@@ -29,7 +29,7 @@ class SubAssetsMapper {
     return SubAssets(
       id: id,
       parentId: subAsset.getValue(key: "parentId"),
-      children: ComponentMapped.fromDataList(componentAssets),
+      children: ComponentMapper.fromDataList(componentAssets),
       name: subAsset.getOrDefaultValue(key: "name", defaultValue: ""),
     );
   }

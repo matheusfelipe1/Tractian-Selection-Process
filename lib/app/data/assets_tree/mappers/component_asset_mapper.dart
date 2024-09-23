@@ -1,7 +1,7 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
 
-class ComponentMapped {
+class ComponentMapper {
   static List<ComponentAsset> fromDataList(
     List<Map<String, dynamic>> component,
   ) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:traction_selection_proccess/app/core/utils/result.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_repository.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
@@ -15,10 +16,14 @@ class LocationRepositoryImpl extends BaseRepository implements LocationRepositor
   Future<Result<List<Location>, Exception>> getLocations(String idCompany) async {
     try {
       final result = await _locationDatasource.getLocations(idCompany);
-      final locationMapped = LocationMapper.fromDataList(result);
+      final locationMapped = await compute(_executeHeavyTask, result);
       return handleSuccess(locationMapped);
     } catch (error) {
       return handleFailure(error);  
     }
+  }
+
+  static List<Location> _executeHeavyTask(dynamic result) {
+    return LocationMapper.fromDataList(result);
   }
 }

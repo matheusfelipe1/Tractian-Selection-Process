@@ -8,9 +8,7 @@ class LocationMapper {
   static const _parentId = "parentId";
 
   static List<Location> fromDataList(List data) {
-
     final dataList = data.cast<Map<String, dynamic>>();
-
 
     final subLocationList = dataList
         .where((item) => item.getValue(key: _parentId) != null)
@@ -32,7 +30,10 @@ class LocationMapper {
 
     return Location(
       id: id,
-      name: location.getOrDefaultValue(key: _name, defaultValue: ""),
+      name: location.getOrDefaultValue(
+        key: _name,
+        defaultValue: "",
+      ),
       children: SubLocationMapper.fromDataList(
         parentId: id,
         subLocationList: subLocationList,
