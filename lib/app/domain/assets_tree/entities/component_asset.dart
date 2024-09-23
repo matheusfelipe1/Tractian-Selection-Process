@@ -2,7 +2,6 @@ import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class ComponentAsset extends TreeBranches {
-  final String name;
   final String sensorId;
   final String? parentId;
   final String? locationId;
@@ -14,16 +13,17 @@ class ComponentAsset extends TreeBranches {
     this.parentId,
     this.locationId,
     required super.id,
-    required this.name,
+    required super.name,
     required this.sensorId,
     required this.sensorType,
     super.children = const [],
     required this.sensorStatus,
   });
 
-  bool get isAssociated => parentId != null || locationId != null;
-
   bool get hasLocation => locationId != null;
+  bool get isCritical => sensorStatus == SensorStatus.alert;
+  bool get isEnergySensor => sensorType == SensorType.energy;
+  bool get isAssociated => parentId != null || locationId != null;
 
   @override
   TractianAssetsTree toDSEntity() {
@@ -32,9 +32,9 @@ class ComponentAsset extends TreeBranches {
       name: name,
       children: [],
       isOpen: isOpen,
+      critical: isCritical,
       isAssociated: isAssociated,
       type: TractianAssetType.component,
-      critical: sensorStatus == SensorStatus.alert,
     );
   }
 

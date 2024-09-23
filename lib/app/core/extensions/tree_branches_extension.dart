@@ -1,3 +1,4 @@
+import 'package:design_system/styles/traction_asset_type.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
@@ -18,6 +19,8 @@ extension ComponentExtensions on List<TreeBranches> {
       where((item) => item is Assets).map((item) => item as Assets).toList();
 
   List<TractianAssetsTree> toDSEntity() {
-    return map((e) => e.toDSEntity()).toList();
-  }
+    final dataList = map((e) => e.toDSEntity()).toList();
+    dataList.sort((_, b) => b.type == TractianAssetType.location ? 1 : -1);
+    return dataList;
+  } 
 }

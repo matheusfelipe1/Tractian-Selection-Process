@@ -5,7 +5,7 @@ part '../tractian_toggle_buttons.dart';
 
 class TractianToggleButtonWidget extends StatelessWidget {
   final TractianToggleButtons settings;
-  const TractianToggleButtonWidget({super.key, required this.settings});
+  const  TractianToggleButtonWidget({super.key, required this.settings});
 
   @override
   Widget build(BuildContext context) {

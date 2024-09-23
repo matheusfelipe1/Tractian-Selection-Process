@@ -2,12 +2,11 @@ import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class Location extends TreeBranches {
-  final String name;
 
   Location({
     super.isOpen,
     required super.id,
-    required this.name,
+    required super.name,
     super.children = const [],
   });
 

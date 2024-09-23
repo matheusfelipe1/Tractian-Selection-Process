@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:design_system/design_system.dart';
+import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_states.dart';
+import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
+import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_states.dart';
 
-part "../widgets/assets_error_widget.dart";
+part "../widgets/assets_tree_error_widget.dart";
 
-class AssetsPage extends StatefulWidget {
-  const AssetsPage({super.key});
+class AssetsTreePage extends StatefulWidget {
+  const AssetsTreePage({super.key});
 
   @override
-  State<AssetsPage> createState() => _AssetsPageState();
+  State<AssetsTreePage> createState() => _AssetsTreePageState();
 }
 
-class _AssetsPageState extends State<AssetsPage> {
+class _AssetsTreePageState extends State<AssetsTreePage> {
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -29,10 +30,11 @@ class _AssetsPageState extends State<AssetsPage> {
           title: tractianLocalizations.assets,
         ),
       ),
-      body: BlocBuilder<AssetsCubit, AssetsState>(builder: (context, state) {
-        final AssetsCubit cubit = context.read<AssetsCubit>();
-        if (state is AssetsError) {
-          return const AssetsErrorWidget();
+      body: BlocBuilder<AssetsTreeCubit, AssetsTreeState>(
+          builder: (context, state) {
+        final AssetsTreeCubit cubit = context.read<AssetsTreeCubit>();
+        if (state is AssetsTreeError) {
+          return const AssetsTreeErrorWidget();
         }
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -40,8 +42,8 @@ class _AssetsPageState extends State<AssetsPage> {
             children: [
               TractianTextFieldWidget(
                 controller: controller,
+                onChanged: cubit.onFiltering,
                 hintText: tractianLocalizations.searchField,
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               Row(
@@ -49,10 +51,9 @@ class _AssetsPageState extends State<AssetsPage> {
                   FittedBox(
                     child: TractianToggleButtonWidget(
                       settings: TractianToggleButtons(
-                        isActive: false,
-                        onTapActive: () {},
-                        onTapInactive: () {},
+                        isActive: state.energy,
                         icon: TractianIcons.lightning,
+                        onTap: cubit.toggleEnergySensor,
                         title: tractianLocalizations.powerSensor,
                       ),
                     ),
@@ -61,10 +62,9 @@ class _AssetsPageState extends State<AssetsPage> {
                   FittedBox(
                     child: TractianToggleButtonWidget(
                       settings: TractianToggleButtons(
-                        isActive: false,
-                        onTapActive: () {},
-                        onTapInactive: () {},
+                        isActive: state.critical,
                         icon: TractianIcons.warninig,
+                        onTap: cubit.toggleAlertCritical,
                         title: tractianLocalizations.critical,
                       ),
                     ),
@@ -72,14 +72,14 @@ class _AssetsPageState extends State<AssetsPage> {
                 ],
               ),
               const SizedBox(height: 8),
-              if (state is AssetsLoaded)
+              if (state is AssetsTreeLoaded)
                 Flexible(
                   child: TractianAssetsTreeWidget(
-                    assetsTree: state.assets,
                     onTap: (id) => cubit.toggleTree(id),
+                    assetsTree: state.assetsTree.branches.toDSEntity(),
                   ),
                 ),
-              if (state is AssetsLoading)
+              if (state is AssetsTreeLoading)
                 Flexible(
                   child: TractianAssetsTreeWidget(
                     isLoading: true,

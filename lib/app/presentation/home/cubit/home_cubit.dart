@@ -3,7 +3,7 @@ import 'package:traction_selection_proccess/app/routes/route_paths.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
 import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_state.dart';
-import 'package:traction_selection_proccess/app/presentation/assets/cubit/assets_cubit.dart';
+import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
 import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {

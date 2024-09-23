@@ -3,7 +3,7 @@ import 'package:design_system/components/assets_tree/widgets/tractian_assets_tre
 class AssetsTree {
   final List<TreeBranches> branches;
 
-  AssetsTree({
+  const AssetsTree({
     required this.branches,
   });
 }
@@ -11,10 +11,12 @@ class AssetsTree {
 abstract class TreeBranches {
   final String id;
   final bool isOpen;
+  final String name;
   final List<TreeBranches> children;
 
   TreeBranches({
     required this.id,
+    required this.name,
     this.isOpen = false,
     this.children = const [],
   });

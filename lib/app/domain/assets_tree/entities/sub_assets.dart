@@ -3,13 +3,12 @@ import 'package:traction_selection_proccess/app/domain/assets_tree/entities/comp
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class SubAssets extends TreeBranches {
-  final String name;
   final String parentId;
 
   SubAssets({
     super.isOpen,
     required super.id,
-    required this.name,
+    required super.name,
     required this.parentId,
     required super.children,
   });
