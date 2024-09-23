@@ -5,6 +5,8 @@ export 'styles/tractian_colors.dart';
 export 'styles/tractian_images.dart';
 export 'styles/traction_asset_type.dart';
 export 'components/appbar/tractian_appbar.dart';
+export "enums/tractian_assets_component_type.dart";
+export "enums/tractian_assets_component_status.dart";
 export 'components/button/tractian_button_widget.dart';
 export 'components/appbar/widgets/tractian_appbar_widget.dart';
 export 'components/text_field/tractian_text_field_widget.dart';

@@ -3,7 +3,7 @@ import 'package:traction_selection_proccess/app/core/utils/result.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/sub_assets.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 
 class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
@@ -12,7 +12,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
     return Result.success(
       AssetsTree(
         branches: [
-          ComponentAsset(
+          AssetsComponent(
             id: "140",
             sensorId: "1290",
             name: "Energy Component",
@@ -29,7 +29,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
                 parentId: "50",
                 name: "Sub Asset Tractian",
                 children: [
-                  ComponentAsset(
+                  AssetsComponent(
                     id: "140",
                     parentId: "90",
                     sensorId: "1890",
@@ -37,7 +37,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
                     sensorType: SensorType.energy,
                     sensorStatus: SensorStatus.alert,
                   ),
-                  ComponentAsset(
+                  AssetsComponent(
                     id: "140",
                     parentId: "90",
                     sensorId: "1890",

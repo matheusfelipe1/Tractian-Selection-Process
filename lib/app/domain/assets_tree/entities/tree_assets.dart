@@ -6,6 +6,14 @@ class AssetsTree {
   const AssetsTree({
     required this.branches,
   });
+
+  AssetsTree copyWith({
+    List<TreeBranches>? branches,
+  }) {
+    return AssetsTree(
+      branches: branches ?? this.branches,
+    );
+  }
 }
 
 abstract class TreeBranches {

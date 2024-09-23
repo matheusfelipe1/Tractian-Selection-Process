@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AssetsTreeCubit(
             GetIt.I(),
             GetIt.I(),
+            GetIt.I(),
           ),
         ),
       ],

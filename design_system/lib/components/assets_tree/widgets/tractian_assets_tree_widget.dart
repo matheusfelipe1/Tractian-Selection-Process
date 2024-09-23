@@ -21,18 +21,20 @@ class TractianAssetsTreeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      itemCount: assetsTree.length,
-      itemBuilder: (context, index) {
-        final item = assetsTree.elementAt(index);
-        return _TractianAssetsTreeItemWidget(
-          item: item,
-          onTap: onTap,
-          isLoading: isLoading,
-        );
-      },
+    return RepaintBoundary(
+      child: ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemCount: assetsTree.length,
+        itemBuilder: (context, index) {
+          final item = assetsTree.elementAt(index);
+          return _TractianAssetsTreeItemWidget(
+            item: item,
+            onTap: onTap,
+            isLoading: isLoading,
+          );
+        },
+      ),
     );
   }
 }

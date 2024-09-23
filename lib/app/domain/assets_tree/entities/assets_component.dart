@@ -1,14 +1,14 @@
 import 'package:design_system/design_system.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
-class ComponentAsset extends TreeBranches {
+class AssetsComponent extends TreeBranches {
   final String sensorId;
   final String? parentId;
   final String? locationId;
   final SensorType sensorType;
   final SensorStatus sensorStatus;
 
-  ComponentAsset({
+  AssetsComponent({
     super.isOpen,
     this.parentId,
     this.locationId,
@@ -22,8 +22,8 @@ class ComponentAsset extends TreeBranches {
 
   bool get hasLocation => locationId != null;
   bool get isCritical => sensorStatus == SensorStatus.alert;
-  bool get isEnergySensor => sensorType == SensorType.energy;
   bool get isAssociated => parentId != null || locationId != null;
+  bool get isEnergySensor => sensorType == SensorType.energySensor;
 
   @override
   TractianAssetsTree toDSEntity() {
@@ -32,14 +32,19 @@ class ComponentAsset extends TreeBranches {
       name: name,
       children: [],
       isOpen: isOpen,
-      critical: isCritical,
       isAssociated: isAssociated,
       type: TractianAssetType.component,
+      componentType: TractianAssetsComponentType.values.firstWhere(
+        (item) => item.value == sensorType.value,
+      ),
+      componentStatus: TractianAssetsComponentStatus.values.firstWhere(
+        (item) => item.value == sensorStatus.value,
+      ),
     );
   }
 
   @override
-  ComponentAsset copyWith({
+  AssetsComponent copyWith({
     String? id,
     bool? isOpen,
     String? name,
@@ -50,7 +55,7 @@ class ComponentAsset extends TreeBranches {
     SensorStatus? sensorStatus,
     List<TreeBranches>? children,
   }) {
-    return ComponentAsset(
+    return AssetsComponent(
       id: id ?? this.id,
       name: name ?? this.name,
       isOpen: isOpen ?? this.isOpen,
@@ -65,8 +70,9 @@ class ComponentAsset extends TreeBranches {
 }
 
 enum SensorType {
-  energy("energy"),
-  vibration("vibration");
+
+  energySensor("energy"),
+  vibrationSensor("vibration");
 
   final String value;
 
@@ -74,6 +80,7 @@ enum SensorType {
 }
 
 enum SensorStatus {
+  
   alert("alert"),
   operating("operating");
 

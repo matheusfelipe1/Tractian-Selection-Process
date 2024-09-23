@@ -30,6 +30,7 @@ void main() {
             create: (context) => AssetsTreeCubit(
               GetIt.I(),
               GetIt.I(),
+              GetIt.I(),
             ),
           ),
         ],
@@ -48,11 +49,12 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(tractianLocalizations.powerSensor), findsOneWidget);
-      expect(find.text("Component critical"), findsNothing);
+      expect(find.text("Energy 2"), findsNothing);
 
       await tester.tap(find.text(tractianLocalizations.powerSensor));
       await tester.pumpAndSettle();
       expect(find.text("Energy Component"), findsOneWidget);
+      expect(find.text("Energy 2"), findsOneWidget);
     },
   );
 }

@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 
 class SubAssets extends TreeBranches {
@@ -20,7 +20,7 @@ class SubAssets extends TreeBranches {
     String? name,
     String? parentId,
     List<TreeBranches>? children,
-    List<ComponentAsset>? componentAssets,
+    List<AssetsComponent>? componentAssets,
   }) {
     return SubAssets(
       id: id ?? this.id,

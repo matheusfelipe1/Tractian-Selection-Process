@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
@@ -21,6 +22,9 @@ class MockDependencyInjection {
     );
     _getIt.registerFactory<GetLocationUseCase>(
       () => MockGetLocationUseCase(),
+    );
+    _getIt.registerFactory(
+      () => BuildAssetsTreeUseCase(),
     );
   }
 }

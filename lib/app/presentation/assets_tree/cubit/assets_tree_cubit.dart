@@ -1,22 +1,25 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
-import 'package:traction_selection_proccess/app/core/extensions/location_extension.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
+import 'package:flutter/foundation.dart';
 import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
+import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
+import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
 import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_states.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
 
 class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   final GetLocationUseCase _getLocationUseCase;
   final GetAssetsTreeUseCase _getAssetsTreeUseCase;
+  final BuildAssetsTreeUseCase _buildAssetsTreeUseCase;
 
   AssetsTreeCubit(
     this._getLocationUseCase,
     this._getAssetsTreeUseCase,
+    this._buildAssetsTreeUseCase,
   ) : super(AssetsTreeInitial());
 
   late final AssetsTreeArgs _args;
@@ -59,23 +62,36 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     final result = await _getAssetsTreeUseCase(_args.companyId);
 
     result.proccessResult(
-      onSuccess: _onSuccessAssetsTree,
+      onSuccess: _buildAssetsTree,
       onFailure: (error) => emit(AssetsTreeError()),
     );
   }
 
-  Future<void> _onSuccessAssetsTree(AssetsTree data) async {
+  Future<void> _buildAssetsTree(AssetsTree data) async {
     final locations = await completer.future;
-    _assetsTree = AssetsTree(
-      branches: [
-        ...data.branches.componentsUnliked,
-        ...locations.insertData(
-          assets: data.branches.assets,
-          components: data.branches.componentsWLocation,
-        )
-      ],
+    final assetsTreeData = AssetsTree(
+      branches: [...data.branches, ...locations],
     );
-    emit(AssetsTreeLoaded(assetsTree: _assetsTree));
+
+    emit(
+      AssetsTreeLoaded(
+        assetsTree: state.assetsTree.copyWith(
+          branches: assetsTreeData.branches.componentsUnliked,
+        ),
+      ),
+    );
+
+    final assetTreeStream = _buildAssetsTreeUseCase(assetsTreeData);
+
+    assetTreeStream.distinct().listen((data) {
+      var assetsTreeCurrentState = state.assetsTree;
+      assetsTreeCurrentState = assetsTreeCurrentState.copyWith(branches: [
+        ...data.branches,
+        ...assetsTreeCurrentState.branches,
+      ]);
+      emit(AssetsTreeLoaded(assetsTree: assetsTreeCurrentState));
+      _assetsTree = assetsTreeCurrentState;
+    });
   }
 
   void toggleTree(String id) {
@@ -109,10 +125,10 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     return assetsTree;
   }
 
-  void toggleAlertCritical() {
+  Future<void> toggleAlertCritical() async {
     final newCriticalState = !state.critical;
     final assetsTreeFiltered = newCriticalState
-        ? _deepCriticalFilter(_assetsTree.branches)
+        ? await compute(_deepCriticalFilter, _assetsTree.branches)
         : _assetsTree.branches;
 
     emit(
@@ -124,7 +140,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     );
   }
 
-  List<TreeBranches> _deepCriticalFilter(
+  static List<TreeBranches> _deepCriticalFilter(
     List<TreeBranches> branches,
   ) {
     final List<TreeBranches> assetsTree = [];
@@ -137,7 +153,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
         );
       }
 
-      if (element is ComponentAsset) {
+      if (element is AssetsComponent) {
         if (element.isCritical) {
           assetsTree.add(element);
         }
@@ -151,10 +167,10 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     return assetsTree;
   }
 
-  void toggleEnergySensor() {
+  Future<void> toggleEnergySensor() async {
     final newEnergySytate = !state.energy;
     final assetsTreeFiltered = newEnergySytate
-        ? _deepEnergySensorFilter(_assetsTree.branches)
+        ? await compute(_deepEnergySensorFilter, _assetsTree.branches)
         : _assetsTree.branches;
 
     emit(
@@ -166,7 +182,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     );
   }
 
-  List<TreeBranches> _deepEnergySensorFilter(
+  static List<TreeBranches> _deepEnergySensorFilter(
     List<TreeBranches> branches,
   ) {
     final List<TreeBranches> assetsTree = [];
@@ -179,7 +195,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
         );
       }
 
-      if (element is ComponentAsset) {
+      if (element is AssetsComponent) {
         if (element.isEnergySensor) {
           assetsTree.add(element);
         }
@@ -193,23 +209,24 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     return assetsTree;
   }
 
-  void onFiltering(String query) {
-    final filterByTyping = _deepTypingFilter(
-      query.toLowerCase(),
-      _assetsTree.branches,
-    );
+  Future<void> onFiltering(String query) async {
+    if (query.length >= 3) {
+      final filterByTyping = await compute(
+        _deepTypingFilter,
+        _assetsTree.branches,
+      );
 
-    emit(
-      state.copyWith(
-        energy: false,
-        critical: false,
-        assetsTree: AssetsTree(branches: filterByTyping),
-      ),
-    );
+      emit(
+        state.copyWith(
+          energy: false,
+          critical: false,
+          assetsTree: AssetsTree(branches: filterByTyping),
+        ),
+      );
+    }
   }
 
-  List<TreeBranches> _deepTypingFilter(
-    String query,
+  static List<TreeBranches> _deepTypingFilter(
     List<TreeBranches> branches,
   ) {
     final List<TreeBranches> assetsTree = [];
@@ -218,11 +235,11 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
       if (element.children.isNotEmpty) {
         element = element.copyWith(
           isOpen: true,
-          children: _deepTypingFilter(query, element.children),
+          children: _deepTypingFilter(element.children),
         );
       }
 
-      if (element.name.toLowerCase().contains(query)) {
+      if (element.name == "Location 410") {
         assetsTree.add(element);
       } else if (element.children.isNotEmpty) {
         assetsTree.add(element);

@@ -1,15 +1,15 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/component_asset.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 
 class ComponentMapper {
-  static List<ComponentAsset> fromDataList(
+  static List<AssetsComponent> fromDataList(
     List<Map<String, dynamic>> component,
   ) {
     return component.map(_fromData).toList();
   }
 
-  static ComponentAsset _fromData(Map<String, dynamic> component) {
-    return ComponentAsset(
+  static AssetsComponent _fromData(Map<String, dynamic> component) {
+    return AssetsComponent(
       id: component.getValue(key: "id"),
       sensorType: _getSensorType(component),
       sensorStatus: _getSensorStatus(component),
