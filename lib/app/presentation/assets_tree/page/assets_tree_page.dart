@@ -33,6 +33,7 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
         getLocationUseCase: GetIt.I(),
         getAssetsTreeUseCase: GetIt.I(),
         buildAssetsTreeUseCase: GetIt.I(),
+        filterByTextAssetsTreeUseCase: GetIt.I(),
       ),
       child: Scaffold(
         backgroundColor: TractianColors.whiteBrand,

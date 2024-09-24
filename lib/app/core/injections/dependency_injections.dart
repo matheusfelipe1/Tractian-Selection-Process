@@ -3,6 +3,7 @@ import 'package:traction_selection_proccess/app/domain/api/api_handler.dart';
 import 'package:traction_selection_proccess/app/data/api/api_handler_impl.dart';
 import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
 import 'package:traction_selection_proccess/app/data/assets_tree/datasource/assets_tree_datasource.dart';
 import 'package:traction_selection_proccess/app/data/locations/datasource/location_datasource.dart';
@@ -63,6 +64,9 @@ class DependencyInjections {
     );
     _getIt.registerFactory(
       () => BuildAssetsTreeUseCase(),
+    );
+    _getIt.registerFactory(
+      () => FilterByTextAssetsTreeUseCase(),
     );
   }
 }

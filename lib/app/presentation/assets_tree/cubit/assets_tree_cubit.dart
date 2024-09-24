@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
@@ -15,14 +16,17 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   final GetLocationUseCase _getLocationUseCase;
   final GetAssetsTreeUseCase _getAssetsTreeUseCase;
   final BuildAssetsTreeUseCase _buildAssetsTreeUseCase;
+  final FilterByTextAssetsTreeUseCase _filterByTextAssetsTreeUseCase;
 
   AssetsTreeCubit({
     required GetLocationUseCase getLocationUseCase,
     required GetAssetsTreeUseCase getAssetsTreeUseCase,
     required BuildAssetsTreeUseCase buildAssetsTreeUseCase,
+    required FilterByTextAssetsTreeUseCase filterByTextAssetsTreeUseCase,
   })  : _getLocationUseCase = getLocationUseCase,
         _getAssetsTreeUseCase = getAssetsTreeUseCase,
         _buildAssetsTreeUseCase = buildAssetsTreeUseCase,
+        _filterByTextAssetsTreeUseCase = filterByTextAssetsTreeUseCase,
         super(AssetsTreeInitial());
 
   late final AssetsTreeArgs _args;
@@ -118,7 +122,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
 
   void toggleTree(String id) {
     _assetsTreeCache = AssetsTree(
-      branches: _deepSearchToExpandes(id, _assetsTreeCache.branches),
+      branches: _deepSearchToExpandes(id, state.assetsTree.branches),
     );
 
     emit(AssetsTreeLoaded(assetsTree: _assetsTreeCache));
@@ -231,45 +235,23 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     return assetsTree;
   }
 
-  Future<void> onFiltering(String query) async {
-    if (query.length >= 3) {
-      final filterByTyping = await compute(
-        _deepTypingFilter,
-        _assetsTreeCache.branches,
-      );
 
+  Future<void> onFiltering(String query) async {
+    final params = FilterByTextAssetsTreeParams(
+      query: query,
+      branches: _assetsTreeCache.branches,
+    );
+    final assetsTreeFiltered = _filterByTextAssetsTreeUseCase(params);
+    
+    assetsTreeFiltered.listen((data) {
       emit(
         state.copyWith(
-          energy: false,
-          critical: false,
-          assetsTree: AssetsTree(branches: filterByTyping),
+          assetsTree: data,
         ),
       );
-    }
+    });
   }
-
-  static List<TreeBranches> _deepTypingFilter(
-    List<TreeBranches> branches,
-  ) {
-    final List<TreeBranches> assetsTree = [];
-
-    for (var element in branches) {
-      if (element.children.isNotEmpty) {
-        element = element.copyWith(
-          isOpen: true,
-          children: _deepTypingFilter(element.children),
-        );
-      }
-
-      if (element.name == "Location 410") {
-        assetsTree.add(element);
-      } else if (element.children.isNotEmpty) {
-        assetsTree.add(element);
-      }
-    }
-
-    return assetsTree;
-  }
+  
 }
 
 class AssetsTreeArgs {

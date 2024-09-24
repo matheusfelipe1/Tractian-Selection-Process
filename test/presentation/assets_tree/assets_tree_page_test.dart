@@ -31,9 +31,10 @@ void main() {
               ),
               BlocProvider<AssetsTreeCubit>(
                 create: (context) => AssetsTreeCubit(
-                  GetIt.I(),
-                  GetIt.I(),
-                  GetIt.I(),
+                  getAssetsTreeUseCase: GetIt.I(),
+                  getLocationUseCase: GetIt.I(),
+                  buildAssetsTreeUseCase: GetIt.I(),
+                  filterByTextAssetsTreeUseCase: GetIt.I(),
                 ),
               ),
             ],
@@ -75,9 +76,10 @@ void main() {
               ),
               BlocProvider<AssetsTreeCubit>(
                 create: (context) => AssetsTreeCubit(
-                  GetIt.I(),
-                  GetIt.I(),
-                  GetIt.I(),
+                  getAssetsTreeUseCase: GetIt.I(),
+                  getLocationUseCase: GetIt.I(),
+                  buildAssetsTreeUseCase: GetIt.I(),
+                  filterByTextAssetsTreeUseCase: GetIt.I(),
                 ),
               ),
             ],
@@ -101,7 +103,6 @@ void main() {
           await tester.tap(find.text(tractianLocalizations.critical));
           await tester.pumpAndSettle();
           expect(find.text("Component critical"), findsOneWidget);
-
         },
       );
 
@@ -116,9 +117,10 @@ void main() {
               ),
               BlocProvider<AssetsTreeCubit>(
                 create: (context) => AssetsTreeCubit(
-                  GetIt.I(),
-                  GetIt.I(),
-                  GetIt.I(),
+                  getAssetsTreeUseCase: GetIt.I(),
+                  getLocationUseCase: GetIt.I(),
+                  buildAssetsTreeUseCase: GetIt.I(),
+                  filterByTextAssetsTreeUseCase: GetIt.I(),
                 ),
               ),
             ],
@@ -142,7 +144,6 @@ void main() {
 
           expect(find.text("Energy Component"), findsOneWidget);
           expect(find.text("Energy 2"), findsOneWidget);
-
         },
       );
     },
