@@ -14,9 +14,6 @@ import 'package:traction_selection_proccess/app/core/injections/dependency_injec
 import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
 
 void main() async {
-  FlutterError.onError = (details) {
-    FlutterError.dumpErrorToConsole(details);
-  };
   await dotenv.load();
   DependencyInjections.ensureInitialized();
   BackgroundIsolateBinaryMessenger.ensureInitialized(

@@ -5,22 +5,15 @@ import 'package:traction_selection_proccess/app/domain/locations/repository/loca
 
 typedef LocationResult = Result<List<Location>, Exception>;
 
-class GetLocationUseCase extends UseCases<LocationResult, LocationParams> {
+class GetLocationUseCase extends UseCases<LocationResult, String> {
 
   final LocationRepository _locationRepository;
 
   GetLocationUseCase(this._locationRepository);
 
   @override
-  Future<LocationResult> call(LocationParams params) async{
-    return await _locationRepository.getLocations(params.idCompany);
+  Future<LocationResult> call(String params) async{
+    return await _locationRepository.getLocations(params);
   }
 }
 
-
-
-class LocationParams extends Params {
-  final String idCompany;
-
-  LocationParams({required this.idCompany});
-}

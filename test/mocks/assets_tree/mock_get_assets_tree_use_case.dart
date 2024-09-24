@@ -16,7 +16,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
             id: "140",
             sensorId: "1290",
             name: "Energy Component",
-            sensorType: SensorType.energy,
+            sensorType: SensorType.energySensor,
             sensorStatus: SensorStatus.operating,
           ),
           Assets(
@@ -34,7 +34,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
                     parentId: "90",
                     sensorId: "1890",
                     name: "Component critical",
-                    sensorType: SensorType.energy,
+                    sensorType: SensorType.energySensor,
                     sensorStatus: SensorStatus.alert,
                   ),
                   AssetsComponent(
@@ -42,7 +42,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
                     parentId: "90",
                     sensorId: "1890",
                     name: "Energy 2",
-                    sensorType: SensorType.energy,
+                    sensorType: SensorType.energySensor,
                     sensorStatus: SensorStatus.operating,
                   ),
                 ],

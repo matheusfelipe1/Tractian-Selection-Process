@@ -26,7 +26,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
 
   Completer<List<Location>> completer = Completer();
 
-  AssetsTree _assetsTree = const AssetsTree(branches: []);
+  AssetsTree _assetsTreeCache = const AssetsTree(branches: []);
 
   @override
   void onInit() {
@@ -47,9 +47,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     emit(AssetsTreeLoading());
     completer = Completer();
 
-    final result = await _getLocationUseCase(
-      LocationParams(idCompany: _args.companyId),
-    );
+    final result = await _getLocationUseCase(_args.companyId);
 
     result.proccessResult(
       onFailure: (error) => emit(AssetsTreeError()),
@@ -67,12 +65,24 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     );
   }
 
-  Future<void> _buildAssetsTree(AssetsTree data) async {
+  Future<void> _buildAssetsTree(AssetsTree inputData) async {
     final locations = await completer.future;
-    final assetsTreeData = AssetsTree(
-      branches: [...data.branches, ...locations],
-    );
+    final assetsTreeData = _combineBranches(inputData, locations);
 
+    _emitInitialAssetsTree(assetsTreeData);
+    _listenForUpdatedAssetsTree(assetsTreeData);
+  }
+
+  AssetsTree _combineBranches(
+    AssetsTree inputData,
+    List<TreeBranches> locations,
+  ) {
+    return AssetsTree(
+      branches: [...inputData.branches, ...locations],
+    );
+  }
+
+  void _emitInitialAssetsTree(AssetsTree assetsTreeData) {
     emit(
       AssetsTreeLoaded(
         assetsTree: state.assetsTree.copyWith(
@@ -80,26 +90,35 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
         ),
       ),
     );
+  }
 
-    final assetTreeStream = _buildAssetsTreeUseCase(assetsTreeData);
-
-    assetTreeStream.distinct().listen((data) {
-      var assetsTreeCurrentState = state.assetsTree;
-      assetsTreeCurrentState = assetsTreeCurrentState.copyWith(branches: [
-        ...data.branches,
-        ...assetsTreeCurrentState.branches,
-      ]);
-      emit(AssetsTreeLoaded(assetsTree: assetsTreeCurrentState));
-      _assetsTree = assetsTreeCurrentState;
+  void _listenForUpdatedAssetsTree(AssetsTree assetsTreeData) {
+    _buildAssetsTreeUseCase(assetsTreeData).listen((resultData) {
+      _updateAssetsTree(resultData);
     });
   }
 
-  void toggleTree(String id) {
-    _assetsTree = AssetsTree(
-      branches: _deepSearchToExpandes(id, _assetsTree.branches),
+  void _updateAssetsTree(AssetsTree resultData) {
+    final currentAssetsTree = state.assetsTree;
+
+    final updatedBranches = List<TreeBranches>.from(resultData.branches)
+      ..addAll(currentAssetsTree.branches);
+
+    emit(
+      AssetsTreeLoaded(
+        assetsTree: currentAssetsTree.copyWith(branches: updatedBranches),
+      ),
     );
 
-    emit(AssetsTreeLoaded(assetsTree: _assetsTree));
+    _assetsTreeCache = currentAssetsTree.copyWith(branches: updatedBranches);
+  }
+
+  void toggleTree(String id) {
+    _assetsTreeCache = AssetsTree(
+      branches: _deepSearchToExpandes(id, _assetsTreeCache.branches),
+    );
+
+    emit(AssetsTreeLoaded(assetsTree: _assetsTreeCache));
   }
 
   List<TreeBranches> _deepSearchToExpandes(
@@ -128,8 +147,8 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   Future<void> toggleAlertCritical() async {
     final newCriticalState = !state.critical;
     final assetsTreeFiltered = newCriticalState
-        ? await compute(_deepCriticalFilter, _assetsTree.branches)
-        : _assetsTree.branches;
+        ? await compute(_deepCriticalFilter, _assetsTreeCache.branches)
+        : _assetsTreeCache.branches;
 
     emit(
       state.copyWith(
@@ -170,8 +189,8 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   Future<void> toggleEnergySensor() async {
     final newEnergySytate = !state.energy;
     final assetsTreeFiltered = newEnergySytate
-        ? await compute(_deepEnergySensorFilter, _assetsTree.branches)
-        : _assetsTree.branches;
+        ? await compute(_deepEnergySensorFilter, _assetsTreeCache.branches)
+        : _assetsTreeCache.branches;
 
     emit(
       state.copyWith(
@@ -213,7 +232,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     if (query.length >= 3) {
       final filterByTyping = await compute(
         _deepTypingFilter,
-        _assetsTree.branches,
+        _assetsTreeCache.branches,
       );
 
       emit(

@@ -1,9 +1,7 @@
 import 'dart:isolate';
 import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/core/extensions/assets_extension.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/core/extensions/component_extensions.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
@@ -21,7 +19,7 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
     Isolate.exit();
   }
 
-  static void _isolateTask(List<dynamic> args) {
+  void _isolateTask(List<dynamic> args) {
     final [sendPort, branches] = args;
 
     for (var data in _buildLocation(branches)) {
@@ -29,67 +27,90 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
     }
   }
 
-  static Iterable<Location> _buildLocation(
+  Iterable<Location> _buildLocation(
     List<TreeBranches> branches,
   ) sync* {
     final assets = branches.whereType<Assets>().toList();
     final locations = branches.whereType<Location>().toList();
     final components = branches.whereType<AssetsComponent>().toList();
 
-    locations.sort((a, b) => b.children.length < a.children.length ? 1 : -1);
+    locations.sort((a, b) => a.children.length.compareTo(b.children.length));
 
     for (var location in locations) {
-      final assetsFiltered = assets.filterByLocationId(location.id);
-      final newAssetsFilter = assets.where(
-        (item) => location.id != item.locationId,
+      final assetsInLocation = assets.where(
+        (assets) => assets.locationId == location.id,
       );
-      final componentsFiltered = components.filterByLocationId(location.id);
-      final newComponentsFilter = components.where(
-        (item) => location.id != item.locationId,
+
+      final componentsInLocation = components.where(
+        (component) => component.locationId == location.id,
       );
+
+      final assetsNotInLocation = assets.where(
+        (assets) => assets.locationId != location.id,
+      );
+
+      final componentsNotInLocation = components.where(
+        (component) => component.locationId != location.id,
+      );
+
+      if (componentsNotInLocation.isEmpty && assetsNotInLocation.isEmpty) {
+        yield location;
+        continue;
+      }
 
       yield location.copyWith(
         children: [
-          ...assetsFiltered,
-          ...componentsFiltered,
+          ...assetsInLocation,
+          ...componentsInLocation,
           ..._buildSubLocation([
             ...location.children,
-            ...newAssetsFilter,
-            ...newComponentsFilter,
+            ...assetsNotInLocation,
+            ...componentsNotInLocation,
           ])
         ],
       );
     }
   }
 
-  static Iterable<SubLocation> _buildSubLocation(
+  Iterable<SubLocation> _buildSubLocation(
     List<TreeBranches> branches,
   ) sync* {
     final assets = branches.whereType<Assets>().toList();
     final subLocations = branches.whereType<SubLocation>().toList();
     final components = branches.whereType<AssetsComponent>().toList();
 
-    subLocations.sort((a, b) => b.children.length < a.children.length ? 1 : -1);
+    subLocations.sort((a, b) => a.children.length.compareTo(b.children.length));
 
     for (var subLocation in subLocations) {
-      final assetsFiltered = assets.filterByLocationId(subLocation.id);
-      final newAssetsFilter = assets.where(
-        (item) => subLocation.id != item.locationId,
+      final assetsInLocation = assets.where(
+        (assets) => assets.locationId == subLocation.id,
       );
 
-      final componentsFiltered = components.filterByLocationId(subLocation.id);
-      final newComponentsFilter = components.where(
-        (item) => subLocation.id != item.locationId,
+      final componentsInLocation = components.where(
+        (component) => component.locationId == subLocation.id,
       );
+
+      final assetsNotInLocation = assets.where(
+        (assets) => assets.locationId != subLocation.id,
+      );
+
+      final componentsNotInLocation = components.where(
+        (component) => component.locationId != subLocation.id,
+      );
+
+      if (componentsNotInLocation.isEmpty && assetsNotInLocation.isEmpty) {
+        yield subLocation;
+        continue;
+      }
 
       yield subLocation.copyWith(
         children: [
-          ...assetsFiltered,
-          ...componentsFiltered,
+          ...assetsInLocation,
+          ...componentsInLocation,
           ..._buildSubLocation([
             ...subLocation.children,
-            ...newAssetsFilter,
-            ...newComponentsFilter,
+            ...assetsNotInLocation,
+            ...componentsNotInLocation,
           ]),
         ],
       );

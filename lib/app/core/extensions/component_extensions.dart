@@ -5,7 +5,4 @@ extension ComponentExtensions on List<AssetsComponent> {
   List<TractianAssetsTree> toDSEntity() {
     return map((e) => e.toDSEntity()).toList();
   }
-
-  List<AssetsComponent> filterByLocationId(String id) =>
-      where((component) => component.locationId == id).toList();
 }
