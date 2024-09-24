@@ -11,7 +11,6 @@ import 'package:traction_selection_proccess/app/routes/route_paths.dart';
 import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
 import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
 import 'package:traction_selection_proccess/app/core/injections/dependency_injections.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
 
 void main() async {
   await dotenv.load();
@@ -28,19 +27,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<HomeCubit>(
-          create: (context) => HomeCubit(GetIt.I()),
-        ),
-        BlocProvider<AssetsTreeCubit>(
-          create: (context) => AssetsTreeCubit(
-            GetIt.I(),
-            GetIt.I(),
-            GetIt.I(),
-          ),
-        ),
-      ],
+    return BlocProvider<HomeCubit>(
+      create: (context) => HomeCubit(
+        GetIt.I(),
+      ),
       child: GetMaterialApp(
         getPages: RoutePages.pages,
         title: AppConstants.appName,

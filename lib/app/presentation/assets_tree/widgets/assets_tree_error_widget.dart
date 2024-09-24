@@ -27,7 +27,7 @@ class AssetsTreeErrorWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            tractianLocalizations.companiesDataError,
+            tractianLocalizations.assetsTreeDataError,
             textAlign: TextAlign.center,
             style: mediumLg.customColor(TractianColors.bodyText2),
           ),

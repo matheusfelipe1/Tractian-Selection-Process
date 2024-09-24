@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
-import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
 import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_states.dart';
@@ -16,11 +16,14 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   final GetAssetsTreeUseCase _getAssetsTreeUseCase;
   final BuildAssetsTreeUseCase _buildAssetsTreeUseCase;
 
-  AssetsTreeCubit(
-    this._getLocationUseCase,
-    this._getAssetsTreeUseCase,
-    this._buildAssetsTreeUseCase,
-  ) : super(AssetsTreeInitial());
+  AssetsTreeCubit({
+    required GetLocationUseCase getLocationUseCase,
+    required GetAssetsTreeUseCase getAssetsTreeUseCase,
+    required BuildAssetsTreeUseCase buildAssetsTreeUseCase,
+  })  : _getLocationUseCase = getLocationUseCase,
+        _getAssetsTreeUseCase = getAssetsTreeUseCase,
+        _buildAssetsTreeUseCase = buildAssetsTreeUseCase,
+        super(AssetsTreeInitial());
 
   late final AssetsTreeArgs _args;
 

@@ -6,5 +6,6 @@
     "assets": "Assets",
     "somethingWrong": "Oops, something went wrong!!",
     "companiesDataError": "An error occurred when trying to search for your companies",
+    "assetsTreeDataError": "An error occurred when trying to search for your assets tree",
     "tryAgain": "Try again"
 }

@@ -6,5 +6,6 @@
     "assets": "Ativos",
     "somethingWrong": "Opa, algo deu errado!!",
     "companiesDataError": "Ocorreu uma falhar ao tentar buscar suas companias.",
+    "assetsTreeDataError": "Ocorreu uma falhar ao tentar buscar sua árvore de ativos.",
     "tryAgain": "Tente novamente"
 }
