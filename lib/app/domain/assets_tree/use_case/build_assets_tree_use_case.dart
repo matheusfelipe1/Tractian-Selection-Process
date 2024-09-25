@@ -6,14 +6,15 @@ import 'package:traction_selection_proccess/app/domain/locations/entities/sub_lo
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 
-class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
+class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
   @override
-  Stream<AssetsTree> call(AssetsTree params) async* {
+  Stream<AssetsTree?> call(AssetsTree params) async* {
     final receivePort = ReceivePort();
     await Isolate.spawn(_isolateTask, [receivePort.sendPort, params.branches]);
 
     await for (var location in receivePort) {
-      yield AssetsTree(branches: [location]);
+      
+      yield location == null ? null : AssetsTree(branches: [location]);
     }
 
     Isolate.exit();
@@ -25,6 +26,8 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
     for (var data in _buildLocation(branches)) {
       sendPort.send(data);
     }
+
+    sendPort.send(null);
   }
 
   Iterable<Location> _buildLocation(
@@ -33,8 +36,6 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
     final assets = branches.whereType<Assets>().toList();
     final locations = branches.whereType<Location>().toList();
     final components = branches.whereType<AssetsComponent>().toList();
-
-    locations.sort((a, b) => a.children.length.compareTo(b.children.length));
 
     for (var location in locations) {
       final assetsInLocation = assets.where(
@@ -78,8 +79,6 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree>, AssetsTree> {
     final assets = branches.whereType<Assets>().toList();
     final subLocations = branches.whereType<SubLocation>().toList();
     final components = branches.whereType<AssetsComponent>().toList();
-
-    subLocations.sort((a, b) => a.children.length.compareTo(b.children.length));
 
     for (var subLocation in subLocations) {
       final assetsInLocation = assets.where(

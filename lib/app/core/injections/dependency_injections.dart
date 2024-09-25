@@ -4,6 +4,7 @@ import 'package:traction_selection_proccess/app/data/api/api_handler_impl.dart';
 import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/pre_proccessing_assets_tree_can_be_filtered_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
 import 'package:traction_selection_proccess/app/data/assets_tree/datasource/assets_tree_datasource.dart';
 import 'package:traction_selection_proccess/app/data/locations/datasource/location_datasource.dart';
@@ -15,6 +16,7 @@ import 'package:traction_selection_proccess/app/data/assets_tree/repository/asse
 import 'package:traction_selection_proccess/app/data/locations/repository/location_repository_impl.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/repository/assets_tree_repository.dart';
+import 'package:traction_selection_proccess/app/domain/tasks/tasks_manager.dart';
 
 class DependencyInjections {
   static final _getIt = GetIt.instance;
@@ -23,6 +25,13 @@ class DependencyInjections {
     _registerDatasources();
     _registerRepositories();
     _registerUseCases();
+    _registerManagers();
+  }
+
+  static void _registerManagers() {
+    _getIt.registerFactory<TasksManager>(
+      () => TasksManager(),
+    );
   }
 
   static void _registerDatasources() {
@@ -66,7 +75,10 @@ class DependencyInjections {
       () => BuildAssetsTreeUseCase(),
     );
     _getIt.registerFactory(
-      () => FilterByTextAssetsTreeUseCase(),
+      () => FilterByTextAssetsTreeUseCase(_getIt()),
+    );
+    _getIt.registerFactory(
+      () => PreProccessingAssetsTreeCanBeFilteredUseCase(),
     );
   }
 }

@@ -2,37 +2,46 @@ import 'dart:async';
 import 'dart:isolate';
 import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/tasks/tasks_manager.dart';
 
 class FilterByTextAssetsTreeUseCase
     extends UseCases<Stream<AssetsTree>, FilterByTextAssetsTreeParams> {
-  Isolate? _activeIsolate;
-  ReceivePort? _receivePort;
+  final TasksManager _taskManager;
+
+  FilterByTextAssetsTreeUseCase(this._taskManager);
 
   @override
   Stream<AssetsTree> call(FilterByTextAssetsTreeParams params) {
     final StreamController<AssetsTree> streamController = StreamController();
-    _runIsolate(params, streamController);
+    _taskManager.addTask(() {
+      _runIsolateFilter(params, streamController);
+    });
     return streamController.stream;
   }
 
-  Future<void> _runIsolate(
+  void dispose() {
+    _taskManager.releaseTask();
+    _taskManager.killAllTasks();
+  }
+
+  Future<void> _runIsolateFilter(
     FilterByTextAssetsTreeParams params,
     StreamController streamController,
   ) async {
-    _activeIsolate?.kill(priority: Isolate.immediate);
-    _receivePort?.close();
-
     final receivePort = ReceivePort();
 
-    _activeIsolate = await Isolate.spawn(
+    await Isolate.spawn(
       _isolateTask,
       [receivePort.sendPort, params.query, params.branches],
     );
 
     receivePort.listen((branches) {
-      streamController.add(AssetsTree(branches: branches));
+      _taskManager.releaseTask();
+      if (branches is List<TreeBranches>) {
+        streamController.add(AssetsTree(branches: branches));
+      }
     }).onDone(() {
-      streamController.close();
+      _taskManager.releaseTask();
     });
   }
 
@@ -51,13 +60,12 @@ class FilterByTextAssetsTreeUseCase
       if (element.children.isNotEmpty) {
         final children = await _deepTypingFilter(query, element.children);
         if (children.isNotEmpty) {
-          return element.copyWith(isOpen: true);
+          return element.copyWith(children: children, isOpen: query.isNotEmpty);
         }
       }
 
       if (element.name.toLowerCase().contains(query.toLowerCase())) {
-        print(element.name);
-        return element.copyWith(isOpen: true);
+        return element.copyWith(isOpen: false);
       }
       return null;
     });

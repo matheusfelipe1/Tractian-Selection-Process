@@ -16,7 +16,8 @@ class SubLocationMapper {
 
     return subLocationsFiltered
         .map((e) => _fromData(subLocation: e, subLocationList: subLocationList))
-        .toList();
+        .toList()
+      ..sort((a, b) => a.children.length.compareTo(b.children.length));
   }
 
   static bool _isParent(Map<String, dynamic> data, String parentId) {

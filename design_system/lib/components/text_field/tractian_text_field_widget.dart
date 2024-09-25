@@ -18,6 +18,7 @@ class TractianTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       cursorHeight: 14,
+      autocorrect: false,
       onChanged: onChanged,
       controller: controller,
       cursorColor: TractianColors.gray500,

@@ -69,6 +69,14 @@ const _mockGeneralAssetsJSON = [
     "status": null
   },
   {
+    "id": "656a07c3f2d4a1001e2144c500",
+    "locationId": null,
+    "name": "MOTOR TC01 COAL UNLOADING AF02",
+    "parentId": "656a07c3f2d4a1001e2144c5",
+    "sensorType": null,
+    "status": null
+  },
+  {
     "gatewayId": "QBK282",
     "id": "6567340c1f4664001f29622e",
     "locationId": null,

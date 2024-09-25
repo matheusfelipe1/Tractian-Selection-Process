@@ -1,6 +1,6 @@
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/data/assets_tree/mappers/component_asset_mapper.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_component_mapper.dart';
 import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_tree_mapper.dart';
 
 import 'sub_assets_mapper.dart';
@@ -19,7 +19,8 @@ class AssetsMapper {
             components: components,
           ),
         )
-        .toList();
+        .toList()
+      ..sort((a, b) => a.children.length.compareTo(b.children.length));
   }
 
   static Assets _fromData({
@@ -31,19 +32,17 @@ class AssetsMapper {
     final componentAssets = components
         .where((component) => component.getValue(key: "parentId") == id)
         .toList();
-    final subAssetsFiltered = subAssets
-        .where((item) => item.getValue(key: "parentId") == id)
-        .toList();
 
     return Assets(
       id: id,
       locationId: asset.getValue(key: "locationId"),
       name: asset.getOrDefaultValue(key: "name", defaultValue: ""),
       children: [
-        ...ComponentMapper.fromDataList(componentAssets),
+        ...AssetsComponentMapper.fromDataList(componentAssets),
         ...SubAssetsMapper.fromDataList(
+          parentId: id,
+          subAssets: subAssets,
           components: components,
-          subAssets: subAssetsFiltered,
         ),
       ],
     );

@@ -1,7 +1,7 @@
 import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
 import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_mapper.dart';
-import 'package:traction_selection_proccess/app/data/assets_tree/mappers/component_asset_mapper.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_component_mapper.dart';
 
 typedef TreeMapperList = List<Map<String, dynamic>>;
 
@@ -10,7 +10,6 @@ class AssetsTreeMappers {
   static const _sensorId = "sensorId";
   static const _sensorType = "sensorType";
   static const _locationId = "locationId";
-
 
   static List<TreeBranches> fromDataList(List data) {
     final dataList = data.cast<Map<String, dynamic>>();
@@ -22,14 +21,14 @@ class AssetsTreeMappers {
     final componentWLocation = dataList.where(_isComponentWLocation).toList();
 
     return [
-      ...ComponentMapper.fromDataList(componentUnliked),
-      ...ComponentMapper.fromDataList(componentWLocation),
+      ...AssetsComponentMapper.fromDataList(componentUnliked),
+      ...AssetsComponentMapper.fromDataList(componentWLocation),
       ...AssetsMapper.fromDataList(
         assets: assets,
         subAssets: subAssets,
         components: componentWParent,
       ),
-    ];
+    ]..sort((a, b) => a.children.length.compareTo(b.children.length));
   }
 
   static bool _isComponentUnliked(Map<String, dynamic> data) {

@@ -19,7 +19,8 @@ class LocationMapper {
 
     return locationList
         .map((location) => _fromData(location, subLocationList))
-        .toList();
+        .toList()
+      ..sort((a, b) => a.children.length.compareTo(b.children.length));
   }
 
   static Location _fromData(

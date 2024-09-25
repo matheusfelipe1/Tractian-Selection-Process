@@ -19,21 +19,24 @@ class AssetsTreePage extends StatefulWidget {
 
 class _AssetsTreePageState extends State<AssetsTreePage> {
   final TextEditingController controller = TextEditingController();
+  late final AssetsTreeCubit cubitController;
 
   @override
   void dispose() {
     super.dispose();
     controller.dispose();
+    cubitController.onDispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AssetsTreeCubit(
+      create: (_) => cubitController = AssetsTreeCubit(
         getLocationUseCase: GetIt.I(),
         getAssetsTreeUseCase: GetIt.I(),
         buildAssetsTreeUseCase: GetIt.I(),
         filterByTextAssetsTreeUseCase: GetIt.I(),
+        preProccessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
       ),
       child: Scaffold(
         backgroundColor: TractianColors.whiteBrand,
