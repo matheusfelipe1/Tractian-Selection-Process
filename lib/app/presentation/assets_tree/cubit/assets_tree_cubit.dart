@@ -125,6 +125,14 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   void _listenForUpdatedAssetsTree(AssetsTree assetsTreeData) {
     _buildAssetsTreeUseCase(assetsTreeData).listen((resultData) {
       if (resultData == null) {
+        emit(
+          AssetsTreeLoaded(
+            energy: state.energy,
+            isProcessingData: false,
+            critical: state.critical,
+            assetsTree: state.assetsTree,
+          ),
+        );
         _preProccessAssetsTree();
         return;
       }
@@ -151,6 +159,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     if (isClosed) return;
     emit(
       AssetsTreeLoaded(
+        isProcessingData: true,
         assetsTree: currentAssetsTree.copyWith(branches: updatedBranches),
       ),
     );

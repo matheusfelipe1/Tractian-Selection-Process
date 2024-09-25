@@ -1,8 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:design_system/design_system.dart';
-import 'package:get_it/get_it.dart';
 import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
 import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
@@ -59,17 +59,25 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
           return RefreshIndicator.adaptive(
             onRefresh: cubit.onRefresh,
             color: TractianColors.blue50,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TractianTextFieldWidget(
+            child: Column(
+              children: [
+                if (state is AssetsTreeLoaded && state.isProcessingData)
+                const LinearProgressIndicator(
+                  color: TractianColors.blue50,
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: TractianTextFieldWidget(
                     controller: controller,
                     onChanged: cubit.onFiltering,
                     hintText: tractianLocalizations.searchField,
                   ),
-                  const SizedBox(height: 8),
-                  Row(
+                ),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
                     children: [
                       FittedBox(
                         child: TractianToggleButtonWidget(
@@ -94,23 +102,25 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  if (state is AssetsTreeLoaded)
-                    Flexible(
-                      child: TractianAssetsTreeWidget(
-                        onTap: (id) => cubit.toggleTree(id),
-                        assetsTree: state.assetsTree.branches.toDSEntity(),
-                      ),
+                ),
+                const SizedBox(height: 8),
+                if (state is AssetsTreeLoaded)
+                  Flexible(
+                    child: TractianAssetsTreeWidget(
+                      onTap: (id) => cubit.toggleTree(id),
+                      assetsTree: state.assetsTree.branches.toDSEntity(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                     ),
-                  if (state is AssetsTreeLoading)
-                    Flexible(
-                      child: TractianAssetsTreeWidget(
-                        isLoading: true,
-                        assetsTree: state.assets,
-                      ),
-                    )
-                ],
-              ),
+                  ),
+                if (state is AssetsTreeLoading)
+                  Flexible(
+                    child: TractianAssetsTreeWidget(
+                      isLoading: true,
+                      assetsTree: state.assets,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                  )
+              ],
             ),
           );
         }),

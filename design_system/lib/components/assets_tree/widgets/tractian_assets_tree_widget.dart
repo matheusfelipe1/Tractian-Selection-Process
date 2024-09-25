@@ -12,6 +12,7 @@ part '../designs/tractian_horizontal_line_paint.dart';
 
 class TractianAssetsTreeWidget extends StatefulWidget {
   final bool isLoading;
+  final EdgeInsets padding;
   final Function(dynamic)? onTap;
   final List<TractianAssetsTree> assetsTree;
   const TractianAssetsTreeWidget({
@@ -19,6 +20,7 @@ class TractianAssetsTreeWidget extends StatefulWidget {
     this.onTap,
     this.isLoading = false,
     required this.assetsTree,
+    this.padding = EdgeInsets.zero,
   });
 
   @override
@@ -31,7 +33,7 @@ class _TractianAssetsTreeWidgetState extends State<TractianAssetsTreeWidget> {
     return RepaintBoundary(
       child: ListView.builder(
         shrinkWrap: true,
-        padding: EdgeInsets.zero,
+        padding: widget.padding,
         addRepaintBoundaries: true,
         itemCount: widget.assetsTree.length,
         itemBuilder: (context, index) {

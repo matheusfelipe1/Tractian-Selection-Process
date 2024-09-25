@@ -58,10 +58,12 @@ class AssetsTreeError extends AssetsTreeState {
 }
 
 class AssetsTreeLoaded extends AssetsTreeState {
+  final bool isProcessingData;
   AssetsTreeLoaded({
     super.energy,
     super.critical,
     required super.assetsTree,
+    this.isProcessingData = false,
   });
 
   @override
@@ -80,7 +82,7 @@ class AssetsTreeLoaded extends AssetsTreeState {
 
 class AssetsTreeLoading extends AssetsTreeState {
   final List<TractianAssetsTree> assets = List.generate(
-    3,
+    10,
     (index) => TractianAssetsTree(
       children: [],
       type: TractianAssetType.location,
