@@ -7,19 +7,20 @@ import 'package:traction_selection_proccess/app/data/locations/datasource/locati
 import 'package:traction_selection_proccess/app/domain/locations/repository/location_repository.dart';
 
 class LocationRepositoryImpl extends BaseRepository implements LocationRepository {
+
   final LocationDatasource _locationDatasource;
 
-  LocationRepositoryImpl({
-    required LocationDatasource locationDatasource,
-  }) : _locationDatasource = locationDatasource;
+  LocationRepositoryImpl(this._locationDatasource);
+
   @override
-  Future<Result<List<Location>, Exception>> getLocations(String idCompany) async {
+  Future<Result<List<Location>, Exception>> getLocations(
+      String idCompany) async {
     try {
       final result = await _locationDatasource.getLocations(idCompany);
       final locationMapped = await compute(_executeHeavyTask, result);
       return handleSuccess(locationMapped);
     } catch (error) {
-      return handleFailure(error);  
+      return handleFailure(error);
     }
   }
 

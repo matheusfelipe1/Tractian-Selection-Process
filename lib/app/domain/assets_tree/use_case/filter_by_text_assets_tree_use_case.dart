@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/domain/tasks/tasks_manager.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 
 class FilterByTextAssetsTreeUseCase
     extends UseCases<Stream<AssetsTree>, FilterByTextAssetsTreeParams> {
@@ -32,7 +33,7 @@ class FilterByTextAssetsTreeUseCase
 
     await Isolate.spawn(
       _isolateTask,
-      [receivePort.sendPort, params.query, params.branches],
+      [receivePort.sendPort, params],
     );
 
     receivePort.listen((branches) {
@@ -46,25 +47,46 @@ class FilterByTextAssetsTreeUseCase
   }
 
   Future<void> _isolateTask(List<dynamic> args) async {
-    final [sendPort, query, branches] = args;
-    final treeBranches = await _deepTypingFilter(query, branches);
+    final [sendPort, params] = args;
+    final treeBranches = await _deepTypingFilter(params);
     sendPort.send(treeBranches);
   }
 
   Future<List<TreeBranches>> _deepTypingFilter(
-    String query,
-    List<TreeBranches> branches,
+    FilterByTextAssetsTreeParams params,
   ) async {
     List<TreeBranches> treeBranches = [];
-    final futures = branches.map((element) async {
+    final futures = params.branches.map((element) async {
       if (element.children.isNotEmpty) {
-        final children = await _deepTypingFilter(query, element.children);
+        final children = await _deepTypingFilter(
+            params.copyWith(branches: element.children));
         if (children.isNotEmpty) {
-          return element.copyWith(children: children, isOpen: query.isNotEmpty);
+          final canOpen = params.isEnergySensor ||
+              params.isCritical ||
+              params.query.isNotEmpty;
+          return element.copyWith(children: children, isOpen: canOpen);
         }
       }
 
-      if (element.name.toLowerCase().contains(query.toLowerCase())) {
+      if (params.isEnergySensor || params.isCritical) {
+        if (element is AssetsComponent &&
+            element.isCritical &&
+            params.isCritical) {
+          if (element.name.toLowerCase().contains(params.query.toLowerCase())) {
+            return element.copyWith(isOpen: false);
+          }
+        }
+        if (element is AssetsComponent &&
+            element.isEnergySensor &&
+            params.isEnergySensor) {
+          if (element.name.toLowerCase().contains(params.query.toLowerCase())) {
+            return element.copyWith(isOpen: false);
+          }
+        }
+        return null;
+      }
+
+      if (element.name.toLowerCase().contains(params.query.toLowerCase())) {
         return element.copyWith(isOpen: false);
       }
       return null;
@@ -77,10 +99,28 @@ class FilterByTextAssetsTreeUseCase
 
 class FilterByTextAssetsTreeParams {
   final String query;
+  final bool isCritical;
+  final bool isEnergySensor;
   final List<TreeBranches> branches;
 
   FilterByTextAssetsTreeParams({
     required this.query,
     required this.branches,
+    required this.isCritical,
+    required this.isEnergySensor,
   });
+
+  FilterByTextAssetsTreeParams copyWith({
+    String? query,
+    bool? isCritical,
+    bool? isEnergySensor,
+    List<TreeBranches>? branches,
+  }) {
+    return FilterByTextAssetsTreeParams(
+      query: query ?? this.query,
+      branches: branches ?? this.branches,
+      isCritical: isCritical ?? this.isCritical,
+      isEnergySensor: isEnergySensor ?? this.isEnergySensor,
+    );
+  }
 }

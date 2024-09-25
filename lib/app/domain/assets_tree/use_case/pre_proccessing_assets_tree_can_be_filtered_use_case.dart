@@ -6,26 +6,22 @@ import 'package:traction_selection_proccess/app/domain/assets_tree/entities/asse
 
 class PreProccessingAssetsTreeCanBeFilteredUseCase
     extends UseCases<Stream<AssetsTree>, List<TreeBranches>> {
-  Isolate? _activeIsolate;
-  ReceivePort? _receivePort;
 
   @override
   Stream<AssetsTree> call(List<TreeBranches> params) {
     final StreamController<AssetsTree> streamController = StreamController();
-    _runIsolate(params, streamController);
+    _preProccessAssetsInIsolate(params, streamController);
     return streamController.stream;
   }
 
-  Future<void> _runIsolate(
+  Future<void> _preProccessAssetsInIsolate(
     List<TreeBranches> params,
     StreamController streamController,
   ) async {
-    _activeIsolate?.kill(priority: Isolate.immediate);
-    _receivePort?.close();
 
     final receivePort = ReceivePort();
 
-    _activeIsolate = await Isolate.spawn(
+    await Isolate.spawn(
       _isolateTask,
       [receivePort.sendPort,  params],
     );

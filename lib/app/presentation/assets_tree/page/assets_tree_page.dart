@@ -35,7 +35,10 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
         getLocationUseCase: GetIt.I(),
         getAssetsTreeUseCase: GetIt.I(),
         buildAssetsTreeUseCase: GetIt.I(),
+        filterEnergySensorUseCase: GetIt.I(),
+        filterCriticalAlertUseCase: GetIt.I(),
         filterByTextAssetsTreeUseCase: GetIt.I(),
+        expandsChildrenWhenClickedUseCase: GetIt.I(),
         preProccessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
       ),
       child: Scaffold(
@@ -53,57 +56,61 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
           if (state is AssetsTreeError) {
             return const AssetsTreeErrorWidget();
           }
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TractianTextFieldWidget(
-                  controller: controller,
-                  onChanged: cubit.onFiltering,
-                  hintText: tractianLocalizations.searchField,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    FittedBox(
-                      child: TractianToggleButtonWidget(
-                        settings: TractianToggleButtons(
-                          isActive: state.energy,
-                          icon: TractianIcons.lightning,
-                          onTap: cubit.toggleEnergySensor,
-                          title: tractianLocalizations.powerSensor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    FittedBox(
-                      child: TractianToggleButtonWidget(
-                        settings: TractianToggleButtons(
-                          isActive: state.critical,
-                          icon: TractianIcons.warninig,
-                          onTap: cubit.toggleAlertCritical,
-                          title: tractianLocalizations.critical,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                if (state is AssetsTreeLoaded)
-                  Flexible(
-                    child: TractianAssetsTreeWidget(
-                      onTap: (id) => cubit.toggleTree(id),
-                      assetsTree: state.assetsTree.branches.toDSEntity(),
-                    ),
+          return RefreshIndicator.adaptive(
+            onRefresh: cubit.onRefresh,
+            color: TractianColors.blue50,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  TractianTextFieldWidget(
+                    controller: controller,
+                    onChanged: cubit.onFiltering,
+                    hintText: tractianLocalizations.searchField,
                   ),
-                if (state is AssetsTreeLoading)
-                  Flexible(
-                    child: TractianAssetsTreeWidget(
-                      isLoading: true,
-                      assetsTree: state.assets,
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      FittedBox(
+                        child: TractianToggleButtonWidget(
+                          settings: TractianToggleButtons(
+                            isActive: state.energy,
+                            icon: TractianIcons.lightning,
+                            onTap: cubit.toggleEnergySensor,
+                            title: tractianLocalizations.powerSensor,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      FittedBox(
+                        child: TractianToggleButtonWidget(
+                          settings: TractianToggleButtons(
+                            isActive: state.critical,
+                            icon: TractianIcons.warninig,
+                            onTap: cubit.toggleAlertCritical,
+                            title: tractianLocalizations.critical,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  if (state is AssetsTreeLoaded)
+                    Flexible(
+                      child: TractianAssetsTreeWidget(
+                        onTap: (id) => cubit.toggleTree(id),
+                        assetsTree: state.assetsTree.branches.toDSEntity(),
+                      ),
                     ),
-                  )
-              ],
+                  if (state is AssetsTreeLoading)
+                    Flexible(
+                      child: TractianAssetsTreeWidget(
+                        isLoading: true,
+                        assetsTree: state.assets,
+                      ),
+                    )
+                ],
+              ),
             ),
           );
         }),

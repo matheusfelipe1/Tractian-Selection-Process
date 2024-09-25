@@ -1,23 +1,27 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart';
 import 'package:traction_selection_proccess/app/core/utils/base_cubit.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/pre_proccessing_assets_tree_can_be_filtered_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
 import 'package:traction_selection_proccess/app/domain/locations/use_cases/get_location_use_case.dart';
 import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_states.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_energy_sensor_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_critical_alert_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/expands_children_when_clicked_use_case.dart';
+import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/pre_proccessing_assets_tree_can_be_filtered_use_case.dart';
 
 class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   final GetLocationUseCase _getLocationUseCase;
   final GetAssetsTreeUseCase _getAssetsTreeUseCase;
   final BuildAssetsTreeUseCase _buildAssetsTreeUseCase;
+  final FilterEnergySensorUseCase _filterEnergySensorUseCase;
+  final FilterCriticalAlertUseCase _filterCriticalAlertUseCase;
   final FilterByTextAssetsTreeUseCase _filterByTextAssetsTreeUseCase;
+  final ExpandsChildrenWhenClickedUseCase _expandChildrenWhenClickedUseCase;
   final PreProccessingAssetsTreeCanBeFilteredUseCase
       _preProccessingAssetsTreeCanBeFilteredUseCase;
 
@@ -25,29 +29,34 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     required GetLocationUseCase getLocationUseCase,
     required GetAssetsTreeUseCase getAssetsTreeUseCase,
     required BuildAssetsTreeUseCase buildAssetsTreeUseCase,
+    required FilterEnergySensorUseCase filterEnergySensorUseCase,
+    required FilterCriticalAlertUseCase filterCriticalAlertUseCase,
     required FilterByTextAssetsTreeUseCase filterByTextAssetsTreeUseCase,
+    required ExpandsChildrenWhenClickedUseCase
+        expandsChildrenWhenClickedUseCase,
     required PreProccessingAssetsTreeCanBeFilteredUseCase
         preProccessingAssetsTreeCanBeFilteredUseCase,
   })  : _getLocationUseCase = getLocationUseCase,
         _getAssetsTreeUseCase = getAssetsTreeUseCase,
         _buildAssetsTreeUseCase = buildAssetsTreeUseCase,
+        _filterEnergySensorUseCase = filterEnergySensorUseCase,
+        _filterCriticalAlertUseCase = filterCriticalAlertUseCase,
         _filterByTextAssetsTreeUseCase = filterByTextAssetsTreeUseCase,
+        _expandChildrenWhenClickedUseCase = expandsChildrenWhenClickedUseCase,
         _preProccessingAssetsTreeCanBeFilteredUseCase =
             preProccessingAssetsTreeCanBeFilteredUseCase,
         super(AssetsTreeInitial());
 
+  String _cachedQueryString = '';
   late final AssetsTreeArgs _args;
-
   Completer<List<Location>> completer = Completer();
-
   AssetsTree _assetsTreeCache = const AssetsTree(branches: []);
-
   AssetsTree _assetsTreeCacheProccessed = const AssetsTree(branches: []);
 
   @override
   void onInit() {
     _args = Get.arguments as AssetsTreeArgs;
-    _getData();
+    _executeRequestsToBuildAssetsTree();
   }
 
   void onDispose() {
@@ -55,21 +64,22 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
     close();
   }
 
-  Future<void> _getData() async {
+  Future<void> onRefresh() async {
+    await _executeRequestsToBuildAssetsTree();
+  }
+
+  Future<void> _executeRequestsToBuildAssetsTree() async {
+    emit(AssetsTreeLoading());
     await Future.wait([
       _getLocations(),
       _getAssetsTree(),
     ]);
   }
 
-  Future<void> onRefresh() async => await _getData();
-
   Future<void> _getLocations() async {
-    emit(AssetsTreeLoading());
     completer = Completer();
 
     final result = await _getLocationUseCase(_args.companyId);
-
     result.proccessResult(
       onFailure: (error) => emit(AssetsTreeError()),
       onSuccess: (data) => completer.complete(data),
@@ -77,9 +87,7 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   }
 
   Future<void> _getAssetsTree() async {
-    emit(AssetsTreeLoading());
     final result = await _getAssetsTreeUseCase(_args.companyId);
-
     result.proccessResult(
       onSuccess: _buildAssetsTree,
       onFailure: (error) => emit(AssetsTreeError()),
@@ -126,7 +134,8 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
 
   void _preProccessAssetsTree() {
     final listenPreProccess = _preProccessingAssetsTreeCanBeFilteredUseCase(
-        _assetsTreeCache.branches);
+      _assetsTreeCache.branches,
+    );
 
     listenPreProccess.listen((data) {
       _assetsTreeCacheProccessed = data;
@@ -150,137 +159,69 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
   }
 
   void toggleTree(String id) {
-    final assetsTree = AssetsTree(
-      branches: _deepSearchToExpandes(id, state.assetsTree.branches),
+    final params = ExpandsChildrenWhenClickedParams(
+      id: id,
+      branches: state.assetsTree.branches,
     );
 
-    emit(AssetsTreeLoaded(assetsTree: assetsTree));
-  }
-
-  List<TreeBranches> _deepSearchToExpandes(
-    String id,
-    List<TreeBranches> branches,
-  ) {
-    final List<TreeBranches> assetsTree = [];
-
-    for (var element in branches) {
-      if (element.children.isNotEmpty) {
-        element = element.copyWith(
-          children: _deepSearchToExpandes(id, element.children),
-        );
-      }
-
-      if (element.id == id) {
-        element = element.copyWith(isOpen: !element.isOpen);
-      }
-
-      assetsTree.add(element);
-    }
-
-    return assetsTree;
+    emit(
+      AssetsTreeLoaded(
+        assetsTree: _expandChildrenWhenClickedUseCase(params),
+      ),
+    );
   }
 
   Future<void> toggleAlertCritical() async {
-    final newCriticalState = !state.critical;
-    final assetsTreeFiltered = newCriticalState
-        ? await compute(
-            _deepCriticalFilter, _assetsTreeCacheProccessed.branches)
-        : _assetsTreeCacheProccessed.branches;
+    final criticalAlert = !state.critical;
+
+    final assetsTree = await _filterCriticalAlertUseCase(
+      FilterCriticalAlertParams(
+        criticalAlertActive: criticalAlert,
+        assetsTreeCache: _assetsTreeCache,
+        assetsTreeProccessed: _assetsTreeCacheProccessed,
+      ),
+    );
 
     emit(
       state.copyWith(
         energy: false,
-        critical: newCriticalState,
-        assetsTree: AssetsTree(branches: assetsTreeFiltered),
+        assetsTree: assetsTree,
+        critical: criticalAlert,
       ),
     );
   }
 
-  static List<TreeBranches> _deepCriticalFilter(
-    List<TreeBranches> branches,
-  ) {
-    final List<TreeBranches> assetsTree = [];
-
-    for (var element in branches) {
-      if (element.children.isNotEmpty) {
-        element = element.copyWith(
-          isOpen: true,
-          children: _deepCriticalFilter(element.children),
-        );
-      }
-
-      if (element is AssetsComponent) {
-        if (element.isCritical) {
-          assetsTree.add(element);
-        }
-      }
-
-      if (element.children.isNotEmpty) {
-        assetsTree.add(element);
-      }
-    }
-
-    return assetsTree;
-  }
-
   Future<void> toggleEnergySensor() async {
-    final newEnergySytate = !state.energy;
-    final assetsTreeFiltered = newEnergySytate
-        ? await compute(
-            _deepEnergySensorFilter, _assetsTreeCacheProccessed.branches)
-        : _assetsTreeCacheProccessed.branches;
+    final energySensor = !state.energy;
+
+    final assetsTree = await _filterEnergySensorUseCase(
+      FilterEnergySensorParams(
+        energySensorActive: energySensor,
+        assetsTreeCache: _assetsTreeCache,
+        assetsTreeProccessed: _assetsTreeCacheProccessed,
+      ),
+    );
 
     emit(
       state.copyWith(
         critical: false,
-        energy: newEnergySytate,
-        assetsTree: AssetsTree(branches: assetsTreeFiltered),
+        energy: energySensor,
+        assetsTree: assetsTree,
       ),
     );
   }
 
-  static List<TreeBranches> _deepEnergySensorFilter(
-    List<TreeBranches> branches,
-  ) {
-    final List<TreeBranches> assetsTree = [];
-
-    for (var element in branches) {
-      if (element.children.isNotEmpty) {
-        element = element.copyWith(
-          isOpen: true,
-          children: _deepEnergySensorFilter(element.children),
-        );
-      }
-
-      if (element is AssetsComponent) {
-        if (element.isEnergySensor) {
-          assetsTree.add(element);
-        }
-      }
-
-      if (element.children.isNotEmpty) {
-        assetsTree.add(element);
-      }
-    }
-
-    return assetsTree;
-  }
-
-  String _cachedQueryString = '';
-
   Future<void> onFiltering(String query) async {
-
     final params = FilterByTextAssetsTreeParams(
       query: query,
-      branches: query.contains(_cachedQueryString) &&
-              query.length > _cachedQueryString.length
-          ? state.assetsTree.branches
-          : _assetsTreeCache.branches,
+      isCritical: state.critical,
+      isEnergySensor: state.energy,
+      branches: _choiceTreeBranches(query),
     );
 
     _cachedQueryString = query;
-    final assetsTreeFiltered = _filterByTextAssetsTreeUseCase(params);
 
+    final assetsTreeFiltered = _filterByTextAssetsTreeUseCase(params);
     assetsTreeFiltered.listen((data) {
       emit(
         state.copyWith(
@@ -288,6 +229,15 @@ class AssetsTreeCubit extends BaseCubit<AssetsTreeState> {
         ),
       );
     });
+  }
+
+  List<TreeBranches> _choiceTreeBranches(String query) {
+    final branches = query.contains(_cachedQueryString) &&
+            query.length > _cachedQueryString.length
+        ? state.assetsTree.branches
+        : _assetsTreeCache.branches;
+
+    return branches;
   }
 }
 
