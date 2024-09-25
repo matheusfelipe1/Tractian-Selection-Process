@@ -1,4 +1,4 @@
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
 
 abstract class HomeState {}
 

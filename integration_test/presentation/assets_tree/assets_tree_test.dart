@@ -2,11 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/page/assets_tree_page.dart';
-import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
-import 'package:traction_selection_proccess/app/routes/route_paths.dart';
+import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_process/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
+import 'package:traction_selection_process/app/presentation/assets_tree/page/assets_tree_page.dart';
+import 'package:traction_selection_process/app/presentation/home/cubit/home_cubit.dart';
+import 'package:traction_selection_process/app/routes/route_paths.dart';
 
 import '../../../test/mocks/injection/mock_dependency_injection.dart';
 import '../../../test/mocks/material_app/mock_material_app.dart';
@@ -28,9 +28,14 @@ void main() {
           ),
           BlocProvider<AssetsTreeCubit>(
             create: (context) => AssetsTreeCubit(
-              GetIt.I(),
-              GetIt.I(),
-              GetIt.I(),
+              getLocationUseCase: GetIt.I(),
+              getAssetsTreeUseCase: GetIt.I(),
+              buildAssetsTreeUseCase: GetIt.I(),
+              filterEnergySensorUseCase: GetIt.I(),
+              filterCriticalAlertUseCase: GetIt.I(),
+              filterByTextAssetsTreeUseCase: GetIt.I(),
+              expandsChildrenWhenClickedUseCase: GetIt.I(),
+              preProcessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
             ),
           ),
         ],

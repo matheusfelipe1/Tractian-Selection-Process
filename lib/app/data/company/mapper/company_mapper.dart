@@ -1,5 +1,5 @@
-import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
 
 class CompanyMapper {
   static Company _fromData(Map<String, dynamic> data) {

@@ -1,8 +1,8 @@
 import 'package:design_system/styles/traction_asset_type.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
 import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
 
 extension ComponentExtensions on List<TreeBranches> {
   List<AssetsComponent> get componentsUnliked =>

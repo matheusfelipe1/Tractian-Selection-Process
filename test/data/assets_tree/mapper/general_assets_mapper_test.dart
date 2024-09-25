@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/data/assets_tree/mappers/assets_tree_mapper.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/data/assets_tree/mappers/assets_tree_mapper.dart';
 
 void main() {
   test(
@@ -14,8 +14,8 @@ void main() {
       for (var element in result) {
         if (element is Assets) {
           final assertion = element.children.cast().every(
-            (item) => item.parentId == element.id,
-          );
+                (item) => item.parentId == element.id,
+              );
           expect(assertion, equals(true));
         }
       }

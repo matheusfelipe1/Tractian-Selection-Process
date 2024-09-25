@@ -1,29 +1,27 @@
 import 'dart:async';
 import 'dart:isolate';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
 
-class PreProccessingAssetsTreeCanBeFilteredUseCase
+class PreProcessingAssetsTreeCanBeFilteredUseCase
     extends UseCases<Stream<AssetsTree>, List<TreeBranches>> {
-
   @override
   Stream<AssetsTree> call(List<TreeBranches> params) {
     final StreamController<AssetsTree> streamController = StreamController();
-    _preProccessAssetsInIsolate(params, streamController);
+    _preprocessAssetsInIsolate(params, streamController);
     return streamController.stream;
   }
 
-  Future<void> _preProccessAssetsInIsolate(
+  Future<void> _preprocessAssetsInIsolate(
     List<TreeBranches> params,
     StreamController streamController,
   ) async {
-
     final receivePort = ReceivePort();
 
     await Isolate.spawn(
       _isolateTask,
-      [receivePort.sendPort,  params],
+      [receivePort.sendPort, params],
     );
 
     receivePort.listen((branches) {

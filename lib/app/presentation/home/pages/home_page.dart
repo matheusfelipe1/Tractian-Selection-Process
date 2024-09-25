@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
-import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/home/cubit/home_state.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/core/constants/app_constants.dart';
+import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_process/app/presentation/home/cubit/home_cubit.dart';
+import 'package:traction_selection_process/app/presentation/home/cubit/home_state.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
 
 part '../widgets/home_error_page.dart';
 part "../widgets/home_companies_listview.dart";

@@ -1,8 +1,7 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
 
 class Location extends TreeBranches {
-
   Location({
     super.isOpen,
     required super.id,

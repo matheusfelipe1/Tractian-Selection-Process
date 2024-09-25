@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/data/locations/mappers/location_mapper.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/data/locations/mappers/location_mapper.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
 
 void main() {
   test(
@@ -13,8 +13,8 @@ void main() {
       for (var location in locations) {
         if (location.children.isNotEmpty) {
           final checkIfIsParentId = location.children.cast().every(
-            (item) => item.parentId == location.id,
-          );
+                (item) => item.parentId == location.id,
+              );
           expect(checkIfIsParentId, equals(true));
         }
       }

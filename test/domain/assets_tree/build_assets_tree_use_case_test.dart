@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/sub_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/sub_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
 
 void main() {
-  final BuildAssetsTreeUseCase _buildAssetsTreeUseCase =
+  final BuildAssetsTreeUseCase buildAssetsTreeUseCase =
       BuildAssetsTreeUseCase();
 
   test(
     "Test",
     () async {
-      final result = await _buildAssetsTreeUseCase(assetsTree);
+      final result = buildAssetsTreeUseCase(assetsTree);
       print(result);
     },
   );

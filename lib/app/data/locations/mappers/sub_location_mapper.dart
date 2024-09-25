@@ -1,5 +1,5 @@
-import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
 
 class SubLocationMapper {
   static const _id = "id";

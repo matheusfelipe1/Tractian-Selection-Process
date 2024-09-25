@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
-import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
-import 'package:traction_selection_proccess/app/domain/company/use_cases/get_companies_use_case.dart';
+import 'package:traction_selection_process/app/core/utils/result.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/domain/company/repository/company_repository.dart';
+import 'package:traction_selection_process/app/domain/company/use_cases/get_companies_use_case.dart';
 
 class CompanyRepositoryMock extends Mock implements CompanyRepository {}
 
@@ -30,7 +30,7 @@ void main() {
 
       expect(result, isA<Result<List<Company>, Exception>>());
       expect(result.isSuccess, equals(true));
-      result.proccessResult(
+      result.processResult(
         onSuccess: (data) {
           expect(data.length, equals(1));
           expect(data.first.id, equals("123"));

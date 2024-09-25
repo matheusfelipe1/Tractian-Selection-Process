@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/data/company/mapper/company_mapper.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/data/company/mapper/company_mapper.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
 
 void main() {
   test(

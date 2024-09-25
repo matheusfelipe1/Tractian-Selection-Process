@@ -1,26 +1,31 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/domain/tasks/tasks_manager.dart';
 
 void main() {
-  final FilterByTextAssetsTreeUseCase _filterByTextAssetsTreeUseCase =
-      FilterByTextAssetsTreeUseCase();
-  //  FilterByTextAssetsTreeParams(query: query, branches: branches)
+  final FilterByTextAssetsTreeUseCase filterByTextAssetsTreeUseCase =
+      FilterByTextAssetsTreeUseCase(
+    TasksManager(),
+  );
   test(
     "Must show assets tree filtered by text",
     () async {
       final params = FilterByTextAssetsTreeParams(
         query: "Tractian 1",
+        isCritical: false,
+        isEnergySensor: false,
         branches: _assetsTreeMock.branches,
       );
-      final onReceivedResults = await _filterByTextAssetsTreeUseCase(params);
+      final onReceivedResults = filterByTextAssetsTreeUseCase(params);
 
       print(onReceivedResults);
-    }, timeout: const Timeout(Duration(seconds: 60)),
+    },
+    timeout: const Timeout(Duration(seconds: 60)),
   );
 }
 

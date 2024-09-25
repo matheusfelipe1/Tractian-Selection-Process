@@ -1,17 +1,17 @@
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
 
-class ExpandsChildrenWhenClickedUseCase extends UseCases<AssetsTree, ExpandsChildrenWhenClickedParams> {
-
+class ExpandsChildrenWhenClickedUseCase
+    extends UseCases<AssetsTree, ExpandsChildrenWhenClickedParams> {
   @override
   AssetsTree call(ExpandsChildrenWhenClickedParams params) {
-     final assetsTree = AssetsTree(
+    final assetsTree = AssetsTree(
       branches: _deepSearchToExpands(params.id, params.branches),
     );
     return assetsTree;
   }
 
-   List<TreeBranches> _deepSearchToExpands(
+  List<TreeBranches> _deepSearchToExpands(
     String id,
     List<TreeBranches> branches,
   ) {
@@ -33,7 +33,6 @@ class ExpandsChildrenWhenClickedUseCase extends UseCases<AssetsTree, ExpandsChil
 
     return assetsTree;
   }
-
 }
 
 class ExpandsChildrenWhenClickedParams {

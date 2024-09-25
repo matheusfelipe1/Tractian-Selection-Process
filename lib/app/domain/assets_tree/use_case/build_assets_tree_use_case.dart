@@ -1,10 +1,10 @@
 import 'dart:isolate';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
 
 class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
   @override
@@ -13,7 +13,6 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
     await Isolate.spawn(_isolateTask, [receivePort.sendPort, params.branches]);
 
     await for (var location in receivePort) {
-      
       yield location == null ? null : AssetsTree(branches: [location]);
     }
 

@@ -1,5 +1,5 @@
-import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
 
 class AssetsComponentMapper {
   static List<AssetsComponent> fromDataList(

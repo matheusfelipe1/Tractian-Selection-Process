@@ -1,6 +1,6 @@
-import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/data/locations/mappers/sub_location_mapper.dart';
+import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/data/locations/mappers/sub_location_mapper.dart';
 
 class LocationMapper {
   static const _id = "id";

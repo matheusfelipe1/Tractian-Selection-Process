@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_proccess/app/core/extensions/tree_branches_extension.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_states.dart';
+import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_process/app/core/extensions/tree_branches_extension.dart';
+import 'package:traction_selection_process/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
+import 'package:traction_selection_process/app/presentation/assets_tree/cubit/assets_tree_states.dart';
 
 part "../widgets/assets_tree_error_widget.dart";
 
@@ -39,7 +39,7 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
         filterCriticalAlertUseCase: GetIt.I(),
         filterByTextAssetsTreeUseCase: GetIt.I(),
         expandsChildrenWhenClickedUseCase: GetIt.I(),
-        preProccessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
+        preProcessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
       ),
       child: Scaffold(
         backgroundColor: TractianColors.whiteBrand,
@@ -62,9 +62,9 @@ class _AssetsTreePageState extends State<AssetsTreePage> {
             child: Column(
               children: [
                 if (state is AssetsTreeLoaded && state.isProcessingData)
-                const LinearProgressIndicator(
-                  color: TractianColors.blue50,
-                ),
+                  const LinearProgressIndicator(
+                    color: TractianColors.blue50,
+                  ),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),

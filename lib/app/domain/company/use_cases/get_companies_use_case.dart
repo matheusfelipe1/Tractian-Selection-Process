@@ -1,7 +1,7 @@
-import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
-import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
+import 'package:traction_selection_process/app/core/utils/result.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/domain/company/repository/company_repository.dart';
 
 typedef CompaniesResult = Result<List<Company>, Exception>;
 
