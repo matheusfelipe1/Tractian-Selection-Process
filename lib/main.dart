@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: RoutePaths.splash,
       theme: ThemeData(useMaterial3: true),
       supportedLocales: AppLocalizations.supportedLocales,
+
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(

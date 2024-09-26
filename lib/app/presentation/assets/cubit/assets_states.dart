@@ -4,17 +4,20 @@ import 'package:traction_selection_process/app/domain/assets_tree/entities/asset
 abstract class AssetsState {
   final bool energy;
   final bool critical;
+  final bool isProcessing;
   final AssetsTreeEntity assetsTree;
 
   AssetsState({
     this.energy = false,
     this.critical = false,
+    this.isProcessing = false,
     this.assetsTree = const AssetsTreeEntity(branches: []),
   });
 
   AssetsState copyWith({
     bool? energy,
     bool? critical,
+    bool? isProcessing,
     AssetsTreeEntity? assetsTree,
   });
 }
@@ -29,6 +32,7 @@ class AssetsInitial extends AssetsState {
   AssetsInitial copyWith({
     bool? energy,
     bool? critical,
+    bool? isProcessing,
     AssetsTreeEntity? assetsTree,
   }) {
     return AssetsInitial(
@@ -48,6 +52,7 @@ class AssetsError extends AssetsState {
   AssetsError copyWith({
     bool? energy,
     bool? critical,
+    bool? isProcessing,
     AssetsTreeEntity? assetsTree,
   }) {
     return AssetsError(
@@ -58,24 +63,25 @@ class AssetsError extends AssetsState {
 }
 
 class AssetsLoaded extends AssetsState {
-  final bool isProcessingData;
   AssetsLoaded({
     super.energy,
     super.critical,
     required super.assetsTree,
-    this.isProcessingData = false,
+    super.isProcessing = false,
   });
 
   @override
   AssetsLoaded copyWith({
     bool? energy,
     bool? critical,
+    bool? isProcessing,
     AssetsTreeEntity? assetsTree,
   }) {
     return AssetsLoaded(
       energy: energy ?? this.energy,
       critical: critical ?? this.critical,
       assetsTree: assetsTree ?? this.assetsTree,
+      isProcessing: isProcessing ?? this.isProcessing,
     );
   }
 }
@@ -84,6 +90,7 @@ class AssetsLoading extends AssetsState {
   AssetsLoading({
     super.energy,
     super.critical,
+    super.isProcessing,
   }) : super(
           assetsTree: AssetsTreeEntity(
             branches: List<TreeBranches>.generate(
@@ -102,11 +109,13 @@ class AssetsLoading extends AssetsState {
   AssetsLoading copyWith({
     bool? energy,
     bool? critical,
+    bool? isProcessing,
     AssetsTreeEntity? assetsTree,
   }) {
     return AssetsLoading(
       energy: energy ?? this.energy,
       critical: critical ?? this.critical,
+      isProcessing: isProcessing ?? this.isProcessing,
     );
   }
 }

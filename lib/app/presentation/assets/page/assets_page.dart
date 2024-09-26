@@ -50,8 +50,7 @@ class _AssetsPageState extends State<AssetsPage> {
             title: tractianLocalizations.assets,
           ),
         ),
-        body: BlocBuilder<AssetsCubit, AssetsState>(
-            builder: (context, state) {
+        body: BlocBuilder<AssetsCubit, AssetsState>(builder: (context, state) {
           final crossFadeState = state is AssetsLoading
               ? CrossFadeState.showSecond
               : CrossFadeState.showFirst;
@@ -63,7 +62,7 @@ class _AssetsPageState extends State<AssetsPage> {
             color: TractianColors.blue50,
             child: Column(
               children: [
-                if (state is AssetsLoaded && state.isProcessingData)
+                if (state.isProcessing)
                   const LinearProgressIndicator(
                     color: TractianColors.blue50,
                   ),
@@ -86,8 +85,11 @@ class _AssetsPageState extends State<AssetsPage> {
                           settings: TractianToggleButtons(
                             isActive: state.energy,
                             icon: TractianIcons.lightning,
-                            onTap: assetsCubit.toggleEnergySensor,
                             title: tractianLocalizations.powerSensor,
+                            onTap: () => {
+                              controller.clear(),
+                              assetsCubit.toggleEnergySensor(),
+                            },
                           ),
                         ),
                       ),
@@ -97,8 +99,11 @@ class _AssetsPageState extends State<AssetsPage> {
                           settings: TractianToggleButtons(
                             isActive: state.critical,
                             icon: TractianIcons.warninig,
-                            onTap: assetsCubit.toggleAlertCritical,
                             title: tractianLocalizations.critical,
+                            onTap: () => {
+                              controller.clear(),
+                              assetsCubit.toggleAlertCritical(),
+                            },
                           ),
                         ),
                       ),

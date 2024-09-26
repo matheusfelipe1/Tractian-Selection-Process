@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:traction_selection_process/app/core/utils/base_cubit.dart';
+import 'package:traction_selection_process/app/core/extensions/tree_branches_extension.dart';
+import 'package:traction_selection_process/app/presentation/assets/cubit/assets_states.dart';
 import 'package:traction_selection_process/app/domain/locations/entities/location_entity.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
-import 'package:traction_selection_process/app/core/extensions/tree_branches_extension.dart';
 import 'package:traction_selection_process/app/domain/locations/use_cases/get_location_use_case.dart';
-import 'package:traction_selection_process/app/presentation/assets/cubit/assets_states.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/build_assets_tree_use_case.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/expand_the_children_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_energy_sensor_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_critical_alert_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/use_case/expand_the_children_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/cached_data_can_be_filtered_use_case.dart';
 
 class AssetsCubit extends BaseCubit<AssetsState> {
@@ -124,7 +124,7 @@ class AssetsCubit extends BaseCubit<AssetsState> {
         emit(
           AssetsLoaded(
             energy: state.energy,
-            isProcessingData: false,
+            isProcessing: false,
             critical: state.critical,
             assetsTree: state.assetsTree,
           ),
@@ -155,7 +155,7 @@ class AssetsCubit extends BaseCubit<AssetsState> {
     if (isClosed) return;
     emit(
       AssetsLoaded(
-        isProcessingData: true,
+        isProcessing: true,
         assetsTree: currentAssetsTree.copyWith(branches: updatedBranches),
       ),
     );
@@ -170,9 +170,9 @@ class AssetsCubit extends BaseCubit<AssetsState> {
     );
 
     emit(
-      AssetsLoaded(
+      state.copyWith(
         assetsTree: _expandTheChildrenUseCase(params),
-      ),
+      )
     );
   }
 
