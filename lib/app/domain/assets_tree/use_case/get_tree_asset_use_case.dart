@@ -1,9 +1,9 @@
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/repository/assets_tree_repository.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/core/utils/result.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/repository/assets_tree_repository.dart';
 
-typedef AssetsTreeResult = Result<AssetsTree, Exception>;
+typedef AssetsTreeResult = Result<AssetsTreeEntity, Exception>;
 
 class GetAssetsTreeUseCase implements UseCases<AssetsTreeResult, String> {
   final AssetsTreeRepository _assetsRepository;

@@ -1,15 +1,13 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:traction_selection_proccess/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/page/assets_tree_page.dart';
-import 'package:traction_selection_proccess/app/presentation/home/cubit/home_cubit.dart';
-import 'package:traction_selection_proccess/app/routes/route_paths.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:traction_selection_process/app/routes/route_paths.dart';
+import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_process/app/presentation/assets/page/assets_page.dart';
+import 'package:traction_selection_process/app/presentation/assets/cubit/assets_cubit.dart';
 
-import '../../../test/mocks/injection/mock_dependency_injection.dart';
 import '../../../test/mocks/material_app/mock_material_app.dart';
+import '../../../test/mocks/injection/mock_dependency_injection.dart';
 
 void main() {
   setUpAll(() {
@@ -17,44 +15,94 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     MockDependencyInjection.ensureInitialized();
   });
-  testWidgets(
-    "Should open and show the path of where it is located when you click on critical",
-    (tester) async {
-      final widget = MockMaterialApp.getWidget(
-        initialRoute: RoutePaths.home,
-        providers: [
-          BlocProvider<HomeCubit>(
-            create: (context) => HomeCubit(GetIt.I()),
-          ),
-          BlocProvider<AssetsTreeCubit>(
-            create: (context) => AssetsTreeCubit(
-              GetIt.I(),
-              GetIt.I(),
-              GetIt.I(),
-            ),
-          ),
-        ],
+  group(
+    "Assets tree tests",
+    () {
+      testWidgets(
+        "Should open and show components in the path of where it is located when you click on critical",
+        (tester) async {
+          final widget = MockMaterialApp.getWidget(
+            initialRoute: RoutePaths.home,
+          );
+          await tester.pumpWidget(widget);
+          await tester.pumpAndSettle();
+
+          Get.toNamed(
+            RoutePaths.assets,
+            arguments: AssetsArgs(companyId: "0"),
+          );
+
+          await tester.pumpAndSettle();
+          expect(find.byType(AssetsPage), findsOneWidget);
+
+          await tester.pumpAndSettle();
+
+          expect(find.text(tractianLocalizations.powerSensor), findsOneWidget);
+          expect(find.text("Energy 2"), findsNothing);
+
+          await tester.tap(find.text(tractianLocalizations.powerSensor));
+          await tester.pumpAndSettle();
+          expect(find.text("Energy 2"), findsAny);
+        },
       );
-      await tester.pumpWidget(widget);
-      await tester.pumpAndSettle();
+      testWidgets(
+        "Should open and show critical components in the path of where it is located when you click on critical",
+        (tester) async {
+          final widget = MockMaterialApp.getWidget(
+            initialRoute: RoutePaths.home,
+          );
+          await tester.pumpWidget(widget);
+          await tester.pumpAndSettle();
 
-      Get.toNamed(
-        RoutePaths.assets,
-        arguments: AssetsTreeArgs(companyId: "0"),
+          Get.toNamed(
+            RoutePaths.assets,
+            arguments: AssetsArgs(companyId: "0"),
+          );
+
+          await tester.pumpAndSettle();
+          expect(find.byType(AssetsPage), findsOneWidget);
+
+          await tester.pumpAndSettle();
+
+          expect(find.text(tractianLocalizations.powerSensor), findsOneWidget);
+          expect(find.text("Component critical"), findsNothing);
+
+          await tester.tap(find.text(tractianLocalizations.critical));
+          await tester.pumpAndSettle();
+          expect(find.text( "Component critical"), findsAny);
+        },
       );
+    testWidgets(
+        "Should filter components in the path of where it is located when you are typing in the search bar",
+        (tester) async {
+          final widget = MockMaterialApp.getWidget(
+            initialRoute: RoutePaths.home,
+          );
+          await tester.pumpWidget(widget);
+          await tester.pumpAndSettle();
 
-      await tester.pumpAndSettle();
-      expect(find.byType(AssetsTreePage), findsOneWidget);
+          Get.toNamed(
+            RoutePaths.assets,
+            arguments: AssetsArgs(companyId: "0"),
+          );
 
-      await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          expect(find.byType(AssetsPage), findsOneWidget);
 
-      expect(find.text(tractianLocalizations.powerSensor), findsOneWidget);
-      expect(find.text("Energy 2"), findsNothing);
+          await tester.pumpAndSettle();
 
-      await tester.tap(find.text(tractianLocalizations.powerSensor));
-      await tester.pumpAndSettle();
-      expect(find.text("Energy Component"), findsOneWidget);
-      expect(find.text("Energy 2"), findsOneWidget);
+          expect(find.text(tractianLocalizations.powerSensor), findsOneWidget);
+          expect(find.text("Component critical"), findsNothing);
+
+          expect(find.byType(TextField), findsOneWidget);
+
+          await tester.enterText(find.byType(TextField), "critical");
+
+          await tester.pumpAndSettle();
+          expect(find.text("Component critical"), findsAny);
+        },
+      );
+    
     },
   );
 }

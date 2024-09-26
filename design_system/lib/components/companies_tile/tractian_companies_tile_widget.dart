@@ -1,5 +1,5 @@
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:design_system/design_system.dart';
 
 class TractianCompaniesTileWidget extends StatelessWidget {
   final bool isLoading;

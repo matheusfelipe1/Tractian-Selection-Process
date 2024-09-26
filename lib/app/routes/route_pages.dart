@@ -1,8 +1,8 @@
 import 'package:get/route_manager.dart';
-import 'package:traction_selection_proccess/app/routes/route_paths.dart';
-import 'package:traction_selection_proccess/app/presentation/home/pages/home_page.dart';
-import 'package:traction_selection_proccess/app/presentation/assets_tree/page/assets_tree_page.dart';
-import 'package:traction_selection_proccess/app/presentation/splash_screen/pages/splash_screen.dart';
+import 'package:traction_selection_process/app/routes/route_paths.dart';
+import 'package:traction_selection_process/app/presentation/home/pages/home_page.dart';
+import 'package:traction_selection_process/app/presentation/assets/page/assets_page.dart';
+import 'package:traction_selection_process/app/presentation/splash_screen/pages/splash_screen.dart';
 
 final class RoutePages {
   static List<GetPage> get pages {
@@ -17,7 +17,7 @@ final class RoutePages {
       ),
       GetPage(
         name: RoutePaths.assets,
-        page: () => const AssetsTreePage(),
+        page: () => const AssetsPage(),
       ),
     ];
   }

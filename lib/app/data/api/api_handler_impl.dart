@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:traction_selection_proccess/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_proccess/app/data/api/custom_interceptors.dart';
-import 'package:traction_selection_proccess/app/domain/api/api_handler.dart';
+import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
+import 'package:traction_selection_process/app/data/api/custom_interceptors.dart';
+import 'package:traction_selection_process/app/domain/api/api_handler.dart';
 
 class ApiHandlerImpl extends ApiHandler {
   late Dio _dio;

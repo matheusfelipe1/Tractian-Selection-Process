@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:design_system/design_system.dart';
 import 'package:get/get.dart';
-import 'package:traction_selection_proccess/app/core/constants/app_constants.dart';
-import 'package:traction_selection_proccess/app/routes/route_paths.dart';
+import 'package:traction_selection_process/app/core/constants/app_constants.dart';
+import 'package:traction_selection_process/app/routes/route_paths.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

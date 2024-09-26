@@ -1,35 +1,35 @@
 import 'package:mocktail/mocktail.dart';
-import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/sub_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
+import 'package:traction_selection_process/app/core/utils/result.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/sub_assets_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/get_tree_asset_use_case.dart';
 
 class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
   @override
   Future<AssetsTreeResult> call(String params) async {
     return Result.success(
-      AssetsTree(
+      AssetsTreeEntity(
         branches: [
-          AssetsComponent(
+          AssetsComponentEntity(
             id: "140",
             sensorId: "1290",
             name: "Energy Component",
             sensorType: SensorType.energySensor,
             sensorStatus: SensorStatus.operating,
           ),
-          Assets(
+          AssetsEntity(
             id: "50",
             locationId: "001",
             name: "Asset Tractian",
             children: [
-              SubAssets(
+              SubAssetsEntity(
                 id: "90",
                 parentId: "50",
                 name: "Sub Asset Tractian",
                 children: [
-                  AssetsComponent(
+                  AssetsComponentEntity(
                     id: "140",
                     parentId: "90",
                     sensorId: "1890",
@@ -37,7 +37,7 @@ class MockGetAssetsTreeUseCase extends Mock implements GetAssetsTreeUseCase {
                     sensorType: SensorType.energySensor,
                     sensorStatus: SensorStatus.alert,
                   ),
-                  AssetsComponent(
+                  AssetsComponentEntity(
                     id: "140",
                     parentId: "90",
                     sensorId: "1890",

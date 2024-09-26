@@ -1,20 +1,19 @@
 import 'dart:isolate';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_proccess/app/domain/locations/entities/sub_location.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_entity.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
-class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
+class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTreeEntity?>, AssetsTreeEntity> {
   @override
-  Stream<AssetsTree?> call(AssetsTree params) async* {
+  Stream<AssetsTreeEntity?> call(AssetsTreeEntity params) async* {
     final receivePort = ReceivePort();
     await Isolate.spawn(_isolateTask, [receivePort.sendPort, params.branches]);
 
     await for (var location in receivePort) {
-      
-      yield location == null ? null : AssetsTree(branches: [location]);
+      yield location == null ? null : AssetsTreeEntity(branches: [location]);
     }
 
     Isolate.exit();
@@ -23,19 +22,19 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
   void _isolateTask(List<dynamic> args) {
     final [sendPort, branches] = args;
 
-    for (var data in _buildLocation(branches)) {
+    for (var data in _buildMainLevelAssetsTree(branches)) {
       sendPort.send(data);
     }
 
     sendPort.send(null);
   }
 
-  Iterable<Location> _buildLocation(
+  Iterable<LocationEntity> _buildMainLevelAssetsTree(
     List<TreeBranches> branches,
   ) sync* {
-    final assets = branches.whereType<Assets>().toList();
-    final locations = branches.whereType<Location>().toList();
-    final components = branches.whereType<AssetsComponent>().toList();
+    final assets = branches.whereType<AssetsEntity>().toList();
+    final locations = branches.whereType<LocationEntity>().toList();
+    final components = branches.whereType<AssetsComponentEntity>().toList();
 
     for (var location in locations) {
       final assetsInLocation = assets.where(
@@ -63,7 +62,7 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
         children: [
           ...assetsInLocation,
           ...componentsInLocation,
-          ..._buildSubLocation([
+          ..._buildSecondaryLevelsAssetsTree([
             ...location.children,
             ...assetsNotInLocation,
             ...componentsNotInLocation,
@@ -73,12 +72,12 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
     }
   }
 
-  Iterable<SubLocation> _buildSubLocation(
+  Iterable<SubLocationEntity> _buildSecondaryLevelsAssetsTree(
     List<TreeBranches> branches,
   ) sync* {
-    final assets = branches.whereType<Assets>().toList();
-    final subLocations = branches.whereType<SubLocation>().toList();
-    final components = branches.whereType<AssetsComponent>().toList();
+    final assets = branches.whereType<AssetsEntity>().toList();
+    final subLocations = branches.whereType<SubLocationEntity>().toList();
+    final components = branches.whereType<AssetsComponentEntity>().toList();
 
     for (var subLocation in subLocations) {
       final assetsInLocation = assets.where(
@@ -106,7 +105,7 @@ class BuildAssetsTreeUseCase extends UseCases<Stream<AssetsTree?>, AssetsTree> {
         children: [
           ...assetsInLocation,
           ...componentsInLocation,
-          ..._buildSubLocation([
+          ..._buildSecondaryLevelsAssetsTree([
             ...subLocation.children,
             ...assetsNotInLocation,
             ...componentsNotInLocation,

@@ -1,14 +1,14 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
 
-class AssetsComponent extends TreeBranches {
+class AssetsComponentEntity extends TreeBranches {
   final String sensorId;
   final String? parentId;
   final String? locationId;
   final SensorType sensorType;
   final SensorStatus sensorStatus;
 
-  AssetsComponent({
+  AssetsComponentEntity({
     super.isOpen,
     this.parentId,
     this.locationId,
@@ -44,7 +44,7 @@ class AssetsComponent extends TreeBranches {
   }
 
   @override
-  AssetsComponent copyWith({
+  AssetsComponentEntity copyWith({
     String? id,
     bool? isOpen,
     String? name,
@@ -55,7 +55,7 @@ class AssetsComponent extends TreeBranches {
     SensorStatus? sensorStatus,
     List<TreeBranches>? children,
   }) {
-    return AssetsComponent(
+    return AssetsComponentEntity(
       id: id ?? this.id,
       name: name ?? this.name,
       isOpen: isOpen ?? this.isOpen,
@@ -70,7 +70,6 @@ class AssetsComponent extends TreeBranches {
 }
 
 enum SensorType {
-
   energySensor("energy"),
   vibrationSensor("vibration");
 
@@ -80,7 +79,6 @@ enum SensorType {
 }
 
 enum SensorStatus {
-  
   alert("alert"),
   operating("operating");
 

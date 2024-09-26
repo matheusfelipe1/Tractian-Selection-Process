@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/data/company/mapper/company_mapper.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
+import 'package:traction_selection_process/app/data/company/mapper/company_mapper.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company_entity.dart';
 
 void main() {
   test(
     "Must return a list of companies",
     () {
       final companies = CompanyMapper.fromDataList(_mockCompaniesJSON);
-      expect(companies, isA<List<Company>>());
+      expect(companies, isA<List<CompanyEntity>>());
       expect(companies.length, equals(3));
       expect(companies.first.id, equals("662fd100f990557384756e58"));
       expect(companies.first.name, equals("Apex"));

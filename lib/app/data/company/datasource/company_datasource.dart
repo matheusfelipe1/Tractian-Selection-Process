@@ -1,5 +1,5 @@
-import 'package:traction_selection_proccess/app/domain/api/api_handler.dart';
-import 'package:traction_selection_proccess/app/core/constants/endpoints.dart';
+import 'package:traction_selection_process/app/domain/api/api_handler.dart';
+import 'package:traction_selection_process/app/core/constants/endpoints.dart';
 
 class CompanyDatasource {
   final ApiHandler _apiHandler;

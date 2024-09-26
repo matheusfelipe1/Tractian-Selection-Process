@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_proccess/app/core/utils/result.dart';
-import 'package:traction_selection_proccess/app/domain/company/entity/company.dart';
-import 'package:traction_selection_proccess/app/data/company/datasource/company_datasource.dart';
-import 'package:traction_selection_proccess/app/domain/company/repository/company_repository.dart';
-import 'package:traction_selection_proccess/app/data/company/repository/company_repository_impl.dart';
+import 'package:traction_selection_process/app/core/utils/result.dart';
+import 'package:traction_selection_process/app/domain/company/entity/company_entity.dart';
+import 'package:traction_selection_process/app/data/company/datasource/company_datasource.dart';
+import 'package:traction_selection_process/app/domain/company/repository/company_repository.dart';
+import 'package:traction_selection_process/app/data/company/repository/company_repository_impl.dart';
 
 class CompanyDatasourceMock extends Mock implements CompanyDatasource {}
 
@@ -25,9 +25,9 @@ void main() {
           .thenAnswer((_) async => _mockCompaniesJSON);
 
       final result = await repository.getCompanies();
-      expect(result, isA<Result<List<Company>, Exception>>());
+      expect(result, isA<Result<List<CompanyEntity>, Exception>>());
       expect(result.isSuccess, equals(true));
-      result.proccessResult(
+      result.processResult(
         onSuccess: (data) {
           expect(data.length, equals(3));
           expect(data.first.id, equals("662fd100f990557384756e58"));

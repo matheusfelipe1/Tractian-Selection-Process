@@ -1,9 +1,8 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
 
-class Location extends TreeBranches {
-
-  Location({
+class LocationEntity extends TreeBranches {
+  LocationEntity({
     super.isOpen,
     required super.id,
     required super.name,
@@ -11,13 +10,13 @@ class Location extends TreeBranches {
   });
 
   @override
-  Location copyWith({
+  LocationEntity copyWith({
     String? id,
     String? name,
     bool? isOpen,
     List<TreeBranches>? children,
   }) {
-    return Location(
+    return LocationEntity(
       id: id ?? this.id,
       name: name ?? this.name,
       isOpen: isOpen ?? this.isOpen,

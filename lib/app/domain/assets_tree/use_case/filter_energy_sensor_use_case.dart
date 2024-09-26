@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
 class FilterEnergySensorUseCase
-    extends UseCases<Future<AssetsTree>, FilterEnergySensorParams> {
+    extends UseCases<Future<AssetsTreeEntity>, FilterEnergySensorParams> {
   @override
-  Future<AssetsTree> call(FilterEnergySensorParams params) async {
+  Future<AssetsTreeEntity> call(FilterEnergySensorParams params) async {
     if (params.energySensorActive) {
-      final treeBranchesProccessed = params.assetsTreeProccessed.branches;
+      final treeBranchesprocessed = params.assetsTreeprocessed.branches;
 
       final treeBranches = await compute(
         _deepEnergySensorFilter,
-        treeBranchesProccessed,
+        treeBranchesprocessed,
       );
 
-      return AssetsTree(branches: treeBranches);
+      return AssetsTreeEntity(branches: treeBranches);
     }
     return params.assetsTreeCache;
   }
@@ -33,7 +33,7 @@ class FilterEnergySensorUseCase
         );
       }
 
-      if (element is AssetsComponent) {
+      if (element is AssetsComponentEntity) {
         if (element.isEnergySensor) {
           assetsTree.add(element);
         }
@@ -50,12 +50,12 @@ class FilterEnergySensorUseCase
 
 class FilterEnergySensorParams {
   final bool energySensorActive;
-  final AssetsTree assetsTreeCache;
-  final AssetsTree assetsTreeProccessed;
+  final AssetsTreeEntity assetsTreeCache;
+  final AssetsTreeEntity assetsTreeprocessed;
 
   FilterEnergySensorParams({
     required this.assetsTreeCache,
     required this.energySensorActive,
-    required this.assetsTreeProccessed,
+    required this.assetsTreeprocessed,
   });
 }

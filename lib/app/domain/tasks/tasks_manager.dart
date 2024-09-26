@@ -6,7 +6,6 @@ class TasksManager {
   static const int _overflowTask = 6;
   final Queue<Function> _tasks = Queue();
 
-
   void _checkOverflow() {
     if (_tasks.length > _overflowTask) {
       _tasks.clear();
@@ -17,12 +16,12 @@ class TasksManager {
   void addTask(Function task) {
     _checkOverflow();
     _tasks.add(task);
-    _proccessTasks();
+    _processTasks();
   }
 
   void releaseTask() {
     _currentTasks--;
-    _proccessTasks();
+    _processTasks();
   }
 
   void killAllTasks() {
@@ -30,12 +29,11 @@ class TasksManager {
     _tasks.clear();
   }
 
-  void _proccessTasks() {
+  void _processTasks() {
     while (_tasks.isNotEmpty && _currentTasks < _maxTasks) {
       final task = _tasks.removeFirst();
       _currentTasks++;
       task();
     }
   }
-
 }

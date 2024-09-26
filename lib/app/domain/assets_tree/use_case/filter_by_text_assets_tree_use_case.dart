@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'dart:isolate';
-import 'package:traction_selection_proccess/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_proccess/app/domain/tasks/tasks_manager.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_proccess/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
+import 'package:traction_selection_process/app/domain/tasks/tasks_manager.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
 class FilterByTextAssetsTreeUseCase
-    extends UseCases<Stream<AssetsTree>, FilterByTextAssetsTreeParams> {
+    extends UseCases<Stream<AssetsTreeEntity>, FilterByTextAssetsTreeParams> {
   final TasksManager _taskManager;
 
   FilterByTextAssetsTreeUseCase(this._taskManager);
 
   @override
-  Stream<AssetsTree> call(FilterByTextAssetsTreeParams params) {
-    final StreamController<AssetsTree> streamController = StreamController();
+  Stream<AssetsTreeEntity> call(FilterByTextAssetsTreeParams params) {
+    final StreamController<AssetsTreeEntity> streamController = StreamController();
     _taskManager.addTask(() {
       _runIsolateFilter(params, streamController);
     });
@@ -39,7 +39,7 @@ class FilterByTextAssetsTreeUseCase
     receivePort.listen((branches) {
       _taskManager.releaseTask();
       if (branches is List<TreeBranches>) {
-        streamController.add(AssetsTree(branches: branches));
+        streamController.add(AssetsTreeEntity(branches: branches));
       }
     }).onDone(() {
       _taskManager.releaseTask();
@@ -69,14 +69,14 @@ class FilterByTextAssetsTreeUseCase
       }
 
       if (params.isEnergySensor || params.isCritical) {
-        if (element is AssetsComponent &&
+        if (element is AssetsComponentEntity &&
             element.isCritical &&
             params.isCritical) {
           if (element.name.toLowerCase().contains(params.query.toLowerCase())) {
             return element.copyWith(isOpen: false);
           }
         }
-        if (element is AssetsComponent &&
+        if (element is AssetsComponentEntity &&
             element.isEnergySensor &&
             params.isEnergySensor) {
           if (element.name.toLowerCase().contains(params.query.toLowerCase())) {
