@@ -1,4 +1,4 @@
-# Tractian Selecion Process
+# Tractian Selection Process
 
 Hello, I'm Matheus, and I'd like to share my experience with the selection process for Tractian. The main challenge involves rendering a tree of asset components, which can range from energy and vibration sensors to statuses indicating normal operation or a critical (alert) state. Additionally, it's crucial to ensure speed, performance, and efficiency when applying filters to these components.
 
