@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:traction_selection_process/app/data/locations/mappers/location_mapper.dart';
-import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location_entity.dart';
 
 void main() {
   test(
     "Must return list of Locations and SubLocations",
     () {
       final locations = LocationMapper.fromDataList(_mockLocationJSON);
-      expect(locations, isA<List<Location>>());
+      expect(locations, isA<List<LocationEntity>>());
       expect(locations.length, equals(11));
 
       for (var location in locations) {

@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
-class PreProcessingAssetsTreeCanBeFilteredUseCase
-    extends UseCases<Stream<AssetsTree>, List<TreeBranches>> {
+class CachedDataCanBeFilteredUseCase extends UseCases<Stream<AssetsTreeEntity>, List<TreeBranches>> {
   @override
-  Stream<AssetsTree> call(List<TreeBranches> params) {
-    final StreamController<AssetsTree> streamController = StreamController();
+  Stream<AssetsTreeEntity> call(List<TreeBranches> params) {
+    final StreamController<AssetsTreeEntity> streamController = StreamController();
     _preprocessAssetsInIsolate(params, streamController);
     return streamController.stream;
   }
@@ -25,7 +24,7 @@ class PreProcessingAssetsTreeCanBeFilteredUseCase
     );
 
     receivePort.listen((branches) {
-      streamController.add(AssetsTree(branches: branches));
+      streamController.add(AssetsTreeEntity(branches: branches));
     }).onDone(() {
       streamController.close();
     });
@@ -49,7 +48,7 @@ class PreProcessingAssetsTreeCanBeFilteredUseCase
         }
       }
 
-      if (element is AssetsComponent) {
+      if (element is AssetsComponentEntity) {
         return element;
       }
       return null;

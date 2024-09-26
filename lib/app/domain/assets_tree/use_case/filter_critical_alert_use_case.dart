@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
 class FilterCriticalAlertUseCase
-    extends UseCases<Future<AssetsTree>, FilterCriticalAlertParams> {
+    extends UseCases<Future<AssetsTreeEntity>, FilterCriticalAlertParams> {
   @override
-  Future<AssetsTree> call(FilterCriticalAlertParams params) async {
+  Future<AssetsTreeEntity> call(FilterCriticalAlertParams params) async {
     if (params.criticalAlertActive) {
       final treeBranchesprocessed = params.assetsTreeprocessed.branches;
 
@@ -17,7 +17,7 @@ class FilterCriticalAlertUseCase
         treeBranchesprocessed,
       );
 
-      return AssetsTree(branches: treeBranches);
+      return AssetsTreeEntity(branches: treeBranches);
     }
     return params.assetsTreeCache;
   }
@@ -35,7 +35,7 @@ class FilterCriticalAlertUseCase
         );
       }
 
-      if (element is AssetsComponent) {
+      if (element is AssetsComponentEntity) {
         if (element.isCritical) {
           assetsTree.add(element);
         }
@@ -52,8 +52,8 @@ class FilterCriticalAlertUseCase
 
 class FilterCriticalAlertParams {
   final bool criticalAlertActive;
-  final AssetsTree assetsTreeCache;
-  final AssetsTree assetsTreeprocessed;
+  final AssetsTreeEntity assetsTreeCache;
+  final AssetsTreeEntity assetsTreeprocessed;
 
   FilterCriticalAlertParams({
     required this.assetsTreeCache,

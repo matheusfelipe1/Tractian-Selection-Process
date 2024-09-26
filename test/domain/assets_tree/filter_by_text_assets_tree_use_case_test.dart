@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
-import 'package:traction_selection_process/app/domain/locations/entities/location.dart';
-import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
 import 'package:traction_selection_process/app/domain/tasks/tasks_manager.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/location_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_entity.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
 
 void main() {
   final FilterByTextAssetsTreeUseCase filterByTextAssetsTreeUseCase =
@@ -29,44 +29,44 @@ void main() {
   );
 }
 
-final _assetsTreeMock = AssetsTree(
+final _assetsTreeMock = AssetsTreeEntity(
   branches: [
-    Location(
+    LocationEntity(
       id: "012",
       name: "Tractian 1",
       children: [
-        SubLocation(
+        SubLocationEntity(
           id: "001",
           name: "Sub 1",
           parentId: "012",
           children: [
-            Assets(
+            AssetsEntity(
               id: "0090",
               name: "Asset 1",
               locationId: "001",
               children: [
-                AssetsComponent(
+                AssetsComponentEntity(
                     id: "0018",
                     parentId: "0090",
                     name: "Component 1",
                     sensorId: "1890",
                     sensorType: SensorType.energySensor,
                     sensorStatus: SensorStatus.operating),
-                AssetsComponent(
+                AssetsComponentEntity(
                     id: "0019",
                     parentId: "0090",
                     name: "Component 2",
                     sensorId: "1890",
                     sensorType: SensorType.energySensor,
                     sensorStatus: SensorStatus.alert),
-                AssetsComponent(
+                AssetsComponentEntity(
                     id: "0020",
                     parentId: "0090",
                     name: "Component 3",
                     sensorId: "1890",
                     sensorType: SensorType.vibrationSensor,
                     sensorStatus: SensorStatus.operating),
-                AssetsComponent(
+                AssetsComponentEntity(
                     id: "0021",
                     parentId: "0090",
                     name: "Component 4",
@@ -79,16 +79,16 @@ final _assetsTreeMock = AssetsTree(
         ),
       ],
     ),
-    Location(
+    LocationEntity(
       id: "012",
       name: "Tractian 2",
       children: [
-        SubLocation(
+        SubLocationEntity(
           id: "001",
           name: "Sub 1",
           parentId: "012",
           children: [
-            Assets(
+            AssetsEntity(
               id: "0090",
               name: "Asset 1",
               locationId: "001",
@@ -98,7 +98,7 @@ final _assetsTreeMock = AssetsTree(
         )
       ],
     ),
-    AssetsComponent(
+    AssetsComponentEntity(
       id: "0021",
       name: "Component 5",
       sensorId: "1890",

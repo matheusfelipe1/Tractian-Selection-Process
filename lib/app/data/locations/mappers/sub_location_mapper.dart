@@ -1,12 +1,10 @@
+import 'package:traction_selection_process/app/core/constants/app_constants.dart';
 import 'package:traction_selection_process/app/core/extensions/map_extensions.dart';
-import 'package:traction_selection_process/app/domain/locations/entities/sub_location.dart';
+import 'package:traction_selection_process/app/domain/locations/entities/sub_location_entity.dart';
 
 class SubLocationMapper {
-  static const _id = "id";
-  static const _name = "name";
-  static const _parentId = "parentId";
 
-  static List<SubLocation> fromDataList({
+  static List<SubLocationEntity> fromDataList({
     required String parentId,
     required List<Map<String, dynamic>> subLocationList,
   }) {
@@ -21,23 +19,23 @@ class SubLocationMapper {
   }
 
   static bool _isParent(Map<String, dynamic> data, String parentId) {
-    return data.getOrDefaultValue(key: _parentId, defaultValue: "") == parentId;
+    return data.getOrDefaultValue(key: AppConstants.parentId, defaultValue: "") == parentId;
   }
 
-  static SubLocation _fromData({
+  static SubLocationEntity _fromData({
     required Map<String, dynamic> subLocation,
     required List<Map<String, dynamic>> subLocationList,
   }) {
-    final id = subLocation.getValue(key: _id);
-    return SubLocation(
+    final id = subLocation.getValue(key: AppConstants.id);
+    return SubLocationEntity(
       id: id,
       name: subLocation.getOrDefaultValue(
-        key: _name,
         defaultValue: "",
+        key: AppConstants.name,
       ),
       parentId: subLocation.getOrDefaultValue(
-        key: _parentId,
         defaultValue: "",
+        key: AppConstants.parentId,
       ),
       children: fromDataList(
         parentId: id,

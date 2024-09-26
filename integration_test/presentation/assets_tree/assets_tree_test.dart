@@ -1,15 +1,12 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
-import 'package:traction_selection_process/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
-import 'package:traction_selection_process/app/presentation/assets_tree/page/assets_tree_page.dart';
-import 'package:traction_selection_process/app/presentation/home/cubit/home_cubit.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:traction_selection_process/app/routes/route_paths.dart';
+import 'package:traction_selection_process/app/core/utils/tractian_localizations.dart';
+import 'package:traction_selection_process/app/presentation/assets/page/assets_page.dart';
+import 'package:traction_selection_process/app/presentation/assets/cubit/assets_cubit.dart';
 
-import '../../../test/mocks/injection/mock_dependency_injection.dart';
 import '../../../test/mocks/material_app/mock_material_app.dart';
+import '../../../test/mocks/injection/mock_dependency_injection.dart';
 
 void main() {
   setUpAll(() {
@@ -22,34 +19,18 @@ void main() {
     (tester) async {
       final widget = MockMaterialApp.getWidget(
         initialRoute: RoutePaths.home,
-        providers: [
-          BlocProvider<HomeCubit>(
-            create: (context) => HomeCubit(GetIt.I()),
-          ),
-          BlocProvider<AssetsTreeCubit>(
-            create: (context) => AssetsTreeCubit(
-              getLocationUseCase: GetIt.I(),
-              getAssetsTreeUseCase: GetIt.I(),
-              buildAssetsTreeUseCase: GetIt.I(),
-              filterEnergySensorUseCase: GetIt.I(),
-              filterCriticalAlertUseCase: GetIt.I(),
-              filterByTextAssetsTreeUseCase: GetIt.I(),
-              expandsChildrenWhenClickedUseCase: GetIt.I(),
-              preProcessingAssetsTreeCanBeFilteredUseCase: GetIt.I(),
-            ),
-          ),
-        ],
+       
       );
       await tester.pumpWidget(widget);
       await tester.pumpAndSettle();
 
       Get.toNamed(
         RoutePaths.assets,
-        arguments: AssetsTreeArgs(companyId: "0"),
+        arguments: AssetsArgs(companyId: "0"),
       );
 
       await tester.pumpAndSettle();
-      expect(find.byType(AssetsTreePage), findsOneWidget);
+      expect(find.byType(AssetsPage), findsOneWidget);
 
       await tester.pumpAndSettle();
 

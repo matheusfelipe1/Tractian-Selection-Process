@@ -3,12 +3,15 @@ import 'package:traction_selection_process/app/routes/route_paths.dart';
 import 'package:traction_selection_process/app/core/utils/base_cubit.dart';
 import 'package:traction_selection_process/app/core/use_cases/use_cases.dart';
 import 'package:traction_selection_process/app/presentation/home/cubit/home_state.dart';
-import 'package:traction_selection_process/app/presentation/assets_tree/cubit/assets_tree_cubit.dart';
 import 'package:traction_selection_process/app/domain/company/use_cases/get_companies_use_case.dart';
+import 'package:traction_selection_process/app/presentation/assets/cubit/assets_cubit.dart';
 
 class HomeCubit extends BaseCubit<HomeState> {
   final GetCompaniesUseCase _getCompaniesUseCase;
-  HomeCubit(this._getCompaniesUseCase) : super(HomeInitial());
+  HomeCubit({
+    required GetCompaniesUseCase getCompaniesUseCase,
+  })  : _getCompaniesUseCase = getCompaniesUseCase,
+        super(HomeInitial());
 
   @override
   void onInit() {
@@ -27,7 +30,7 @@ class HomeCubit extends BaseCubit<HomeState> {
   void goToAssetsPage(String idCompany) {
     Get.toNamed(
       RoutePaths.assets,
-      arguments: AssetsTreeArgs(companyId: idCompany),
+      arguments: AssetsArgs(companyId: idCompany),
     );
   }
 

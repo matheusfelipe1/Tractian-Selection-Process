@@ -1,10 +1,10 @@
 import 'package:design_system/design_system.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
 
-class Assets extends TreeBranches {
+class AssetsEntity extends TreeBranches {
   final String locationId;
 
-  Assets({
+  AssetsEntity({
     super.isOpen,
     required super.id,
     required super.name,
@@ -13,14 +13,14 @@ class Assets extends TreeBranches {
   });
 
   @override
-  Assets copyWith({
+  AssetsEntity copyWith({
     String? id,
     String? name,
     bool? isOpen,
     String? locationId,
     List<TreeBranches>? children,
   }) {
-    return Assets(
+    return AssetsEntity(
       id: id ?? this.id,
       name: name ?? this.name,
       isOpen: isOpen ?? this.isOpen,

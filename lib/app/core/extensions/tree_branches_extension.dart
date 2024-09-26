@@ -1,22 +1,22 @@
 import 'package:design_system/styles/traction_asset_type.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/tree_assets.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_entity.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_tree_entity.dart';
 import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/entities/assets_component_entity.dart';
 
 extension ComponentExtensions on List<TreeBranches> {
-  List<AssetsComponent> get componentsUnliked =>
-      where((item) => item is AssetsComponent && !item.isAssociated)
-          .map((item) => item as AssetsComponent)
+  List<AssetsComponentEntity> get componentsUnlinked =>
+      where((item) => item is AssetsComponentEntity && !item.isAssociated)
+          .map((item) => item as AssetsComponentEntity)
           .toList();
 
-  List<AssetsComponent> get componentsWLocation =>
-      where((item) => item is AssetsComponent && item.hasLocation)
-          .map((item) => item as AssetsComponent)
+  List<AssetsComponentEntity> get componentsWLocation =>
+      where((item) => item is AssetsComponentEntity && item.hasLocation)
+          .map((item) => item as AssetsComponentEntity)
           .toList();
 
-  List<Assets> get assets =>
-      where((item) => item is Assets).map((item) => item as Assets).toList();
+  List<AssetsEntity> get assets =>
+      where((item) => item is AssetsEntity).map((item) => item as AssetsEntity).toList();
 
   List<TractianAssetsTree> toDSEntity() {
     final dataList = map((e) => e.toDSEntity()).toList();

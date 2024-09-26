@@ -33,14 +33,14 @@ class TractianTextFieldWidget extends StatelessWidget {
         fillColor: TractianColors.gray100,
         constraints: const BoxConstraints(maxHeight: 32),
         hintStyle: regularSm.customColor(TractianColors.gray500),
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(4),
+        ),
         prefixIcon: const Icon(
           size: 14,
           Icons.search,
           color: TractianColors.gray500,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(4),
         ),
       ),
     );

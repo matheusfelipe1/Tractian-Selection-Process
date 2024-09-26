@@ -1,16 +1,16 @@
 import 'package:design_system/components/assets_tree/widgets/tractian_assets_tree_widget.dart';
 
-class AssetsTree {
+class AssetsTreeEntity {
   final List<TreeBranches> branches;
 
-  const AssetsTree({
+  const AssetsTreeEntity({
     required this.branches,
   });
 
-  AssetsTree copyWith({
+  AssetsTreeEntity copyWith({
     List<TreeBranches>? branches,
   }) {
-    return AssetsTree(
+    return AssetsTreeEntity(
       branches: branches ?? this.branches,
     );
   }

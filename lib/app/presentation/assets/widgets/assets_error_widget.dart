@@ -1,11 +1,11 @@
-part of '../page/assets_tree_page.dart';
+part of '../page/assets_page.dart';
 
-class AssetsTreeErrorWidget extends StatelessWidget {
-  const AssetsTreeErrorWidget({super.key});
+class AssetsErrorWidget extends StatelessWidget {
+  const AssetsErrorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final assetsCubit = context.read<AssetsTreeCubit>();
+    final assetsCubit = context.read<AssetsCubit>();
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(

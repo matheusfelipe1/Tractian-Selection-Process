@@ -18,8 +18,8 @@ import 'package:traction_selection_process/app/data/assets_tree/repository/asset
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_energy_sensor_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_critical_alert_use_case.dart';
 import 'package:traction_selection_process/app/domain/assets_tree/use_case/filter_by_text_assets_tree_use_case.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/use_case/expands_children_when_clicked_use_case.dart';
-import 'package:traction_selection_process/app/domain/assets_tree/use_case/pre_processing_assets_tree_can_be_filtered_use_case.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/expand_the_children_use_case.dart';
+import 'package:traction_selection_process/app/domain/assets_tree/use_case/cached_data_can_be_filtered_use_case.dart';
 
 class DependencyInjections {
   static final _getIt = GetIt.instance;
@@ -69,6 +69,9 @@ class DependencyInjections {
       () => BuildAssetsTreeUseCase(),
     );
     _getIt.registerFactory(
+      () => ExpandTheChildrenUseCase(),
+    );
+    _getIt.registerFactory(
       () => FilterEnergySensorUseCase(),
     );
     _getIt.registerFactory(
@@ -84,13 +87,10 @@ class DependencyInjections {
       () => GetAssetsTreeUseCase(_getIt()),
     );
     _getIt.registerFactory(
-      () => ExpandsChildrenWhenClickedUseCase(),
+      () => CachedDataCanBeFilteredUseCase(),
     );
     _getIt.registerFactory(
       () => FilterByTextAssetsTreeUseCase(_getIt()),
-    );
-    _getIt.registerFactory(
-      () => PreProcessingAssetsTreeCanBeFilteredUseCase(),
     );
   }
 }
