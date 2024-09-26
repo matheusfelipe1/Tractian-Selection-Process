@@ -137,11 +137,11 @@ class AssetsCubit extends BaseCubit<AssetsState> {
   }
 
   void _cachedDataCanBeFiltered() {
-    final listenPreprocess = _cachedDataCanBeFilteredUseCase(
+    final listenCachedData = _cachedDataCanBeFilteredUseCase(
       _assetsTreeCache.branches,
     );
 
-    listenPreprocess.listen((data) {
+    listenCachedData.listen((data) {
       _assetsTreeCacheprocessed = data;
     });
   }
