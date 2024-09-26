@@ -24,14 +24,16 @@ This application was built in `Flutter 3.24.3` version
 * Click [here](https://drive.google.com/file/d/18oJcWzjeirXz1TzO_T6qfGlvxRb07hQc/view?usp=sharing) to download the APK.
   
 * The video below showcases the functionality where, upon clicking an item, it expands to reveal its respective children.
+  > Note: The test images below were carried out in all available companies
 
 https://github.com/user-attachments/assets/9ff794e0-f3b3-40b3-9833-c757a38d4137
 
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/b50a0987-c5d6-4328-b480-4a09fd083596" width="20%" />
-  <img src="https://github.com/user-attachments/assets/c1d5d2c7-2410-4031-94b7-fbbc900e1878" width="20%" />
-  <img src="https://github.com/user-attachments/assets/debd1ffd-e884-4dce-9f4c-f53a8972c1b4" width="20%" />
-  <img src="https://github.com/user-attachments/assets/28d62e00-da44-43bd-bd44-ab189b645d91" width="20%" />
+  <img src="https://github.com/user-attachments/assets/b50a0987-c5d6-4328-b480-4a09fd083596" width="15%" />
+  <img src="https://github.com/user-attachments/assets/c1d5d2c7-2410-4031-94b7-fbbc900e1878" width="15%" />
+  <img src="https://github.com/user-attachments/assets/c68d6dfc-da69-459b-b612-a0a3214a0795" width="15%" />
+  <img src="https://github.com/user-attachments/assets/debd1ffd-e884-4dce-9f4c-f53a8972c1b4" width="15%" />
+  <img src="https://github.com/user-attachments/assets/28d62e00-da44-43bd-bd44-ab189b645d91" width="15%" />
 </p>
 
 
