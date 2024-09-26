@@ -19,6 +19,8 @@ This application was built in `Flutter 3.24.3` version
 * I have also integrated all the requested filters, such as the **Energy Sensor** filter, the **Critical** status filter, the **Text Input** filter, and the combination of **Text Input** with either **Energy Sensor** or **Critical** status.
   
 * To achieve this goal, focusing on performance, speed, and especially a good user experience without causing bottlenecks or UI freezes, we utilized isolates for processing in separate threads, parallel programming practices, and a custom algorithm that checks if each child widget is within the user's field of view. If a widget is visible, it is built; otherwise, it is not created. This approach conserves memory for our application while ensuring optimal performance, preventing UI overload, and maintaining good speed.
+
+  > Note: It is worth noting that in `Parallel Programming`, I used an approach with `sync*` and `yield`. As soon as the data is processed and ready, it is sent to the `Cubit` to be displayed in the UI. This process continues gradually until all items are fully visible. This is particularly important because we have a recursive algorithm, and depending on the number of children and grandchildren, we don't want the display to take too long. With this approach, we ensure a better user experience.
   
 * Click [here](https://drive.google.com/file/d/1nqz2alE9C_o0ns_aY7YkOGc1Xa_P_07_/view?usp=sharing) to watch the video of the application running with high performance
 * Click [here](https://drive.google.com/file/d/18oJcWzjeirXz1TzO_T6qfGlvxRb07hQc/view?usp=sharing) to download the APK.
