@@ -24,6 +24,9 @@ This application was built in `Flutter 3.24.3` version
   
 * Click [here](https://drive.google.com/file/d/1nqz2alE9C_o0ns_aY7YkOGc1Xa_P_07_/view?usp=sharing) to watch the video of the application running with high performance
 * Click [here](https://drive.google.com/file/d/18oJcWzjeirXz1TzO_T6qfGlvxRb07hQc/view?usp=sharing) to download the APK.
+* Jaguar enterprise video [here](https://drive.google.com/file/d/1yB5iin9Dz4crLWeLoF9Q7u4zQ84ToiXI/view?usp=drivesdk)
+* Tobias enterprise video [here](https://drive.google.com/file/d/1jhZRA5vce_yewOIeGegHnDqiNn8KoLHh/view?usp=drivesdk)
+* Apex enterprise video [here](https://drive.google.com/file/d/1CxaUShBgxLALd5Kn2-qEHimTvZQnAYjp/view?usp=drivesdk)
   
 * The video below showcases the functionality where, upon clicking an item, it expands to reveal its respective children.
   > Note: The test images below were carried out in all available companies
@@ -102,3 +105,13 @@ https://github.com/user-attachments/assets/9ff794e0-f3b3-40b3-9833-c757a38d4137
 > 
 
 * However, when the return value of this algorithm is `true`, the `StreamController` triggers an event notifying the build system that it can render that widget. This ensures that only the necessary widgets are created, contributing to the application's efficiency
+
+### Improvements
+
+
+Well, I would like to execute an algorithm in such a way that it does not wait for all child elements, and their respective child elements, to be fully processed before being displayed on the screen. Ideally, the parent element would be displayed first, and once a child element is processed, it would then be appended to the array in the view, and so on successively.
+
+Another aspect I would like to implement is revisiting my understanding of Clean Architecture. Given that the concept of Clean Architecture is quite broad, it may lead to differing interpretations, information, or concepts. Therefore, I would like to carefully review the code to ensure it strictly adheres to all the relevant standards. Perhaps there are areas that could be improved in terms of treatment or organization, even though I believe my current structure is already well-organized. However, as we know, there is always room for improvement.
+
+I would also like to allocate more time to revisiting some of the naming conventions. And that’s it.
+
