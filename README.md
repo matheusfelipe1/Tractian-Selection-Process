@@ -22,6 +22,8 @@ This application was built in `Flutter 3.24.3` version
   
 * Click [here](https://drive.google.com/file/d/1nqz2alE9C_o0ns_aY7YkOGc1Xa_P_07_/view?usp=sharing) to watch the video of the application running with high performance
 * Click [here](https://drive.google.com/file/d/18oJcWzjeirXz1TzO_T6qfGlvxRb07hQc/view?usp=sharing) to download the APK.
+  
+* The video below showcases the functionality where, upon clicking an item, it expands to reveal its respective children.
 
 https://github.com/user-attachments/assets/9ff794e0-f3b3-40b3-9833-c757a38d4137
 
